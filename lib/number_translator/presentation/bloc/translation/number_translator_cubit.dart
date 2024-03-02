@@ -21,6 +21,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     if (response.error == 'true') {
       emit(
         state.copyWith(
+          translation: '',
           validationFailed: true,
         ),
       );
@@ -39,16 +40,18 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     if (numberToTranslateController.text.isEmpty) {
       emit(
         state.copyWith(
-          validationFailed: true,
+          translation: 'Insert some value to translate.',
+          validationFailed: false,
         ),
       );
-      return true;
+      return false;
     }
     final Map<String, dynamic> numbersMapping = jsonDecode(await rootBundle.loadString('assets/numbers/numbers-mapping.json'));
-    for( var element in numberToTranslateController.text.split(' ')){
+    for( var element in numberToTranslateController.text.trim().split(' ')){
       if (!numbersMapping['numbers']!.contains(element)) {
         emit(
           state.copyWith(
+            translation: '',
             validationFailed: true,
           ),
         );
@@ -57,6 +60,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     }
     emit(
       state.copyWith(
+        translation: '',
         validationFailed: false,
       ),
     );

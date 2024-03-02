@@ -19,43 +19,73 @@ class NumberTranslatorPage extends StatelessWidget {
               return Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 150,
-                      width: 200,
-                      child: CustomTextFormField(
-                        controller: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController,
-                        cubit: cubit,
-                        readOnly: false,
-                        borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
-                        onChanged: (value) async {
-                          if (await cubit.validateNumberToTranslate()) {
-                            debugPrint('Valid number to translate!!');
-                            cubit.translate(numberToTranslate: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController.text);
-                          }else {
-
-                          }
-                        },
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0, top: 20.0),
+                          child: Text(
+                            'Number to translate',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 150,
+                          width: 200,
+                          child: CustomTextFormField(
+                            controller: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController,
+                            cubit: cubit,
+                            readOnly: false,
+                            borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
+                            onChanged: (value) async {
+                              if (await cubit.validateNumberToTranslate()) {
+                                // debugPrint('Valid number to translate!!');
+                                cubit.translate(numberToTranslate: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController.text);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: IconButton.outlined(
+                      onPressed: () {},
+                      icon: const Icon(
+                        size: 32.0,
+                        Icons.swap_vert,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 150,
-                      width: 200,
-                      child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
-                        builder: (context, state) {
-                          if(state is NumberTranslatorInitial) {
-                            return CustomTextFormField(
-                              controller: serviceLocator.get<NumberTranslatorCubit>().translatedNumberController..text = state.translation,
-                              cubit: cubit,
-                              readOnly: true,
-                            );
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      ),
+                    padding: const EdgeInsets.only(bottom: 10.0, top: 20.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: Text(
+                            'Translated number',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 150,
+                          width: 200,
+                          child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
+                            builder: (context, state) {
+                              if (state is NumberTranslatorInitial) {
+                                return CustomTextFormField(
+                                  controller: serviceLocator.get<NumberTranslatorCubit>().translatedNumberController..text = state.translation,
+                                  cubit: cubit,
+                                  readOnly: true,
+                                );
+                              }
+                              return const CircularProgressIndicator();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
