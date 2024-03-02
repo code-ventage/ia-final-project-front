@@ -4,6 +4,7 @@ import 'package:ia_final_project_front/config/connection/connection_helper.dart'
 import 'package:ia_final_project_front/number_translator/data/data_sources/number_translator_datasourse_impl.dart';
 import 'package:ia_final_project_front/number_translator/data/repositories/number_translator_repository.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/number_translator_cubit.dart';
+import 'package:ia_final_project_front/number_translator/presentation/pages/configurations/configurations_page.dart';
 
 import '../../number_translator/data/data_sources/number_translator_datasource.dart';
 import '../../number_translator/data/repositories/number_translator_repository_impl.dart';
@@ -23,6 +24,7 @@ void setupServiceLocator() {
 
 void setupPages() {
   serviceLocator.registerSingleton<NumberTranslatorPage>(const NumberTranslatorPage());
+  serviceLocator.registerSingleton<ConfigurationsPage>(const ConfigurationsPage());
 }
 
 void setupDataServices() {
