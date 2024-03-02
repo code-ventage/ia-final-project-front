@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/service_locator/get_it.dart';
 import 'go_router/go_router.dart';
-import 'number_translator/presentation/bloc/number_translator_cubit.dart';
+import 'number_translator/presentation/bloc/translation/number_translator_cubit.dart';
 
 void main() async {
   initServices();
