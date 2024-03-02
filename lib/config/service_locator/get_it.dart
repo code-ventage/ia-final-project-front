@@ -8,7 +8,7 @@ import 'package:ia_final_project_front/number_translator/presentation/pages/conf
 
 import '../../number_translator/data/data_sources/number_translator_datasource.dart';
 import '../../number_translator/data/repositories/number_translator_repository_impl.dart';
-import '../../number_translator/presentation/pages/number_translator_page.dart';
+import '../../number_translator/presentation/pages/translation/number_translator_page.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -36,7 +36,7 @@ void setupDataServices() {
   
   serviceLocator.registerSingleton<NumberTranslatorRepository>(
     NumberTranslatorRepositoryImpl(
-      datasource: serviceLocator.get<NumberTranslatorDatasourceImpl>()
+      datasource: serviceLocator.get<NumberTranslatorDatasource>()
     ),
   );
 }
