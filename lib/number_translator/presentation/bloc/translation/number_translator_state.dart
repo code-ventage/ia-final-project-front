@@ -5,27 +5,31 @@ abstract class NumberTranslatorState extends Equatable {
 
   NumberTranslatorInitial copyWith({
     String? translation,
-    int? counter,
+    bool? validationFailed,
   });
 }
 
 class NumberTranslatorInitial extends NumberTranslatorState {
   final String translation;
-  final int counter;
+  final bool validationFailed;
 
-  const NumberTranslatorInitial({this.translation = "0", this.counter = 0});
+  const NumberTranslatorInitial({
+    this.translation = "",
+    this.validationFailed = false,
+  });
 
   @override
-  List<Object> get props => [translation, counter];
+  List<Object> get props => [translation, validationFailed];
 
   @override
   NumberTranslatorInitial copyWith({
     String? translation,
     int? counter,
+    bool? validationFailed,
   }) {
     return NumberTranslatorInitial(
       translation: translation ?? this.translation,
-      counter: counter ?? this.counter,
+      validationFailed: validationFailed?? this.validationFailed,
     );
   }
 }
