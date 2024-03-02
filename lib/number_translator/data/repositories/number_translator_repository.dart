@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ia_final_project_front/config/conection/connection_helper.dart';
+import 'package:ia_final_project_front/config/connection/connection_helper.dart';
 import 'package:ia_final_project_front/config/service_locator/get_it.dart';
 import 'package:ia_final_project_front/number_translator/data/models/consult_request.dart';
 import 'package:ia_final_project_front/number_translator/data/models/consult_response.dart';
