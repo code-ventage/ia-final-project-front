@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/number_translator_cubit.dart';
+import '../../bloc/translation/number_translator_cubit.dart';
 
 class NumberTranslatorPage extends StatelessWidget {
   const NumberTranslatorPage({super.key});
@@ -12,7 +12,7 @@ class NumberTranslatorPage extends StatelessWidget {
       body: Center(
         child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
           builder: (context, state) {
-            if(state is NumberTranslatorBlocInitial) {
+            if(state is NumberTranslatorInitial) {
               return Column(
                 children: [
                   Text(state.counter.toString()),

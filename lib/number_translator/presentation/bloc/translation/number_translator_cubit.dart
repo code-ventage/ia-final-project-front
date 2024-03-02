@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 part 'number_translator_state.dart';
 
 class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
-  NumberTranslatorCubit() : super(const NumberTranslatorBlocInitial());
+  NumberTranslatorCubit() : super(const NumberTranslatorInitial());
   final String translation = "";
 
   // translate
