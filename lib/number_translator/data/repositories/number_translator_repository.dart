@@ -1,13 +1,11 @@
-import 'package:dio/dio.dart';
+import 'package:ia_final_project_front/config/conection/connection_helper.dart';
+import 'package:ia_final_project_front/config/service_locator/get_it.dart';
 
 class NumberTranslatorRepository {
-  final dio = Dio(BaseOptions(
-    baseUrl: 'http://0.0.0.0:34545',
-    contentType: 'application/json',
-  ));
+  final connectionHelper = serviceLocator.get<ConnectionHelper>();
 
   Future<String> makeTranslate() async {
-    return (await dio.post(
+    return (await connectionHelper.dio.post(
       '/consult',
       data: {
         "consult": "mil dos",
