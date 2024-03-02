@@ -9,9 +9,9 @@ import '../../number_translator/presentation/pages/number_translator_page.dart';
 final serviceLocator = GetIt.instance;
 
 void setupServiceLocator() {
-  serviceLocator.registerLazySingleton(() => const NumberTranslatorPage());
-  serviceLocator.registerLazySingleton(() => NumberTranslatorRepository());
-  serviceLocator.registerLazySingleton(() => const ConfigurationData());
-  serviceLocator.registerLazySingleton(() => ConnectionHelper());
-  serviceLocator.registerLazySingleton(() => NumberTranslatorCubit());
+  serviceLocator.registerSingleton(const ConfigurationData());
+  serviceLocator.registerSingleton(ConnectionHelper());
+  serviceLocator.registerSingleton(NumberTranslatorCubit());
+  serviceLocator.registerSingleton(NumberTranslatorRepository());
+  serviceLocator.registerSingleton(const NumberTranslatorPage());
 }
