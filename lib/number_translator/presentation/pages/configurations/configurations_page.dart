@@ -9,24 +9,23 @@ class ConfigurationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-
-    var controller = context.read<ConfigurationsCubit>().controller;
-
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.only(left: 10.0),
           child: Text('Configurations', style: TextStyle(fontSize: 20)),
         ),
-        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: (){
-          context.pop();
-        }),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              context.pop();
+            }),
         toolbarHeight: height * 0.1,
       ),
       body: Column(
         children: [
           ExpansionTile(
-            leading: const Icon( Icons.route_outlined ),
+            leading: const Icon(Icons.route_outlined),
             title: const Text('Hotspot IP Address'),
             subtitle: const Text('Input your hotspot IP address'),
             children: [
@@ -34,28 +33,51 @@ class ConfigurationsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: SizedBox(
                   height: 65,
-                  child: TextFormField(
-                    controller: controller,
-                    textAlignVertical: TextAlignVertical.top,
-                    cursorHeight: 25,
-                    decoration: InputDecoration(
-                      suffix: IconButton(
-                        icon: const Icon(Icons.save),
-                        onPressed: () {
-                          context.read<ConfigurationsCubit>().setBaseUrl(controller.text);
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
+                  child: BlocConsumer<ConfigurationsCubit, ConfigurationsState>(
+                    listener: (context, state) {
+                      if (state is ConfigurationsInitial) {
+                        //show a message to the user on the bottom of the screen
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: const Duration(milliseconds: 500),
+                            content: Text(
+                              'Base URL has been set to ${state.baseUrl}',
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context).colorScheme.onSecondary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      final state = context.read<ConfigurationsCubit>().state as ConfigurationsInitial;
+                      final controller = context.read<ConfigurationsCubit>().controller;
+                      return TextFormField(
+                        controller: controller..text = state.baseUrl,
+                        textAlignVertical: TextAlignVertical.top,
+                        cursorHeight: 25,
+                        decoration: InputDecoration(
+                          suffix: IconButton(
+                            icon: const Icon(Icons.save),
+                            onPressed: () {
+                              context.read<ConfigurationsCubit>().setBaseUrl(controller.text);
+                            },
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
               )
