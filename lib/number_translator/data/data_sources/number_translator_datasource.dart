@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ia_final_project_front/config/config_data/configuration_data.dart';
-import 'package:ia_final_project_front/config/service_locator/get_it.dart';
 import 'package:ia_final_project_front/number_translator/data/models/consult_response.dart';
 
 import '../../../config/connection/connection_helper.dart';
@@ -18,20 +16,20 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
 
   @override
   Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request}) async {
-    var response = <String, String>{};
+    var response = <String, dynamic>{};
     var error = '';
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+     /* if (serviceLocator.get<ConfigurationData>().DEBUGING) {
         response = {
           'hash_response': '123',
         };
         return GeneralResponse(error: error, data: ConsultResponse.fromJson(response));
       }
-
-      response = await connectionHelper.dio.post(
+*/
+      response = (await connectionHelper.dio.post(
         '/consult',
         data: request.toJson(),
-      ) as Map<String, String>;
+      )).data;
       error = 'false';
 
     } on Exception catch (e) {
