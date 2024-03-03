@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
 
 import 'config/service_locator/get_it.dart';
 import 'go_router/go_router.dart';
@@ -22,6 +23,7 @@ class NumberTranslateApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => serviceLocator.get<NumberTranslatorCubit>()),
+        BlocProvider(create: (context) => serviceLocator.get<ConfigurationsCubit>())
       ],
       child: const _NumberTranslateApp(),
     );
