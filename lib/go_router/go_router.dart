@@ -8,7 +8,7 @@ import 'package:ia_final_project_front/number_translator/presentation/pages/conf
 import '../number_translator/presentation/pages/translation/number_translator_page.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.configurations.routePath,
+  initialLocation: Routes.numberTranslator.routePath,
   routes: [
     GoRoute(
       path: Routes.numberTranslator.routePath,
