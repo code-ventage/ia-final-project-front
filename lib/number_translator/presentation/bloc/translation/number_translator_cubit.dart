@@ -16,10 +16,9 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
   final String translation = "";
   final TextEditingController numberToTranslateController = TextEditingController();
   final TextEditingController translatedNumberController = TextEditingController();
-  final errorTextToShow = tr('insert_a_valid_number_to_translate');
-  final insertTextToShow = tr('insert_some_value_to_translate');
 
   Future<void> translate({required String numberToTranslate}) async {
+    final errorTextToShow = tr('insert_a_valid_number_to_translate');
     var response = await serviceLocator.get<NumberTranslatorService>().makeTranslate(request: ConsultEntity(number: numberToTranslate));
     if (response.error == 'true') {
       emit(
@@ -50,6 +49,8 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
   }
 
   Future<bool> validateNumberToTranslate() async {
+    final errorTextToShow = tr('insert_a_valid_number_to_translate');
+    final insertTextToShow = tr('insert_some_value_to_translate');
     if (numberToTranslateController.text.isEmpty) {
       emit(
         state.copyWith(
