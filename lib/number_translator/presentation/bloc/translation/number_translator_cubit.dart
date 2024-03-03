@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:ia_final_project_front/config/service_locator/get_it.dart';
+import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/number_translator/domain/entities/consult_entity.dart';
 import 'package:ia_final_project_front/number_translator/domain/use_cases/number_translator_service.dart';
 

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ia_final_project_front/config/config_data/configuration_data.dart';
-import 'package:ia_final_project_front/config/service_locator/get_it.dart';
+import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 
 part 'configurations_state.dart';
 

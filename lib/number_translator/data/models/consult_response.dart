@@ -7,7 +7,7 @@ class ConsultResponse {
 
   factory ConsultResponse.fromJson(Map<String, dynamic> json) {
     return ConsultResponse(
-      hashResponse: json['hash_response'],
+      hashResponse: json['hash_response']?['N']??'',
     );
   }
 }
