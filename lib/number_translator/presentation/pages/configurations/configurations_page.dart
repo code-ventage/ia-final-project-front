@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:ia_final_project_front/go_router/routes.dart';
 
 class ConfigurationsPage extends StatelessWidget {
   const ConfigurationsPage({super.key});
