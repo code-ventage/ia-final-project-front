@@ -7,20 +7,45 @@ class ConfigurationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Configurations Page'),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 10.0),
+          child: Text('Configurations', style: TextStyle(fontSize: 20)),
+        ),
+        toolbarHeight: height * 0.1,
       ),
       body: Column(
         children: [
-          ListTile(
-            title: const Text('Base Url'),
-            subtitle: const Text('Configure base url'),
-            trailing: const Icon( Icons.route_outlined ),
-            onTap: () {
-              context.pushNamed(Routes.baseUrl.name);
-            },
+          ExpansionTile(
+            leading: const Icon( Icons.route_outlined ),
+            title: const Text('Hotspot IP Address'),
+            subtitle: const Text('Input your hotspot IP address'),
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    suffix: IconButton(
+                      icon: const Icon(Icons.save),
+                      onPressed: () {},
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           )
         ],
       ),
