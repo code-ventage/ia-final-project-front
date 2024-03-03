@@ -13,5 +13,7 @@ class ConfigurationsCubit extends Cubit<ConfigurationsState> {
 
   void setBaseUrl(String baseUrl) async {
     serviceLocator<ConfigurationData>().BASE_URL = baseUrl;
+    controller.text = baseUrl;
+    emit(state.copyWith(baseUrl: baseUrl));
   }
 }
