@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/get_it.dart';
 
+import '../../../../go_router/routes.dart';
 import '../../bloc/translation/number_translator_cubit.dart';
 import '../../widgets/custom_text_form_field_widget.dart';
 
@@ -19,9 +21,13 @@ class NumberTranslatorPage extends StatelessWidget {
           child: Text('Number Translator', style: TextStyle(fontSize: 20)),
         ),
         toolbarHeight: height * 0.1,
-
         actions: [
-          IconButton(onPressed: (){}, icon: const Icon(Icons.settings))
+          IconButton(
+            onPressed: () {
+              context.pushNamed(Routes.configurations.name);
+            },
+            icon: const Icon(Icons.settings),
+          ),
         ],
       ),
       body: Center(
@@ -34,24 +40,29 @@ class NumberTranslatorPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        firstTextFormField(context, height, width * 0.45, cubit, state),
+                        firstTextFormField(
+                            context, height, width * 0.45, cubit, state),
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.155),
                           child: IconButton.outlined(
                             onPressed: () {},
                             icon: Icon(
-                              size: (height + width) < 300 ? (height + width) * 0.035 : (height + width) * 0.020,
+                              size: (height + width) < 300
+                                  ? (height + width) * 0.035
+                                  : (height + width) * 0.020,
                               Icons.swap_horiz,
                             ),
                           ),
                         ),
-                        secondTextFormField(context, height, width * 0.45, cubit),
+                        secondTextFormField(
+                            context, height, width * 0.45, cubit),
                       ],
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        firstTextFormField(context, height, width, cubit, state),
+                        firstTextFormField(
+                            context, height, width, cubit, state),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: IconButton.outlined(
@@ -73,7 +84,8 @@ class NumberTranslatorPage extends StatelessWidget {
     );
   }
 
-  Padding firstTextFormField(BuildContext context, double height, double width, NumberTranslatorCubit cubit, NumberTranslatorInitial state) {
+  Padding firstTextFormField(BuildContext context, double height, double width,
+      NumberTranslatorCubit cubit, NumberTranslatorInitial state) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -89,14 +101,22 @@ class NumberTranslatorPage extends StatelessWidget {
             height: height * 0.25,
             width: width * 0.85,
             child: CustomTextFormField(
-              controller: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController,
+              controller: serviceLocator
+                  .get<NumberTranslatorCubit>()
+                  .numberToTranslateController,
               cubit: cubit,
               readOnly: false,
-              borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
+              borderColor: state.validationFailed
+                  ? Theme.of(context).colorScheme.error
+                  : null,
               onChanged: (value) async {
                 if (await cubit.validateNumberToTranslate()) {
                   // debugPrint('Valid number to translate!!');
-                  cubit.translate(numberToTranslate: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController.text);
+                  cubit.translate(
+                      numberToTranslate: serviceLocator
+                          .get<NumberTranslatorCubit>()
+                          .numberToTranslateController
+                          .text);
                 }
               },
             ),
@@ -106,7 +126,8 @@ class NumberTranslatorPage extends StatelessWidget {
     );
   }
 
-  Padding secondTextFormField(BuildContext context, double height, double width, NumberTranslatorCubit cubit) {
+  Padding secondTextFormField(BuildContext context, double height, double width,
+      NumberTranslatorCubit cubit) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -125,7 +146,10 @@ class NumberTranslatorPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is NumberTranslatorInitial) {
                   return CustomTextFormField(
-                    controller: serviceLocator.get<NumberTranslatorCubit>().translatedNumberController..text = state.translation,
+                    controller: serviceLocator
+                        .get<NumberTranslatorCubit>()
+                        .translatedNumberController
+                      ..text = state.translation,
                     cubit: cubit,
                     readOnly: true,
                   );
