@@ -40,7 +40,7 @@ class ConfigurationsPage extends StatelessWidget {
                         //show a message to the user on the bottom of the screen
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            duration: const Duration(milliseconds: 500),
+                            duration: const Duration(seconds: 1),
                             content: Text(
                               '${tr('the_base_has_been_changed')} ${state.baseUrl}',
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(

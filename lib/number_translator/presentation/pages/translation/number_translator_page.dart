@@ -90,12 +90,16 @@ class NumberTranslatorPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-            child: Text(
-              tr('number_to_translate_label'),
-              style: Theme.of(context).textTheme.titleMedium,
+            child: TextButton(
+              onPressed: (){},
+              child: Text(
+                tr('number_to_translate_label'),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ),
           SizedBox(
@@ -131,12 +135,16 @@ class NumberTranslatorPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-            child: Text(
-              tr('translated_number_label'),
-              style: Theme.of(context).textTheme.titleMedium,
+            child: TextButton(
+              onPressed: (){},
+              child: Text(
+                tr('translated_number_label'),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ),
           SizedBox(
