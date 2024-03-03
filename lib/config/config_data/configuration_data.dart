@@ -1,11 +1,11 @@
 class ConfigurationData {
-  const ConfigurationData({
+  ConfigurationData({
     this.BASE_URL = "http://0.0.0.0:34545",
     this.CONTENT_TYPE = "application/json",
     this.DEBUGING = true,
   });
 
-  final String BASE_URL;
+  String BASE_URL;
   final String CONTENT_TYPE;
   final bool DEBUGING;
 
