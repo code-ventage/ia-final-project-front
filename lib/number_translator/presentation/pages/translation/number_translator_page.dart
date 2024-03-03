@@ -6,6 +6,7 @@ import 'package:ia_final_project_front/config/service_locator/service_locator.da
 
 import '../../../../go_router/routes.dart';
 import '../../bloc/translation/number_translator_cubit.dart';
+import '../../widgets/custom_icon_selection_button.dart';
 import '../../widgets/custom_text_form_field_widget.dart';
 
 class NumberTranslatorPage extends StatelessWidget {
@@ -103,17 +104,17 @@ class NumberTranslatorPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                child: CustomTextExpansionPressedButton(
-                  isSelected: state.isLetterTranslationSelected,
-                  onSelected: onPressed,
+                child: CustomIconSelectionButton(
+                  isSelected: state.isDigitTranslation,
+                  onSelected: state.isDigitTranslation? onPressed : null,
                   icon: Icons.numbers,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                child: CustomTextExpansionPressedButton(
-                  isSelected: !state.isLetterTranslationSelected,
-                  onSelected: onPressed,
+                child: CustomIconSelectionButton(
+                  isSelected: !state.isDigitTranslation,
+                  onSelected: !state.isDigitTranslation? onPressed : null,
                   icon: Icons.translate,
                 ),
               ),
@@ -158,17 +159,17 @@ class NumberTranslatorPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                child: CustomTextExpansionPressedButton(
-                  isSelected: state.isLetterTranslationSelected,
-                  onSelected: onPressed,
+                child: CustomIconSelectionButton(
+                  isSelected: state.isDigitTranslation,
+                  onSelected: state.isDigitTranslation? onPressed : null,
                   icon: Icons.translate,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                child: CustomTextExpansionPressedButton(
-                  isSelected: !state.isLetterTranslationSelected,
-                  onSelected: onPressed,
+                child: CustomIconSelectionButton(
+                  isSelected: !state.isDigitTranslation,
+                  onSelected: !state.isDigitTranslation? onPressed : null,
                   icon: Icons.numbers,
                 ),
               ),
@@ -193,50 +194,6 @@ class NumberTranslatorPage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class CustomTextExpansionPressedButton extends StatelessWidget {
-  const CustomTextExpansionPressedButton({
-    Key? key,
-    this.onSelected,
-    this.icon,
-    this.isSelected = false,
-  }) : super(key: key);
-
-  final IconData? icon;
-  final bool isSelected;
-  final void Function()? onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    var colorScheme = Theme.of(context).colorScheme;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 2.0),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeIn,
-            height: 4,
-            width: isSelected ? 0 : 35,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: colorScheme.secondary,
-            ),
-          ),
-        ),
-        IconButton(
-          key: const ValueKey<int>(1),
-          onPressed: onSelected,
-          icon: Icon(
-            icon,
-            size: 30,
-            color: isSelected ? colorScheme.onInverseSurface : colorScheme.primary,
-          ),
-        ),
-      ],
     );
   }
 }

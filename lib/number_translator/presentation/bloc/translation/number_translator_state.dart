@@ -13,16 +13,16 @@ abstract class NumberTranslatorState extends Equatable {
 class NumberTranslatorInitial extends NumberTranslatorState {
   final String translation;
   final bool validationFailed;
-  final bool isLetterTranslationSelected;
+  final bool isDigitTranslation;
 
   const NumberTranslatorInitial({
     this.translation = "",
     this.validationFailed = false,
-    this.isLetterTranslationSelected = false,
+    this.isDigitTranslation = false,
   });
 
   @override
-  List<Object> get props => [translation, validationFailed, isLetterTranslationSelected];
+  List<Object> get props => [translation, validationFailed, isDigitTranslation];
 
   @override
   NumberTranslatorInitial copyWith({
@@ -34,7 +34,7 @@ class NumberTranslatorInitial extends NumberTranslatorState {
     return NumberTranslatorInitial(
       translation: translation ?? this.translation,
       validationFailed: validationFailed?? this.validationFailed,
-      isLetterTranslationSelected: isDigitTranslationSelected?? isLetterTranslationSelected,
+      isDigitTranslation: isDigitTranslationSelected?? isDigitTranslation,
     );
   }
 }
