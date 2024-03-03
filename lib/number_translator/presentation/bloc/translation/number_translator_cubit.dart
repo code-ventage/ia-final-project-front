@@ -27,6 +27,16 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
       );
       return;
     }
+    String? hashResponse = response.data.hashResponse;
+    if(hashResponse.isEmpty){
+      emit(
+        state.copyWith(
+          translation: 'Insert a valid number to translate.',
+          validationFailed: true,
+        ),
+      );
+      return;
+    }
     emit(
       state.copyWith(
         translation:
@@ -51,7 +61,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
       if (!numbersMapping['numbers']!.contains(element)) {
         emit(
           state.copyWith(
-            translation: '',
+            translation: 'Insert a valid number to translate.',
             validationFailed: true,
           ),
         );
@@ -60,7 +70,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     }
     emit(
       state.copyWith(
-        translation: '',
+        translation: 'Insert a valid number to translate.',
         validationFailed: false,
       ),
     );

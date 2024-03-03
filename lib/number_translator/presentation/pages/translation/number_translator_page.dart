@@ -111,7 +111,6 @@ class NumberTranslatorPage extends StatelessWidget {
                   : null,
               onChanged: (value) async {
                 if (await cubit.validateNumberToTranslate()) {
-                  // debugPrint('Valid number to translate!!');
                   cubit.translate(
                       numberToTranslate: serviceLocator
                           .get<NumberTranslatorCubit>()
@@ -146,6 +145,9 @@ class NumberTranslatorPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is NumberTranslatorInitial) {
                   return CustomTextFormField(
+                    borderColor: state.validationFailed
+                        ? Theme.of(context).colorScheme.error
+                        : null,
                     controller: serviceLocator
                         .get<NumberTranslatorCubit>()
                         .translatedNumberController
