@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,9 +17,9 @@ class NumberTranslatorPage extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: Text('Number Translator', style: TextStyle(fontSize: 20)),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(tr('number_translator_page_title'), style: const TextStyle(fontSize: 20)),
         ),
         toolbarHeight: height * 0.1,
         actions: [
@@ -93,7 +94,7 @@ class NumberTranslatorPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
             child: Text(
-              'Number to translate',
+              tr('number_to_translate_label'),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -134,7 +135,7 @@ class NumberTranslatorPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
             child: Text(
-              'Translated number',
+              tr('translated_number_label'),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
