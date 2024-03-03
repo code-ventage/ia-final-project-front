@@ -42,7 +42,7 @@ class NumberTranslatorPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         firstTextFormField(
-                            context, height, width * 0.45, cubit, state, () => context.read<NumberTranslatorCubit>().changeTranslationType()),
+                            context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.155),
                           child: IconButton.outlined(
@@ -54,14 +54,16 @@ class NumberTranslatorPage extends StatelessWidget {
                           ),
                         ),
                         secondTextFormField(
-                            context, height, width * 0.45, cubit, state, () => context.read<NumberTranslatorCubit>().changeTranslationType()),
+                            context, height, width * 0.45, cubit, state, () {
+                              return cubit.changeTranslationType();
+                            }),
                       ],
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        firstTextFormField(context, height, width, cubit, state, () => context.read<NumberTranslatorCubit>().changeTranslationType()),
+                        firstTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: IconButton.outlined(
@@ -73,7 +75,7 @@ class NumberTranslatorPage extends StatelessWidget {
                           ),
                         ),
                         secondTextFormField(
-                            context, height, width, cubit, state, () => context.read<NumberTranslatorCubit>().changeTranslationType()),
+                            context, height, width, cubit, state, () => cubit.changeTranslationType()),
                       ],
                     );
             }
@@ -121,14 +123,14 @@ class NumberTranslatorPage extends StatelessWidget {
             height: height * 0.25,
             width: width * 0.85,
             child: CustomTextFormField(
-              controller: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController,
+              controller: cubit.numberToTranslateController,
               cubit: cubit,
               readOnly: false,
               borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
               onChanged: (value) async {
                 if (await cubit.validateNumberToTranslate()) {
                   cubit.translate(
-                    numberToTranslate: serviceLocator.get<NumberTranslatorCubit>().numberToTranslateController.text,
+                    numberToTranslate: cubit.numberToTranslateController.text,
                   );
                 }
               },
@@ -180,7 +182,7 @@ class NumberTranslatorPage extends StatelessWidget {
                 if (state is NumberTranslatorInitial) {
                   return CustomTextFormField(
                     borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
-                    controller: serviceLocator.get<NumberTranslatorCubit>().translatedNumberController..text = state.translation,
+                    controller: cubit.translatedNumberController..text = state.translation,
                     cubit: cubit,
                     readOnly: true,
                   );
@@ -209,6 +211,7 @@ class CustomTextExpansionPressedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
         Padding(
@@ -220,7 +223,7 @@ class CustomTextExpansionPressedButton extends StatelessWidget {
             width: isSelected ? 0 : 35,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.secondary,
+              color: colorScheme.secondary,
             ),
           ),
         ),
@@ -230,7 +233,7 @@ class CustomTextExpansionPressedButton extends StatelessWidget {
           icon: Icon(
             icon,
             size: 30,
-            color: isSelected ? Theme.of(context).colorScheme.onInverseSurface : Theme.of(context).colorScheme.primary,
+            color: isSelected ? colorScheme.onInverseSurface : colorScheme.primary,
           ),
         ),
       ],
