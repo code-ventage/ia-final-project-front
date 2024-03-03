@@ -1,7 +1,7 @@
 {
   "number_translator_page_title": "Number Translator",
-  "number_to_translate_label": "Number to translate",
-  "translated_number_label": "Translated number",
+  "number_to_translate_label": "Digit number",
+  "translated_number_label": "Letter number",
   "configurations_page_title": "Configuration",
   "hotspot_ip_address_label": "Hotspot IP address",
   "input_your_hotspot_ip_address": "Input your hotspot IP address",

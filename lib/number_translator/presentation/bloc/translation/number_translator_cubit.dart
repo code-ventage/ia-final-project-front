@@ -80,4 +80,12 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     );
     return true;
   }
+
+  void changeTranslationType() {
+    emit(
+      state.copyWith(
+        isDigitTranslationSelected: !(state as NumberTranslatorInitial).isLetterTranslationSelected,
+      ),
+    );
+  }
 }
