@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
 
-import 'config/service_locator/get_it.dart';
+import 'config/service_locator/service_locator.dart';
 import 'go_router/go_router.dart';
 import 'number_translator/presentation/bloc/translation/number_translator_cubit.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ia_final_project_front/config/service_locator/get_it.dart';
+import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/go_router/routes.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/configurations/configurations_page.dart';
 

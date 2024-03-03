@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:ia_final_project_front/number_translator/data/models/consult_response.dart';
 
+import '../../../config/config_data/configuration_data.dart';
 import '../../../config/connection/connection_helper.dart';
+import '../../../config/service_locator/service_locator.dart';
 import '../models/consult_request.dart';
 import '../models/general_response.dart';
 
@@ -19,13 +21,12 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
     var response = <String, dynamic>{};
     var error = '';
     try {
-     /* if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
         response = {
-          'hash_response': '123',
+          'hash_response': {'N':'123'},
         };
         return GeneralResponse(error: error, data: ConsultResponse.fromJson(response));
       }
-*/
       response = (await connectionHelper.dio.post(
         '/consult',
         data: request.toJson(),

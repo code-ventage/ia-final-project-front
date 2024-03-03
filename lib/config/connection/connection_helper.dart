@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../config_data/configuration_data.dart';
-import '../service_locator/get_it.dart';
+import '../service_locator/service_locator.dart';
 
 class ConnectionHelper {
 
