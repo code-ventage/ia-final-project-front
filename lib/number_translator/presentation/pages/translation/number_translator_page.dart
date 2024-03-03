@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 
-import '../../../../go_router/routes.dart';
-import '../../bloc/translation/number_translator_cubit.dart';
-import '../../widgets/custom_text_form_field_widget.dart';
+import 'package:ia_final_project_front/go_router/routes.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/translation/number_translator_cubit.dart';
+import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
 
 class NumberTranslatorPage extends StatelessWidget {
   const NumberTranslatorPage({super.key});
