@@ -1,3 +1,5 @@
+import 'package:ia_final_project_front/config/extension/extensions.dart';
+
 import '../../data/models/consult_response.dart';
 import '../../data/models/general_response.dart';
 import '../entities/consult_entity.dart';
@@ -13,5 +15,8 @@ class NumberTranslatorServiceImpl extends NumberTranslatorService {
   NumberTranslatorServiceImpl({required this.repository});
 
   @override
-  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultEntity request}) async => await repository.makeTranslate(request: request);
+  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultEntity request}) async {
+    var response = await repository.makeTranslate(request: request);
+    return GeneralResponse(error: response.error, data: ConsultResponse(hashResponse: response.data.hashResponse.formatNumber()));
+  }
 }
