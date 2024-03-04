@@ -6,5 +6,4 @@ enum Routes{
   final String name;
   const Routes({required this.routePath, required this.name});
 
-
 }

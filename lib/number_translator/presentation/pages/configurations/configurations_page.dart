@@ -9,6 +9,7 @@ class ConfigurationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -37,14 +38,13 @@ class ConfigurationsPage extends StatelessWidget {
                   child: BlocConsumer<ConfigurationsCubit, ConfigurationsState>(
                     listener: (context, state) {
                       if (state is ConfigurationsInitial) {
-                        //show a message to the user on the bottom of the screen
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             duration: const Duration(seconds: 1),
                             content: Text(
-                              '${tr('the_base_has_been_changed')} ${state.baseUrl}',
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Theme.of(context).colorScheme.onSecondary,
+                              '${tr('the_base_has_been_changed')} ${state.hotspotAddress}',
+                              style: themeData.textTheme.bodyLarge?.copyWith(
+                                    color: themeData.colorScheme.onSecondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -53,27 +53,26 @@ class ConfigurationsPage extends StatelessWidget {
                       }
                     },
                     builder: (context, state) {
-                      final state = context.read<ConfigurationsCubit>().state as ConfigurationsInitial;
-                      final controller = context.read<ConfigurationsCubit>().controller;
+                      final cubit = context.read<ConfigurationsCubit>();
+                      final state = cubit.state as ConfigurationsInitial;
+                      final controller = cubit.controller;
                       return TextFormField(
-                        controller: controller..text = state.baseUrl,
+                        controller: controller..text = state.hotspotAddress,
                         textAlignVertical: TextAlignVertical.top,
                         cursorHeight: 25,
                         decoration: InputDecoration(
                           suffix: IconButton(
                             icon: const Icon(Icons.save),
-                            onPressed: () {
-                              context.read<ConfigurationsCubit>().setBaseUrl(controller.text);
-                            },
+                            onPressed: () => cubit.setBaseUrl(controller.text),
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: themeData.colorScheme.secondary,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: themeData.colorScheme.secondary,
                             ),
                           ),
                         ),

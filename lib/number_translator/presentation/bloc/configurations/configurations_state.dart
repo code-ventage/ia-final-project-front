@@ -7,17 +7,17 @@ abstract class ConfigurationsState extends Equatable {
 }
 
 class ConfigurationsInitial extends ConfigurationsState {
-  final String baseUrl;
+  final String hotspotAddress;
 
   const ConfigurationsInitial(
-      {this.baseUrl = '192.168.43.9'});
+      {this.hotspotAddress = '192.168.43.9'});
 
   @override
   ConfigurationsInitial copyWith({String? baseUrl}) {
     return ConfigurationsInitial(
-        baseUrl: baseUrl ?? this.baseUrl);
+        hotspotAddress: baseUrl ?? hotspotAddress);
   }
 
   @override
-  List<Object> get props => [baseUrl];
+  List<Object> get props => [hotspotAddress];
 }
