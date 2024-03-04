@@ -40,6 +40,10 @@ class _NumberTranslateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ConfigurationsCubit, ConfigurationsState>(
+      buildWhen: (previous, current) {
+        if(previous is! ConfigurationsInitial || current is! ConfigurationsInitial) return false;
+        return previous.isSpanishLanguaje != current.isSpanishLanguaje;
+      },
       builder: (context, state) {
         return EasyLocalization(
           supportedLocales: const [
