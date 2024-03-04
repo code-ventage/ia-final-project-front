@@ -30,6 +30,10 @@ class ConfigurationsPage extends StatelessWidget {
       body: Column(
         children: [
           buildHotsPotIpAddressConfiguration(themeData, cubit, controller),
+          ListTile(
+            title: Text(tr("translation_configuration_title")),
+            subtitle: Text(tr("translation_configuration_subtitle")),
+          ),
         ],
       ),
     );
