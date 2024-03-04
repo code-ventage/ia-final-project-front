@@ -14,6 +14,6 @@ class ConfigurationsCubit extends Cubit<ConfigurationsState> {
   void setBaseUrl(String hotspotAddress) async {
     serviceLocator<ConfigurationData>().BASE_URL = 'http://$hotspotAddress:34545';
     controller.text = hotspotAddress;
-    emit(state.copyWith(baseUrl: hotspotAddress));
+    emit(state.copyWith(hotspotAddress: hotspotAddress));
   }
 }

@@ -27,17 +27,7 @@ class NumberTranslateApp extends StatelessWidget {
         BlocProvider(create: (context) => serviceLocator.get<NumberTranslatorCubit>()),
         BlocProvider(create: (context) => serviceLocator.get<ConfigurationsCubit>())
       ],
-      child: EasyLocalization(
-        supportedLocales: const [
-          Locale('es', 'ES'),
-          Locale('en', 'US'),
-        ],
-        path: 'assets/translations', // Asegúrate de que esta ruta es correcta
-        startLocale: const Locale('es', 'ES'),
-        fallbackLocale: const Locale('es', 'ES'),
-        useFallbackTranslations: true,
-        child: const _NumberTranslateApp(),
-      ),
+      child: const _NumberTranslateApp(),
     );
   }
 }
@@ -49,16 +39,30 @@ class _NumberTranslateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      title: 'Material App',
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.dark,
-      theme: ThemeData.dark(),
+    return BlocBuilder<ConfigurationsCubit, ConfigurationsState>(
+      builder: (context, state) {
+        return EasyLocalization(
+          supportedLocales: const [
+            Locale('es', 'ES'),
+            Locale('en', 'US'),
+          ],
+          path: 'assets/translations',
+          startLocale: (state as ConfigurationsInitial).isSpanishLanguaje ? const Locale('es', 'ES') : const Locale('en', 'US'),
+          fallbackLocale: const Locale('es', 'ES'),
+          useFallbackTranslations: true,
+          child: MaterialApp.router(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            title: 'Material App',
+            debugShowCheckedModeBanner: false,
+            routerConfig: router,
+            darkTheme: ThemeData.dark(),
+            themeMode: ThemeMode.dark,
+            theme: ThemeData.dark(),
+          ),
+        );
+      },
     );
   }
 }

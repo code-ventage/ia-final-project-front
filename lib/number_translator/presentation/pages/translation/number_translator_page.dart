@@ -39,16 +39,16 @@ class NumberTranslatorPage extends StatelessWidget {
               final cubit = serviceLocator.get<NumberTranslatorCubit>();
               return MediaQuery.of(context).size.width > 600
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         firstTextFormField(context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
                         Padding(
-                          padding: EdgeInsets.only(top: height * 0.155),
+                          padding: EdgeInsets.only(top: height * 0.216),
                           child: IconButton.outlined(
                             onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
                             icon: Icon(
-                              size: (height + width) < 300 ? (height + width) * 0.035 : (height + width) * 0.020,
+                              size: (height + width) * 0.015,
                               Icons.swap_horiz,
                             ),
                           ),
@@ -63,16 +63,6 @@ class NumberTranslatorPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         firstTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: IconButton.outlined(
-                            onPressed: () => cubit.changeTranslationType(),
-                            icon: Icon(
-                              size: (height + width) * 0.035,
-                              Icons.swap_vert,
-                            ),
-                          ),
-                        ),
                         secondTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
                       ],
                     );
@@ -95,7 +85,7 @@ class NumberTranslatorPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: width>300? CrossAxisAlignment.start: CrossAxisAlignment.center,
         children: [
           Row(
             children: [
@@ -150,7 +140,7 @@ class NumberTranslatorPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: width>300? CrossAxisAlignment.start: CrossAxisAlignment.center,
         children: [
           Row(
             children: [
