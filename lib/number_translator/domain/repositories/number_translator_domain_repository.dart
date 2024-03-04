@@ -6,7 +6,7 @@ import '../../data/models/general_response.dart';
 import '../entities/consult_entity.dart';
 
 abstract class NumberTranslatorDomainRepository {
-  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultEntity request});
+  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultEntity request, required bool isFromDigit});
 }
 
 class NumberTranslatorDomainRepositoryImpl extends NumberTranslatorDomainRepository {
@@ -15,5 +15,9 @@ class NumberTranslatorDomainRepositoryImpl extends NumberTranslatorDomainReposit
   NumberTranslatorDomainRepositoryImpl({required this.repository});
 
   @override
-  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultEntity request}) async => await repository.makeTranslate(request: ConsultRequest(consult: request.number));
+  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultEntity request, required bool isFromDigit}) async =>
+      await repository.makeTranslate(
+        request: ConsultRequest(consult: request.number),
+        isFromDigit: isFromDigit,
+      );
 }

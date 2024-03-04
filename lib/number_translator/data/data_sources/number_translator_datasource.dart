@@ -8,7 +8,7 @@ import '../models/consult_request.dart';
 import '../models/general_response.dart';
 
 abstract class NumberTranslatorDatasource {
-  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request});
+  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request, required bool isFromDigit});
 }
 
 class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
@@ -17,7 +17,7 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
   NumberTranslatorDatasourceImpl({required this.connectionHelper});
 
   @override
-  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request}) async {
+  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request, required bool isFromDigit}) async {
     var response = <String, dynamic>{};
     var error = '';
     try {
@@ -28,7 +28,7 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
         return GeneralResponse(error: error, data: ConsultResponse.fromJson(response));
       }
       response = (await connectionHelper.dio.post(
-        '/consult',
+        '/consult/${isFromDigit?'/digit':'/letter'}',
         data: request.toJson(),
       )).data;
       error = 'false';

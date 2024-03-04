@@ -5,17 +5,18 @@ import 'package:ia_final_project_front/number_translator/data/models/general_res
 import '../data_sources/number_translator_datasource.dart';
 
 abstract class NumberTranslatorRepository {
-  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request});
+  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request, required bool isFromDigit});
 }
 
-
-class NumberTranslatorRepositoryImpl extends NumberTranslatorRepository{
-
+class NumberTranslatorRepositoryImpl extends NumberTranslatorRepository {
   final NumberTranslatorDatasource datasource;
 
   NumberTranslatorRepositoryImpl({required this.datasource});
 
   @override
-  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request}) async => await datasource.makeTranslate(request: request);
-
+  Future<GeneralResponse<ConsultResponse>> makeTranslate({required ConsultRequest request, required bool isFromDigit}) async =>
+      await datasource.makeTranslate(
+        request: request,
+        isFromDigit: isFromDigit,
+      );
 }

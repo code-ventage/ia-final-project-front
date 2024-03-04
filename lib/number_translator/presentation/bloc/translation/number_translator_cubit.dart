@@ -19,7 +19,10 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
 
   Future<void> translate({required String numberToTranslate}) async {
     final errorTextToShow = tr('insert_a_valid_number_to_translate');
-    var response = await serviceLocator.get<NumberTranslatorService>().makeTranslate(request: ConsultEntity(number: numberToTranslate));
+    var response = await serviceLocator.get<NumberTranslatorService>().makeTranslate(
+          request: ConsultEntity(number: numberToTranslate),
+          isFromDigit: (state as NumberTranslatorInitial).isDigitTranslation,
+        );
     if (response.error == 'true') {
       emit(
         state.copyWith(
@@ -29,8 +32,8 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
       );
       return;
     }
-    String? hashResponse = response.data.hashResponse;
-    if(hashResponse.isEmpty){
+    String hashResponse = response.data.hashResponse;
+    if (hashResponse.isEmpty) {
       emit(
         state.copyWith(
           translation: errorTextToShow,
@@ -41,8 +44,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     }
     emit(
       state.copyWith(
-        translation:
-            (await serviceLocator.get<NumberTranslatorService>().makeTranslate(request: ConsultEntity(number: numberToTranslate))).data.hashResponse,
+        translation: hashResponse,
         validationFailed: false,
       ),
     );
@@ -61,7 +63,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
       return false;
     }
     final Map<String, dynamic> numbersMapping = jsonDecode(await rootBundle.loadString('assets/numbers/numbers-mapping.json'));
-    for( var element in numberToTranslateController.text.trim().split(' ')){
+    for (var element in numberToTranslateController.text.trim().split(' ')) {
       if (!numbersMapping['numbers']!.contains(element)) {
         emit(
           state.copyWith(
