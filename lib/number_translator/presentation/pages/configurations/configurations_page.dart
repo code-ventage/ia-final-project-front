@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -11,9 +12,9 @@ class ConfigurationsPage extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: Text('Configurations', style: TextStyle(fontSize: 20)),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(tr('configurations_page_title'), style: const TextStyle(fontSize: 20)),
         ),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -26,8 +27,8 @@ class ConfigurationsPage extends StatelessWidget {
         children: [
           ExpansionTile(
             leading: const Icon(Icons.route_outlined),
-            title: const Text('Hotspot IP Address'),
-            subtitle: const Text('Input your hotspot IP address'),
+            title: Text(tr('hotspot_ip_address_label')),
+            subtitle: Text(tr('input_your_hotspot_ip_address')),
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -39,9 +40,9 @@ class ConfigurationsPage extends StatelessWidget {
                         //show a message to the user on the bottom of the screen
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            duration: const Duration(milliseconds: 500),
+                            duration: const Duration(seconds: 1),
                             content: Text(
-                              'Base URL has been set to ${state.baseUrl}',
+                              '${tr('the_base_has_been_changed')} ${state.baseUrl}',
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: Theme.of(context).colorScheme.onSecondary,
                                     fontWeight: FontWeight.bold,

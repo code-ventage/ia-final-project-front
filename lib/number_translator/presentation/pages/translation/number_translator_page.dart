@@ -1,11 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 
-import 'package:ia_final_project_front/go_router/routes.dart';
-import 'package:ia_final_project_front/number_translator/presentation/bloc/translation/number_translator_cubit.dart';
-import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
+import '../../../../go_router/routes.dart';
+import '../../bloc/translation/number_translator_cubit.dart';
+import '../../widgets/custom_icon_selection_button.dart';
+import '../../widgets/custom_text_form_field_widget.dart';
 
 class NumberTranslatorPage extends StatelessWidget {
   const NumberTranslatorPage({super.key});
@@ -16,9 +18,9 @@ class NumberTranslatorPage extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: Text('Number Translator', style: TextStyle(fontSize: 20)),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(tr('number_translator_page_title'), style: const TextStyle(fontSize: 20)),
         ),
         toolbarHeight: height * 0.1,
         actions: [
@@ -41,39 +43,40 @@ class NumberTranslatorPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         firstTextFormField(
-                            context, height, width * 0.45, cubit, state),
+                            context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.155),
                           child: IconButton.outlined(
-                            onPressed: () {},
+                            onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
                             icon: Icon(
-                              size: (height + width) < 300
-                                  ? (height + width) * 0.035
-                                  : (height + width) * 0.020,
+                              size: (height + width) < 300 ? (height + width) * 0.035 : (height + width) * 0.020,
                               Icons.swap_horiz,
                             ),
                           ),
                         ),
                         secondTextFormField(
-                            context, height, width * 0.45, cubit),
+                            context, height, width * 0.45, cubit, state, () {
+                              return cubit.changeTranslationType();
+                            }),
                       ],
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        firstTextFormField(
-                            context, height, width, cubit, state),
+                        firstTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: IconButton.outlined(
-                            onPressed: () {},
+                            onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
                             icon: Icon(
                               size: (height + width) * 0.035,
                               Icons.swap_vert,
                             ),
                           ),
                         ),
-                        secondTextFormField(context, height, width, cubit)
+                        secondTextFormField(
+                            context, height, width, cubit, state, () => cubit.changeTranslationType()),
                       ],
                     );
             }
@@ -84,38 +87,52 @@ class NumberTranslatorPage extends StatelessWidget {
     );
   }
 
-  Padding firstTextFormField(BuildContext context, double height, double width,
-      NumberTranslatorCubit cubit, NumberTranslatorInitial state) {
+  Padding firstTextFormField(
+    BuildContext context,
+    double height,
+    double width,
+    NumberTranslatorCubit cubit,
+    NumberTranslatorInitial state,
+    void Function() onPressed,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-            child: Text(
-              'Number to translate',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                child: CustomIconSelectionButton(
+                  isSelected: state.isDigitTranslation,
+                  onSelected: state.isDigitTranslation? onPressed : null,
+                  icon: Icons.numbers,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                child: CustomIconSelectionButton(
+                  isSelected: !state.isDigitTranslation,
+                  onSelected: !state.isDigitTranslation? onPressed : null,
+                  icon: Icons.translate,
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: height * 0.25,
             width: width * 0.85,
             child: CustomTextFormField(
-              controller: serviceLocator
-                  .get<NumberTranslatorCubit>()
-                  .numberToTranslateController,
+              controller: cubit.numberToTranslateController,
               cubit: cubit,
               readOnly: false,
-              borderColor: state.validationFailed
-                  ? Theme.of(context).colorScheme.error
-                  : null,
+              borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
               onChanged: (value) async {
                 if (await cubit.validateNumberToTranslate()) {
                   cubit.translate(
-                      numberToTranslate: serviceLocator
-                          .get<NumberTranslatorCubit>()
-                          .numberToTranslateController
-                          .text);
+                    numberToTranslate: cubit.numberToTranslateController.text,
+                  );
                 }
               },
             ),
@@ -125,18 +142,38 @@ class NumberTranslatorPage extends StatelessWidget {
     );
   }
 
-  Padding secondTextFormField(BuildContext context, double height, double width,
-      NumberTranslatorCubit cubit) {
+  Padding secondTextFormField(
+    BuildContext context,
+    double height,
+    double width,
+    NumberTranslatorCubit cubit,
+    NumberTranslatorInitial state,
+    void Function() onPressed,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-            child: Text(
-              'Translated number',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                child: CustomIconSelectionButton(
+                  isSelected: state.isDigitTranslation,
+                  onSelected: state.isDigitTranslation? onPressed : null,
+                  icon: Icons.translate,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                child: CustomIconSelectionButton(
+                  isSelected: !state.isDigitTranslation,
+                  onSelected: !state.isDigitTranslation? onPressed : null,
+                  icon: Icons.numbers,
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: height * 0.25,
@@ -145,13 +182,8 @@ class NumberTranslatorPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is NumberTranslatorInitial) {
                   return CustomTextFormField(
-                    borderColor: state.validationFailed
-                        ? Theme.of(context).colorScheme.error
-                        : null,
-                    controller: serviceLocator
-                        .get<NumberTranslatorCubit>()
-                        .translatedNumberController
-                      ..text = state.translation,
+                    borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
+                    controller: cubit.translatedNumberController..text = state.translation,
                     cubit: cubit,
                     readOnly: true,
                   );

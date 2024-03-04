@@ -1,0 +1,11 @@
+{
+  "number_translator_page_title": "Number Translator",
+  "number_to_translate_label": "Digit number",
+  "translated_number_label": "Letter number",
+  "configurations_page_title": "Configuration",
+  "hotspot_ip_address_label": "Hotspot IP address",
+  "input_your_hotspot_ip_address": "Input your hotspot IP address",
+  "the_base_has_been_changed": "The base url has been set to",
+  "insert_a_valid_number_to_translate": "Insert a valid number to translate",
+  "insert_some_value_to_translate": "Insert some value to translate"
+}

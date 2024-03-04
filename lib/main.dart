@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
@@ -8,6 +9,7 @@ import 'number_translator/presentation/bloc/translation/number_translator_cubit.
 
 void main() async {
   initServices();
+
   runApp(const NumberTranslateApp());
 }
 
@@ -25,7 +27,17 @@ class NumberTranslateApp extends StatelessWidget {
         BlocProvider(create: (context) => serviceLocator.get<NumberTranslatorCubit>()),
         BlocProvider(create: (context) => serviceLocator.get<ConfigurationsCubit>())
       ],
-      child: const _NumberTranslateApp(),
+      child: EasyLocalization(
+        supportedLocales: const [
+          Locale('es', 'ES'),
+          Locale('en', 'US'),
+        ],
+        path: 'assets/translations', // Asegúrate de que esta ruta es correcta
+        startLocale: const Locale('es', 'ES'),
+        fallbackLocale: const Locale('es', 'ES'),
+        useFallbackTranslations: true,
+        child: const _NumberTranslateApp(),
+      ),
     );
   }
 }
@@ -38,6 +50,9 @@ class _NumberTranslateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       title: 'Material App',
       debugShowCheckedModeBanner: false,
       routerConfig: router,

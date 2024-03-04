@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
   final TextEditingController translatedNumberController = TextEditingController();
 
   Future<void> translate({required String numberToTranslate}) async {
+    final errorTextToShow = tr('insert_a_valid_number_to_translate');
     var response = await serviceLocator.get<NumberTranslatorService>().makeTranslate(request: ConsultEntity(number: numberToTranslate));
     if (response.error == 'true') {
       emit(
@@ -31,7 +33,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     if(hashResponse.isEmpty){
       emit(
         state.copyWith(
-          translation: 'Insert a valid number to translate.',
+          translation: errorTextToShow,
           validationFailed: true,
         ),
       );
@@ -47,10 +49,12 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
   }
 
   Future<bool> validateNumberToTranslate() async {
+    final errorTextToShow = tr('insert_a_valid_number_to_translate');
+    final insertTextToShow = tr('insert_some_value_to_translate');
     if (numberToTranslateController.text.isEmpty) {
       emit(
         state.copyWith(
-          translation: 'Insert some value to translate.',
+          translation: insertTextToShow,
           validationFailed: false,
         ),
       );
@@ -61,7 +65,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
       if (!numbersMapping['numbers']!.contains(element)) {
         emit(
           state.copyWith(
-            translation: 'Insert a valid number to translate.',
+            translation: errorTextToShow,
             validationFailed: true,
           ),
         );
@@ -70,10 +74,18 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     }
     emit(
       state.copyWith(
-        translation: 'Insert a valid number to translate.',
+        translation: errorTextToShow,
         validationFailed: false,
       ),
     );
     return true;
+  }
+
+  void changeTranslationType() {
+    emit(
+      state.copyWith(
+        isDigitTranslationSelected: !(state as NumberTranslatorInitial).isDigitTranslation,
+      ),
+    );
   }
 }
