@@ -42,8 +42,7 @@ class NumberTranslatorPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        firstTextFormField(
-                            context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
+                        firstTextFormField(context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.155),
                           child: IconButton.outlined(
@@ -54,10 +53,9 @@ class NumberTranslatorPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        secondTextFormField(
-                            context, height, width * 0.45, cubit, state, () {
-                              return cubit.changeTranslationType();
-                            }),
+                        secondTextFormField(context, height, width * 0.45, cubit, state, () {
+                          return cubit.changeTranslationType();
+                        }),
                       ],
                     )
                   : Column(
@@ -75,8 +73,7 @@ class NumberTranslatorPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        secondTextFormField(
-                            context, height, width, cubit, state, () => cubit.changeTranslationType()),
+                        secondTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
                       ],
                     );
             }
@@ -106,7 +103,7 @@ class NumberTranslatorPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
                   isSelected: state.isDigitTranslation,
-                  onSelected: state.isDigitTranslation? onPressed : null,
+                  onSelected: state.isDigitTranslation ? onPressed : null,
                   icon: Icons.numbers,
                 ),
               ),
@@ -114,7 +111,7 @@ class NumberTranslatorPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
                   isSelected: !state.isDigitTranslation,
-                  onSelected: !state.isDigitTranslation? onPressed : null,
+                  onSelected: !state.isDigitTranslation ? onPressed : null,
                   icon: Icons.translate,
                 ),
               ),
@@ -129,7 +126,9 @@ class NumberTranslatorPage extends StatelessWidget {
               readOnly: false,
               borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
               onChanged: (value) async {
-                if (await cubit.validateNumberToTranslate()) {
+                if (state.isDigitTranslation
+                    ? cubit.numberToTranslateController.text.matchAsPrefix(RegExp(r'^\d+$').pattern) != null
+                    : await cubit.validateNumberToTranslate()) {
                   cubit.translate(
                     numberToTranslate: cubit.numberToTranslateController.text,
                   );
@@ -161,7 +160,7 @@ class NumberTranslatorPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
                   isSelected: state.isDigitTranslation,
-                  onSelected: state.isDigitTranslation? onPressed : null,
+                  onSelected: state.isDigitTranslation ? onPressed : null,
                   icon: Icons.translate,
                 ),
               ),
@@ -169,7 +168,7 @@ class NumberTranslatorPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
                   isSelected: !state.isDigitTranslation,
-                  onSelected: !state.isDigitTranslation? onPressed : null,
+                  onSelected: !state.isDigitTranslation ? onPressed : null,
                   icon: Icons.numbers,
                 ),
               ),
