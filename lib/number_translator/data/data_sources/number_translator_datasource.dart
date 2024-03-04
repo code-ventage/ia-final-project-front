@@ -23,16 +23,16 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
     try {
       if (serviceLocator.get<ConfigurationData>().DEBUGING) {
         response = {
-          'hash_response': {'N':isFromDigit?'123456':'mil doscientos'},
+          'hash_response': {'N': isFromDigit ? '123456' : 'mil doscientos'},
         };
         return GeneralResponse(error: error, data: ConsultResponse.fromJson(response));
       }
       response = (await connectionHelper.dio.post(
-        '/consult/${isFromDigit?'/digit':'/letter'}',
+        '/consult/${isFromDigit ? '/digit' : '/letter'}',
         data: request.toJson(),
-      )).data;
+      ))
+          .data;
       error = 'false';
-
     } on Exception catch (e) {
       debugPrint(e.toString());
       error = 'true';

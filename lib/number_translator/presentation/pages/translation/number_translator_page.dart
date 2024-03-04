@@ -66,7 +66,7 @@ class NumberTranslatorPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: IconButton.outlined(
-                            onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
+                            onPressed: () => cubit.changeTranslationType(),
                             icon: Icon(
                               size: (height + width) * 0.035,
                               Icons.swap_vert,
@@ -102,16 +102,16 @@ class NumberTranslatorPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
-                  isSelected: state.isDigitTranslation,
-                  onSelected: state.isDigitTranslation ? onPressed : null,
+                  isSelected: state.isLetterTranslation,
+                  onSelected: state.isLetterTranslation ? onPressed : null,
                   icon: Icons.numbers,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
-                  isSelected: !state.isDigitTranslation,
-                  onSelected: !state.isDigitTranslation ? onPressed : null,
+                  isSelected: !state.isLetterTranslation,
+                  onSelected: !state.isLetterTranslation ? onPressed : null,
                   icon: Icons.translate,
                 ),
               ),
@@ -126,9 +126,7 @@ class NumberTranslatorPage extends StatelessWidget {
               readOnly: false,
               borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
               onChanged: (value) async {
-                if (state.isDigitTranslation
-                    ? cubit.numberToTranslateController.text.matchAsPrefix(RegExp(r'^\d+$').pattern) != null
-                    : await cubit.validateNumberToTranslate()) {
+                if (await cubit.validateNumberToTranslate()) {
                   cubit.translate(
                     numberToTranslate: cubit.numberToTranslateController.text,
                   );
@@ -159,16 +157,16 @@ class NumberTranslatorPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
-                  isSelected: state.isDigitTranslation,
-                  onSelected: state.isDigitTranslation ? onPressed : null,
+                  isSelected: state.isLetterTranslation,
+                  onSelected: state.isLetterTranslation ? onPressed : null,
                   icon: Icons.translate,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
                 child: CustomIconSelectionButton(
-                  isSelected: !state.isDigitTranslation,
-                  onSelected: !state.isDigitTranslation ? onPressed : null,
+                  isSelected: !state.isLetterTranslation,
+                  onSelected: !state.isLetterTranslation ? onPressed : null,
                   icon: Icons.numbers,
                 ),
               ),
@@ -182,7 +180,7 @@ class NumberTranslatorPage extends StatelessWidget {
                 if (state is NumberTranslatorInitial) {
                   return CustomTextFormField(
                     borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
-                    controller: cubit.translatedNumberController..text = state.translation,
+                    controller: cubit.translatedNumberController,
                     cubit: cubit,
                     readOnly: true,
                   );
