@@ -32,43 +32,45 @@ class NumberTranslatorPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
-          builder: (context, state) {
-            if (state is NumberTranslatorInitial) {
-              final cubit = serviceLocator.get<NumberTranslatorCubit>();
-              return MediaQuery.of(context).size.width > 600
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        firstTextFormField(context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
-                        Padding(
-                          padding: EdgeInsets.only(top: height * 0.216),
-                          child: IconButton.outlined(
-                            onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
-                            icon: Icon(
-                              size: (height + width) * 0.015,
-                              Icons.swap_horiz,
+      body: SingleChildScrollView(
+        child: Center(
+          child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
+            builder: (context, state) {
+              if (state is NumberTranslatorInitial) {
+                final cubit = serviceLocator.get<NumberTranslatorCubit>();
+                return MediaQuery.of(context).size.width > 600
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          firstTextFormField(context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
+                          Padding(
+                            padding: EdgeInsets.only(top: height * 0.216),
+                            child: IconButton.outlined(
+                              onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
+                              icon: Icon(
+                                size: (height + width) * 0.015,
+                                Icons.swap_horiz,
+                              ),
                             ),
                           ),
-                        ),
-                        secondTextFormField(context, height, width * 0.45, cubit, state, () {
-                          return cubit.changeTranslationType();
-                        }),
-                      ],
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        firstTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
-                        secondTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
-                      ],
-                    );
-            }
-            return const CircularProgressIndicator();
-          },
+                          secondTextFormField(context, height, width * 0.45, cubit, state, () {
+                            return cubit.changeTranslationType();
+                          }),
+                        ],
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          firstTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
+                          secondTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
+                        ],
+                      );
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
         ),
       ),
     );
