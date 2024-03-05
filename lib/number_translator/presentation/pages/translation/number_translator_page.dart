@@ -24,10 +24,11 @@ class NumberTranslatorPage extends StatelessWidget {
       },
       listener: (context, state) {
         context.setLocale((state as ConfigurationsInitial).isSpanishLanguaje ? context.supportedLocales.first : context.supportedLocales.last);
-      },
-      builder: (context, state) {
         serviceLocator.get<ConfigurationsCubit>().currentLanguage = context.locale == context.supportedLocales.first ? tr('spanish_language') : tr
           ('english_language');
+      },
+      builder: (context, state) {
+        serviceLocator.get<NumberTranslatorCubit>().validateNumberToTranslate();
         return Scaffold(
           appBar: AppBar(
             title: Padding(

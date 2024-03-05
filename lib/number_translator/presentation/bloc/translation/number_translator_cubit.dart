@@ -12,7 +12,9 @@ import 'package:ia_final_project_front/number_translator/domain/use_cases/number
 part 'number_translator_state.dart';
 
 class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
-  NumberTranslatorCubit() : super(const NumberTranslatorInitial());
+  NumberTranslatorCubit() : super(const NumberTranslatorInitial()){
+   translatedNumberController.text = tr('insert_a_valid_number_to_translate');
+  }
   final String translation = "";
   final TextEditingController numberToTranslateController = TextEditingController();
   final TextEditingController translatedNumberController = TextEditingController();

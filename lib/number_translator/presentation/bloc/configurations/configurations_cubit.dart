@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ia_final_project_front/config/config_data/configuration_data.dart';
@@ -7,7 +8,9 @@ import 'package:ia_final_project_front/config/service_locator/service_locator.da
 part 'configurations_state.dart';
 
 class ConfigurationsCubit extends Cubit<ConfigurationsState> {
-  ConfigurationsCubit() : super(const ConfigurationsInitial());
+  ConfigurationsCubit() : super(const ConfigurationsInitial()){
+    currentLanguage = tr("current_language");
+  }
 
   TextEditingController controller = TextEditingController();
   String currentLanguage = 'Espanol';

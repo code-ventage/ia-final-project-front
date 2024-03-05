@@ -11,5 +11,6 @@
   "translation_configuration_title": "English",
   "translation_configuration_subtitle": "Translation settings",
   "spanish_language": "Espanol",
-  "english_language": "English"
+  "english_language": "English",
+  "current_language": "English"
 }
