@@ -17,18 +17,26 @@ class NumberTranslatorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final cubit = serviceLocator.get<NumberTranslatorCubit>();
     return BlocConsumer<ConfigurationsCubit, ConfigurationsState>(
       buildWhen: (previous, current) {
         if (previous is! ConfigurationsInitial || current is! ConfigurationsInitial) return false;
-        return previous.isSpanishLanguaje != current.isSpanishLanguaje;
+        return previous.isSpanishLanguage != current.isSpanishLanguage;
       },
       listener: (context, state) {
-        context.setLocale((state as ConfigurationsInitial).isSpanishLanguaje ? context.supportedLocales.first : context.supportedLocales.last);
-        serviceLocator.get<ConfigurationsCubit>().currentLanguage = context.locale == context.supportedLocales.first ? tr('spanish_language') : tr
-          ('english_language');
+        context.setLocale((state as ConfigurationsInitial).isSpanishLanguage ? context.supportedLocales.first : context.supportedLocales.last);
+        serviceLocator.get<ConfigurationsCubit>().currentLanguage =
+            context.locale == context.supportedLocales.first ? tr('spanish_language') : tr('english_language');
+        cubit.validateNumberToTranslate().then(
+              (value) => {
+            cubit.translate(
+              numberToTranslate: cubit.numberToTranslateController.text,
+            )
+          },
+        );
       },
       builder: (context, state) {
-        serviceLocator.get<NumberTranslatorCubit>().validateNumberToTranslate();
+        cubit.validateNumberToTranslate();
         return Scaffold(
           appBar: AppBar(
             title: Padding(
@@ -50,7 +58,6 @@ class NumberTranslatorPage extends StatelessWidget {
               child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
                 builder: (context, state) {
                   if (state is NumberTranslatorInitial) {
-                    final cubit = serviceLocator.get<NumberTranslatorCubit>();
                     return MediaQuery.of(context).size.width > 600
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,

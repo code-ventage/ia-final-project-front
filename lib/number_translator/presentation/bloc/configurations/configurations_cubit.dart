@@ -25,6 +25,6 @@ class ConfigurationsCubit extends Cubit<ConfigurationsState> {
 
   void changeLanguage(bool spanish) {
     currentLanguage = spanish ? 'es' : 'en';
-    emit(state.copyWith(isSpanishLanguaje: spanish));
+    emit(state.copyWith(isSpanishLanguage: spanish));
   }
 }
