@@ -7,5 +7,7 @@
   "input_your_hotspot_ip_address": "Input your hotspot IP address",
   "the_base_has_been_changed": "The base url has been set to",
   "insert_a_valid_number_to_translate": "Insert a valid number to translate",
-  "insert_some_value_to_translate": "Insert some value to translate"
+  "insert_some_value_to_translate": "Insert some value to translate",
+  "translation_configuration_title": "English",
+  "translation_configuration_subtitle": "Translation settings"
 }

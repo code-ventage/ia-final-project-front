@@ -9,7 +9,11 @@ class ConfigurationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
     final height = MediaQuery.of(context).size.height;
+    final cubit = context.read<ConfigurationsCubit>();
+    final controller = cubit.controller;
+
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -25,67 +29,71 @@ class ConfigurationsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ExpansionTile(
-            leading: const Icon(Icons.route_outlined),
-            title: Text(tr('hotspot_ip_address_label')),
-            subtitle: Text(tr('input_your_hotspot_ip_address')),
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  height: 65,
-                  child: BlocConsumer<ConfigurationsCubit, ConfigurationsState>(
-                    listener: (context, state) {
-                      if (state is ConfigurationsInitial) {
-                        //show a message to the user on the bottom of the screen
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            duration: const Duration(seconds: 1),
-                            content: Text(
-                              '${tr('the_base_has_been_changed')} ${state.baseUrl}',
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Theme.of(context).colorScheme.onSecondary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      final state = context.read<ConfigurationsCubit>().state as ConfigurationsInitial;
-                      final controller = context.read<ConfigurationsCubit>().controller;
-                      return TextFormField(
-                        controller: controller..text = state.baseUrl,
-                        textAlignVertical: TextAlignVertical.top,
-                        cursorHeight: 25,
-                        decoration: InputDecoration(
-                          suffix: IconButton(
-                            icon: const Icon(Icons.save),
-                            onPressed: () {
-                              context.read<ConfigurationsCubit>().setBaseUrl(controller.text);
-                            },
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              )
-            ],
-          )
+          buildHotsPotIpAddressConfiguration(themeData, cubit, controller),
+          ListTile(
+            title: Text(tr("translation_configuration_title")),
+            subtitle: Text(tr("translation_configuration_subtitle")),
+          ),
         ],
       ),
+    );
+  }
+
+  ExpansionTile buildHotsPotIpAddressConfiguration(ThemeData themeData, ConfigurationsCubit cubit, TextEditingController controller) {
+    return ExpansionTile(
+      leading: const Icon(Icons.route_outlined),
+      title: Text(tr('hotspot_ip_address_label')),
+      subtitle: Text(tr('input_your_hotspot_ip_address')),
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: SizedBox(
+            height: 65,
+            child: BlocConsumer<ConfigurationsCubit, ConfigurationsState>(
+              listener: (context, state) {
+                if (state is ConfigurationsInitial) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: const Duration(seconds: 1),
+                      content: Text(
+                        '${tr('the_base_has_been_changed')} ${state.hotspotAddress}',
+                        style: themeData.textTheme.bodyLarge?.copyWith(
+                          color: themeData.colorScheme.onSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                final state = cubit.state as ConfigurationsInitial;
+                return TextFormField(
+                  controller: controller..text = state.hotspotAddress,
+                  textAlignVertical: TextAlignVertical.top,
+                  cursorHeight: 25,
+                  decoration: InputDecoration(
+                    suffix: IconButton(
+                      icon: const Icon(Icons.save),
+                      onPressed: () => cubit.setBaseUrl(controller.text),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: themeData.colorScheme.secondary,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: themeData.colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        )
+      ],
     );
   }
 }

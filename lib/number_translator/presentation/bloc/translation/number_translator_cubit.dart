@@ -19,30 +19,32 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
 
   Future<void> translate({required String numberToTranslate}) async {
     final errorTextToShow = tr('insert_a_valid_number_to_translate');
-    var response = await serviceLocator.get<NumberTranslatorService>().makeTranslate(request: ConsultEntity(number: numberToTranslate));
+    var response = await serviceLocator.get<NumberTranslatorService>().makeTranslate(
+          request: ConsultEntity(number: numberToTranslate),
+          isFromDigit: (state as NumberTranslatorInitial).isLetterTranslation,
+        );
     if (response.error == 'true') {
+      translatedNumberController.text = '';
       emit(
         state.copyWith(
-          translation: '',
           validationFailed: true,
         ),
       );
       return;
     }
-    String? hashResponse = response.data.hashResponse;
-    if(hashResponse.isEmpty){
+    String hashResponse = response.data.hashResponse;
+    if (hashResponse.isEmpty) {
+      translatedNumberController.text = errorTextToShow;
       emit(
         state.copyWith(
-          translation: errorTextToShow,
           validationFailed: true,
         ),
       );
       return;
     }
+    translatedNumberController.text = hashResponse;
     emit(
       state.copyWith(
-        translation:
-            (await serviceLocator.get<NumberTranslatorService>().makeTranslate(request: ConsultEntity(number: numberToTranslate))).data.hashResponse,
         validationFailed: false,
       ),
     );
@@ -52,29 +54,48 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
     final errorTextToShow = tr('insert_a_valid_number_to_translate');
     final insertTextToShow = tr('insert_some_value_to_translate');
     if (numberToTranslateController.text.isEmpty) {
+      translatedNumberController.text = insertTextToShow;
       emit(
         state.copyWith(
-          translation: insertTextToShow,
           validationFailed: false,
         ),
       );
       return false;
     }
+    var isOnlyDigits = numberToTranslateController.text.trim().split(' ').every((element) => int.tryParse(element) != null);
+    if (!(state as NumberTranslatorInitial).isLetterTranslation && !isOnlyDigits) {
+      translatedNumberController.text = errorTextToShow;
+      emit(
+        state.copyWith(
+          validationFailed: true,
+        ),
+      );
+      return false;
+    }
+    if (!(state as NumberTranslatorInitial).isLetterTranslation) {
+      translatedNumberController.text = '';
+      emit(
+        state.copyWith(
+          validationFailed: false,
+        ),
+      );
+      return true;
+    }
     final Map<String, dynamic> numbersMapping = jsonDecode(await rootBundle.loadString('assets/numbers/numbers-mapping.json'));
-    for( var element in numberToTranslateController.text.trim().split(' ')){
+    for (var element in numberToTranslateController.text.trim().split(' ')) {
       if (!numbersMapping['numbers']!.contains(element)) {
+        translatedNumberController.text = errorTextToShow;
         emit(
           state.copyWith(
-            translation: errorTextToShow,
             validationFailed: true,
           ),
         );
         return false;
       }
     }
+    translatedNumberController.text = errorTextToShow;
     emit(
       state.copyWith(
-        translation: errorTextToShow,
         validationFailed: false,
       ),
     );
@@ -82,9 +103,14 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
   }
 
   void changeTranslationType() {
+    if (!(numberToTranslateController.text.isEmpty || numberToTranslateController.text.isEmpty)) {
+      var numberToTranslateText = numberToTranslateController.text;
+      numberToTranslateController.text = translatedNumberController.text;
+      translatedNumberController.text = numberToTranslateText;
+    }
     emit(
       state.copyWith(
-        isDigitTranslationSelected: !(state as NumberTranslatorInitial).isDigitTranslation,
+        isDigitTranslationSelected: !(state as NumberTranslatorInitial).isLetterTranslation,
       ),
     );
   }

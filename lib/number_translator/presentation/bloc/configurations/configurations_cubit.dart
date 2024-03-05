@@ -11,9 +11,9 @@ class ConfigurationsCubit extends Cubit<ConfigurationsState> {
 
   TextEditingController controller = TextEditingController();
 
-  void setBaseUrl(String baseUrl) async {
-    serviceLocator<ConfigurationData>().BASE_URL = baseUrl;
-    controller.text = baseUrl;
-    emit(state.copyWith(baseUrl: baseUrl));
+  void setBaseUrl(String hotspotAddress) async {
+    serviceLocator<ConfigurationData>().BASE_URL = 'http://$hotspotAddress:34545';
+    controller.text = hotspotAddress;
+    emit(state.copyWith(hotspotAddress: hotspotAddress));
   }
 }
