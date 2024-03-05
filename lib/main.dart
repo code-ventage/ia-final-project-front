@@ -39,34 +39,34 @@ class _NumberTranslateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConfigurationsCubit, ConfigurationsState>(
-      buildWhen: (previous, current) {
-        if(previous is! ConfigurationsInitial || current is! ConfigurationsInitial) return false;
-        return previous.isSpanishLanguaje != current.isSpanishLanguaje;
-      },
-      builder: (context, state) {
-        return EasyLocalization(
-          supportedLocales: const [
-            Locale('es', 'ES'),
-            Locale('en', 'US'),
-          ],
-          path: 'assets/translations',
-          startLocale: (state as ConfigurationsInitial).isSpanishLanguaje ? const Locale('es', 'ES') : const Locale('en', 'US'),
-          fallbackLocale: const Locale('es', 'ES'),
-          useFallbackTranslations: true,
-          child: MaterialApp.router(
+    return EasyLocalization(
+      supportedLocales: const [
+        Locale('es', 'ES'),
+        Locale('en', 'US'),
+      ],
+      path: 'assets/translations',
+      startLocale: const Locale('es', 'ES'),
+      fallbackLocale: const Locale('en', 'US'),
+      useFallbackTranslations: true,
+      child: BlocBuilder<ConfigurationsCubit, ConfigurationsState>(
+        buildWhen: (previous, current) {
+          if (previous is! ConfigurationsInitial || current is! ConfigurationsInitial) return false;
+          return previous.isSpanishLanguaje != current.isSpanishLanguaje;
+        },
+        builder: (context, state) {
+          return MaterialApp.router(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            locale: (state as ConfigurationsInitial).isSpanishLanguaje? context.supportedLocales.first: context.supportedLocales.last,
             title: 'Material App',
             debugShowCheckedModeBanner: false,
             routerConfig: router,
             darkTheme: ThemeData.dark(),
             themeMode: ThemeMode.dark,
             theme: ThemeData.dark(),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
