@@ -6,6 +6,7 @@ import 'package:ia_final_project_front/number_translator/domain/use_cases/number
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/translation/number_translator_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/configurations/configurations_page.dart';
+import 'package:ia_final_project_front/number_translator/presentation/pages/game_page/game_page.dart';
 
 import '../../number_translator/data/data_sources/number_translator_datasource.dart';
 import '../../number_translator/domain/repositories/number_translator_domain_repository.dart';
@@ -28,6 +29,7 @@ void setupServiceLocator() {
 void setupPages() {
   serviceLocator.registerSingleton<NumberTranslatorPage>(const NumberTranslatorPage());
   serviceLocator.registerSingleton<ConfigurationsPage>(const ConfigurationsPage());
+  serviceLocator.registerSingleton<GamePage>(const GamePage());
 }
 
 void setupDataServices() {

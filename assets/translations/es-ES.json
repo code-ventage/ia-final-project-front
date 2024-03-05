@@ -12,5 +12,10 @@
   "translation_configuration_subtitle": "Configuraciones de traduccion",
   "spanish_language": "Espanol",
   "english_language": "English",
-  "current_language": "Espanol"
+  "current_language": "Espanol",
+  "play_a_game": "Jugar!",
+  "settings": "Opciones",
+  "translate_numbers": "Traducir numeros",
+  "translate_letters": "Traducir nombres de numeros",
+  "swap": "Intercambiar"
 }

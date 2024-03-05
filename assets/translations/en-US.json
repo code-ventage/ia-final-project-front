@@ -12,5 +12,11 @@
   "translation_configuration_subtitle": "Translation settings",
   "spanish_language": "Espanol",
   "english_language": "English",
-  "current_language": "English"
+  "current_language": "English",
+  "play_a_game": "Play a game!",
+  "settings": "Settings",
+  "translate_numbers": "Translate numbers",
+  "translate_letters": "Translate number names",
+  "swap": "Swap"
+
 }
