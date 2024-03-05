@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
 
 class ConfigurationsPage extends StatelessWidget {
@@ -28,11 +30,30 @@ class ConfigurationsPage extends StatelessWidget {
         toolbarHeight: height * 0.1,
       ),
       body: Column(
+
         children: [
           buildHotsPotIpAddressConfiguration(themeData, cubit, controller),
-          ListTile(
-            title: Text(tr("translation_configuration_title")),
-            subtitle: Text(tr("translation_configuration_subtitle")),
+          const Gap(20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: DropdownMenu(
+              enableFilter: true,
+              controller: TextEditingController(text: cubit.currentLanguage == 'Espanol' ? tr('spanish_language') : tr('english_language')),
+              width: MediaQuery.of(context).size.width - 20,
+              dropdownMenuEntries: [
+                DropdownMenuEntry(
+                  value: 'es',
+                  label: tr('spanish_language'),
+                ),
+                DropdownMenuEntry(
+                  value: 'en',
+                  label: tr('english_language'),
+                ),
+              ],
+              onSelected: (value) {
+                serviceLocator.get<ConfigurationsCubit>().changeLanguage(value == 'es');
+              },
+            ),
           ),
         ],
       ),

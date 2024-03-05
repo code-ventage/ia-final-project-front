@@ -3,7 +3,7 @@ part of 'configurations_cubit.dart';
 abstract class ConfigurationsState extends Equatable {
   const ConfigurationsState();
 
-  ConfigurationsInitial copyWith({String? hotspotAddress});
+  ConfigurationsInitial copyWith({String? hotspotAddress, bool? isSpanishLanguaje});
 }
 
 class ConfigurationsInitial extends ConfigurationsState {

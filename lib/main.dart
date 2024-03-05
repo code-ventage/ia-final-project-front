@@ -10,11 +10,26 @@ import 'number_translator/presentation/bloc/translation/number_translator_cubit.
 void main() async {
   initServices();
 
-  runApp(const NumberTranslateApp());
+  runApp(
+      EasyLocalization(
+          supportedLocales: const [
+            Locale('es', 'ES'),
+            Locale('en', 'US'),
+          ],
+          saveLocale: true,
+          path: 'assets/translations',
+          startLocale: const Locale('es', 'ES'),
+          fallbackLocale: const Locale('en', 'US'),
+          useFallbackTranslations: true,
+          child:const NumberTranslateApp()
+      )
+  );
 }
 
-void initServices() {
+void initServices() async{
   setupServiceLocator();
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 }
 
 class NumberTranslateApp extends StatelessWidget {
@@ -39,34 +54,16 @@ class _NumberTranslateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EasyLocalization(
-      supportedLocales: const [
-        Locale('es', 'ES'),
-        Locale('en', 'US'),
-      ],
-      path: 'assets/translations',
-      startLocale: const Locale('es', 'ES'),
-      fallbackLocale: const Locale('en', 'US'),
-      useFallbackTranslations: true,
-      child: BlocBuilder<ConfigurationsCubit, ConfigurationsState>(
-        buildWhen: (previous, current) {
-          if (previous is! ConfigurationsInitial || current is! ConfigurationsInitial) return false;
-          return previous.isSpanishLanguaje != current.isSpanishLanguaje;
-        },
-        builder: (context, state) {
-          return MaterialApp.router(
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: (state as ConfigurationsInitial).isSpanishLanguaje? context.supportedLocales.first: context.supportedLocales.last,
-            title: 'Material App',
-            debugShowCheckedModeBanner: false,
-            routerConfig: router,
-            darkTheme: ThemeData.dark(),
-            themeMode: ThemeMode.dark,
-            theme: ThemeData.dark(),
-          );
-        },
-      ),
+    return MaterialApp.router(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      title: 'Material App',
+      debugShowCheckedModeBanner: false,
+      routerConfig: router,
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
+      theme: ThemeData.dark(),
     );
   }
 }

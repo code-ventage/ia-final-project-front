@@ -10,10 +10,16 @@ class ConfigurationsCubit extends Cubit<ConfigurationsState> {
   ConfigurationsCubit() : super(const ConfigurationsInitial());
 
   TextEditingController controller = TextEditingController();
+  String currentLanguage = 'Espanol';
 
   void setBaseUrl(String hotspotAddress) async {
     serviceLocator<ConfigurationData>().BASE_URL = 'http://$hotspotAddress:34545';
     controller.text = hotspotAddress;
     emit(state.copyWith(hotspotAddress: hotspotAddress));
+  }
+
+  void changeLanguage(bool spanish) {
+    currentLanguage = spanish ? 'es' : 'en';
+    emit(state.copyWith(isSpanishLanguaje: spanish));
   }
 }

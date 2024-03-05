@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 
 import '../../../../go_router/routes.dart';
+import '../../bloc/configurations/configurations_cubit.dart';
 import '../../bloc/translation/number_translator_cubit.dart';
 import '../../widgets/custom_icon_selection_button.dart';
 import '../../widgets/custom_text_form_field_widget.dart';
@@ -16,63 +17,76 @@ class NumberTranslatorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Text(tr('number_translator_page_title'), style: const TextStyle(fontSize: 20)),
-        ),
-        toolbarHeight: height * 0.1,
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.pushNamed(Routes.configurations.name);
-            },
-            icon: const Icon(Icons.settings),
+    return BlocConsumer<ConfigurationsCubit, ConfigurationsState>(
+      buildWhen: (previous, current) {
+        if (previous is! ConfigurationsInitial || current is! ConfigurationsInitial) return false;
+        return previous.isSpanishLanguaje != current.isSpanishLanguaje;
+      },
+      listener: (context, state) {
+        context.setLocale((state as ConfigurationsInitial).isSpanishLanguaje ? context.supportedLocales.first : context.supportedLocales.last);
+      },
+      builder: (context, state) {
+        serviceLocator.get<ConfigurationsCubit>().currentLanguage = context.locale == context.supportedLocales.first ? tr('spanish_language') : tr
+          ('english_language');
+        return Scaffold(
+          appBar: AppBar(
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(tr('number_translator_page_title'), style: const TextStyle(fontSize: 20)),
+            ),
+            toolbarHeight: height * 0.1,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  context.pushNamed(Routes.configurations.name);
+                },
+                icon: const Icon(Icons.settings),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
-            builder: (context, state) {
-              if (state is NumberTranslatorInitial) {
-                final cubit = serviceLocator.get<NumberTranslatorCubit>();
-                return MediaQuery.of(context).size.width > 600
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          firstTextFormField(context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
-                          Padding(
-                            padding: EdgeInsets.only(top: height * 0.216),
-                            child: IconButton.outlined(
-                              onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
-                              icon: Icon(
-                                size: (height + width) * 0.015,
-                                Icons.swap_horiz,
+          body: SingleChildScrollView(
+            child: Center(
+              child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
+                builder: (context, state) {
+                  if (state is NumberTranslatorInitial) {
+                    final cubit = serviceLocator.get<NumberTranslatorCubit>();
+                    return MediaQuery.of(context).size.width > 600
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              firstTextFormField(context, height, width * 0.45, cubit, state, () => cubit.changeTranslationType()),
+                              Padding(
+                                padding: EdgeInsets.only(top: height * 0.216),
+                                child: IconButton.outlined(
+                                  onPressed: () => context.read<NumberTranslatorCubit>().changeTranslationType(),
+                                  icon: Icon(
+                                    size: (height + width) * 0.015,
+                                    Icons.swap_horiz,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          secondTextFormField(context, height, width * 0.45, cubit, state, () {
-                            return cubit.changeTranslationType();
-                          }),
-                        ],
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          firstTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
-                          secondTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
-                        ],
-                      );
-              }
-              return const CircularProgressIndicator();
-            },
+                              secondTextFormField(context, height, width * 0.45, cubit, state, () {
+                                return cubit.changeTranslationType();
+                              }),
+                            ],
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              firstTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
+                              secondTextFormField(context, height, width, cubit, state, () => cubit.changeTranslationType()),
+                            ],
+                          );
+                  }
+                  return const CircularProgressIndicator();
+                },
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -87,7 +101,7 @@ class NumberTranslatorPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: width>300? CrossAxisAlignment.start: CrossAxisAlignment.center,
+        crossAxisAlignment: width > 300 ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: [
           Row(
             children: [
@@ -142,7 +156,7 @@ class NumberTranslatorPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: width>300? CrossAxisAlignment.start: CrossAxisAlignment.center,
+        crossAxisAlignment: width > 300 ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: [
           Row(
             children: [
