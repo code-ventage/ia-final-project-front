@@ -23,7 +23,7 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
     try {
       if (serviceLocator.get<ConfigurationData>().DEBUGING) {
         response = {
-          'hash_response': {'N': isFromDigit ? '123456' : 'mil doscientos'},
+          'hash_response': {'N': isFromDigit ? '1000' : 'mil'},
         };
         return GeneralResponse(error: error, data: ConsultResponse.fromJson(response));
       }
