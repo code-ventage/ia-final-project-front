@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/game/game_cubit.dart';
 
 import 'config/service_locator/service_locator.dart';
 import 'go_router/go_router.dart';
@@ -40,7 +41,8 @@ class NumberTranslateApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => serviceLocator.get<NumberTranslatorCubit>()),
-        BlocProvider(create: (context) => serviceLocator.get<ConfigurationsCubit>())
+        BlocProvider(create: (context) => serviceLocator.get<ConfigurationsCubit>()),
+        BlocProvider(create: (context) => serviceLocator.get<GameCubit>())
       ],
       child: const _NumberTranslateApp(),
     );
@@ -63,7 +65,7 @@ class _NumberTranslateApp extends StatelessWidget {
       routerConfig: router,
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.dark,
-      theme: ThemeData.dark(),
+      theme: ThemeData.light(),
     );
   }
 }

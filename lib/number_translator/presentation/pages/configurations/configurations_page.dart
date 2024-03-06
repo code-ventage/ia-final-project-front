@@ -37,8 +37,8 @@ class ConfigurationsPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: DropdownMenu(
-              enableFilter: true,
-              controller: TextEditingController(text: cubit.currentLanguage == 'Espanol' ? tr('spanish_language') : tr('english_language')),
+              enableSearch: true,
+              controller: TextEditingController(text: tr('current_language')),
               width: MediaQuery.of(context).size.width - 20,
               dropdownMenuEntries: [
                 DropdownMenuEntry(
