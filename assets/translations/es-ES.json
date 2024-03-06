@@ -17,5 +17,13 @@
   "settings": "Opciones",
   "translate_numbers": "Traducir numeros",
   "translate_letters": "Traducir nombres de numeros",
-  "swap": "Intercambiar"
+  "swap": "Intercambiar",
+  "game_page_title": "GamTra Beta",
+  "game_first_introduction": "Hola!!",
+  "game_first_description": "Quieres jugar un juego?",
+  "game_second_introduction": "Explicacion",
+  "game_second_description": "La cosa es facil:\nTe dare algunos segundos para traducir el numero en pantalla. Si puedes hacerlo en tiempo, ganas :)\nEn otro caso, pierdes :(",
+  "game_third_introduction": "Entonces...",
+  "game_third_description": "Dame lo mejor de ti!!!"
+
 }

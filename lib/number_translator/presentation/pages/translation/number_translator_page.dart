@@ -96,7 +96,7 @@ class NumberTranslatorPage extends StatelessWidget {
                                 child: FloatingActionButton(
                                   isExtended: true,
                                   child: Text(tr('play_a_game'), style: Theme.of(context).textTheme.titleMedium),
-                                  onPressed: () {},
+                                  onPressed: () => context.pushNamed(Routes.gamePage.name),
                                 ),
                               )
                             ],
@@ -119,7 +119,7 @@ class NumberTranslatorPage extends StatelessWidget {
               ? CustomTooltip(
                   message: tr('play_a_game'),
                   child: FloatingActionButton.small(
-                    onPressed: () {},
+                    onPressed: () => context.pushNamed(Routes.gamePage.name),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     child: const Icon(Icons.gamepad_outlined),
                   ),
@@ -175,7 +175,6 @@ class NumberTranslatorPage extends StatelessWidget {
             width: width * 0.85,
             child: CustomTextFormField(
               controller: cubit.numberToTranslateController,
-              cubit: cubit,
               readOnly: false,
               borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
               onChanged: (value) async {
@@ -240,7 +239,6 @@ class NumberTranslatorPage extends StatelessWidget {
                   return CustomTextFormField(
                     borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
                     controller: cubit.translatedNumberController,
-                    cubit: cubit,
                     readOnly: true,
                   );
                 }

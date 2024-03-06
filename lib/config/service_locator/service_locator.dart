@@ -10,6 +10,7 @@ import 'package:ia_final_project_front/number_translator/presentation/pages/game
 
 import '../../number_translator/data/data_sources/number_translator_datasource.dart';
 import '../../number_translator/domain/repositories/number_translator_domain_repository.dart';
+import '../../number_translator/presentation/bloc/game/game_cubit.dart';
 import '../../number_translator/presentation/pages/translation/number_translator_page.dart';
 
 final serviceLocator = GetIt.instance;
@@ -19,6 +20,8 @@ void setupServiceLocator() {
   serviceLocator.registerSingleton<ConnectionHelper>(ConnectionHelper());
   serviceLocator.registerSingleton<NumberTranslatorCubit>(NumberTranslatorCubit());
   serviceLocator.registerSingleton<ConfigurationsCubit>(ConfigurationsCubit());
+  serviceLocator.registerSingleton<GameCubit>(GameCubit());
+
 
   setupDataServices();
   setupDomainServices();

@@ -44,6 +44,7 @@ dependencies:
   easy_localization: ^3.0.5
   animate_do: ^3.3.4
   gap: ^3.0.1
+  introduction_screen: ^3.1.12
 
 dev_dependencies:
   flutter_test:
