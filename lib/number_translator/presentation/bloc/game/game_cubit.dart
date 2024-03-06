@@ -26,20 +26,19 @@ class GameCubit extends Cubit<GameState> {
     currentNumber = Random().nextInt(limit);
     var translationService = serviceLocator.get<NumberTranslatorService>();
     currentTranslation =
-        (await translationService.makeTranslate(request: ConsultEntity(number: '$currentNumber'), isFromDigit: false))
-            .data
-            .hashResponse;
+        (await translationService.makeTranslate(request: ConsultEntity(number: '$currentNumber'), isFromDigit: false)).data.hashResponse;
     debugPrint('currentTranslation: $currentTranslation');
     initiationTime = DateTime.now();
     emit(state.copyWith(isInitializing: false, isFirstTime: false, randomNumberLimit: limit));
   }
 
   void finishState(void Function()? onWrong) {
-    if (responseTextController.text == currentTranslation) {
+    if (responseTextController.text == currentTranslation && !(state as GameInitial).finished) {
       var now = DateTime.now();
       var diference = now.difference(initiationTime).inSeconds;
-      currentPoints = currentNumber ~/ diference;
-      emit(state.copyWith(finished: true));
+      currentPoints += currentNumber ~/ diference;
+      var nextLimit = (state as GameInitial).randomNumberLimit + 1000;
+      startGame(limit: nextLimit > maxLimit ? maxLimit : nextLimit);
     } else {
       emit(state.copyWith(finished: true));
       onWrong?.call();
