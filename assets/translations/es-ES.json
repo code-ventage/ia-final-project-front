@@ -24,6 +24,11 @@
   "game_second_introduction": "Explicacion",
   "game_second_description": "La cosa es facil:\nTe dare algunos segundos para traducir el numero en pantalla. Si puedes hacerlo en tiempo, ganas :)\nEn otro caso, pierdes :(",
   "game_third_introduction": "Entonces...",
-  "game_third_description": "Dame lo mejor de ti!!!"
+  "game_third_description": "Dame lo mejor de ti!!!",
+  "game_done_button": "echo",
+  "game_next_button": "siguiente",
+  "game_back_button": "atras",
+  "game_your_score": "Tu puntuacion",
+  "game_finish": "Termine"
 
 }

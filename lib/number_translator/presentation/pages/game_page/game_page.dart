@@ -99,7 +99,7 @@ class _Game extends StatelessWidget {
           onPressed: () {
             cubit.finishState(() {});
           },
-          child: const Text('Finish'), // todo change the text to tr
+          child: Text(tr('game_finish')), // todo change the text to tr
         ),
       ],
     );
@@ -124,7 +124,7 @@ class _GameFinished extends StatelessWidget {
           ),
           const Gap(20),
           Text(
-            'Your score',
+          tr('game_your_score'),
             style: textTheme.titleLarge?.copyWith(
               fontSize: 32,
               fontWeight: FontWeight.w500,
@@ -188,9 +188,9 @@ class _GameIntroduction extends StatelessWidget {
       onDone: () {
         return cubit.saveFirstTime();
       },
-      done: const Text('done'),
-      next: const Text('next'),
-      back: const Text('back'),
+      done: Text(tr('game_done_button')),
+      next: Text(tr('game_next_button')),
+      back: Text(tr('game_back_button')),
       showDoneButton: true,
       showBackButton: true,
       dotsDecorator: DotsDecorator(

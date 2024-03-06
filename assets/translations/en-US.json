@@ -24,6 +24,11 @@
   "game_second_introduction": "Explanation",
   "game_second_description": "The thing is easy:\nI give you a few seconds to translate the number in screen. If you can translate it in time, you will win.\nIn other case, you lose :(",
   "game_third_introduction": "So...",
-  "game_third_description": "Give me your best!!!"
+  "game_third_description": "Give me your best!!!",
+  "game_done_button": "done",
+  "game_next_button": "next",
+  "game_back_button": "back",
+  "game_your_score": "Your score",
+  "game_finish": "Finish"
 
 }
