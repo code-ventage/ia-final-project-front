@@ -12,7 +12,6 @@ class CustomAnimatedTimer extends StatefulWidget {
   final double fontSize;
   final double strokeWeight;
 
-
   @override
   State<CustomAnimatedTimer> createState() => _CustomAnimatedTimerState();
 }
@@ -38,6 +37,11 @@ class _CustomAnimatedTimerState extends State<CustomAnimatedTimer> {
           CircularProgressIndicator(
             value: maxTime / widget.duration.inSeconds,
             strokeWidth: widget.strokeWeight,
+            color: maxTime > 10
+                ? Theme.of(context).colorScheme.primary
+                : maxTime > 5
+                    ? Colors.orangeAccent
+                    : Colors.redAccent,
           ),
           Center(
             child: Animate(
