@@ -4,28 +4,32 @@ abstract class NumberTranslatorState extends Equatable {
   const NumberTranslatorState();
 
   NumberTranslatorInitial copyWith({
-    String? translation,
-    int? counter,
+    bool? validationFailed,
+    bool? isDigitTranslationSelected,
   });
 }
 
 class NumberTranslatorInitial extends NumberTranslatorState {
-  final String translation;
-  final int counter;
+  final bool validationFailed;
+  final bool isLetterTranslation;
 
-  const NumberTranslatorInitial({this.translation = "0", this.counter = 0});
+  const NumberTranslatorInitial({
+    this.validationFailed = false,
+    this.isLetterTranslation = false,
+  });
 
   @override
-  List<Object> get props => [translation, counter];
+  List<Object> get props => [validationFailed, isLetterTranslation];
 
   @override
   NumberTranslatorInitial copyWith({
-    String? translation,
     int? counter,
+    bool? validationFailed,
+    bool? isDigitTranslationSelected,
   }) {
     return NumberTranslatorInitial(
-      translation: translation ?? this.translation,
-      counter: counter ?? this.counter,
+      validationFailed: validationFailed?? this.validationFailed,
+      isLetterTranslation: isDigitTranslationSelected?? isLetterTranslation,
     );
   }
 }

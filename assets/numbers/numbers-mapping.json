@@ -1,5 +1,6 @@
 {
   "numbers": [
+    "un",
     "uno",
     "dos",
     "tres",
@@ -15,7 +16,7 @@
     "trece",
     "catorce",
     "quince",
-    "dieciséis",
+    "dieciseis",
     "diecisiete",
     "dieciocho",
     "diecinueve",
@@ -29,10 +30,18 @@
     "noventa",
     "cien",
     "ciento",
+    "cientos",
+    "doscientos",
+    "trescientos",
+    "cuatrocientos",
+    "quinientos",
+    "seiscientos",
+    "setecientos",
+    "ochocientos",
+    "novecientos",
     "mil",
-    "millón",
+    "millon",
     "millones",
-    "billón",
-    "billones"
+    "y"
   ]
 }
