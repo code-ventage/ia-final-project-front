@@ -11,7 +11,7 @@
   "translation_configuration_title": "Español",
   "translation_configuration_subtitle": "Configuraciones de traducción"
   "translation_configuration_title": "Espanol",
-  "translation_configuration_subtitle": "Configuraciones de traduccion",
+  "translation_configuration_subtitle": "Configuraciones de traducción",
   "spanish_language": "Espanol",
   "english_language": "English",
   "current_language": "Espanol",
@@ -20,17 +20,17 @@
   "translate_numbers": "Traducir numeros",
   "translate_letters": "Traducir nombres de numeros",
   "swap": "Intercambiar",
-  "game_page_title": "GamTra Beta",
-  "game_first_introduction": "Hola!!",
+  "game_page_title": "N-Tras",
+  "game_first_introduction": "Hola!",
   "game_first_description": "Quieres jugar un juego?",
   "game_second_introduction": "Explicacion",
   "game_second_description": "La cosa es facil:\nTe dare algunos segundos para traducir el numero en pantalla. Si puedes hacerlo en tiempo, ganas :)\nEn otro caso, pierdes :(",
   "game_third_introduction": "Entonces...",
-  "game_third_description": "Dame lo mejor de ti!!!",
-  "game_done_button": "echo",
+  "game_third_description": "Dame lo mejor de ti!",
+  "game_done_button": "hecho",
   "game_next_button": "siguiente",
   "game_back_button": "atras",
-  "game_your_score": "Tu puntuacion",
+  "game_your_score": "Tu puntuación",
   "game_finish": "Termine"
 
 }

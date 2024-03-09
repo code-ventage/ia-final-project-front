@@ -12,9 +12,10 @@ import 'package:ia_final_project_front/number_translator/domain/use_cases/number
 part 'number_translator_state.dart';
 
 class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
-  NumberTranslatorCubit() : super(const NumberTranslatorInitial()){
-   translatedNumberController.text = tr('insert_a_valid_number_to_translate');
+  NumberTranslatorCubit() : super(const NumberTranslatorInitial()) {
+    translatedNumberController.text = tr('insert_a_valid_number_to_translate');
   }
+
   final String translation = "";
   final TextEditingController numberToTranslateController = TextEditingController();
   final TextEditingController translatedNumberController = TextEditingController();
@@ -105,11 +106,8 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
   }
 
   void changeTranslationType() {
-    if (!(numberToTranslateController.text.isEmpty || numberToTranslateController.text.isEmpty)) {
-      var numberToTranslateText = numberToTranslateController.text;
-      numberToTranslateController.text = translatedNumberController.text;
-      translatedNumberController.text = numberToTranslateText;
-    }
+    numberToTranslateController.text = '';
+    translatedNumberController.text = '';
     emit(
       state.copyWith(
         isDigitTranslationSelected: !(state as NumberTranslatorInitial).isLetterTranslation,

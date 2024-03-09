@@ -16,11 +16,12 @@ class ConfigurationsCubit extends Cubit<ConfigurationsState> {
   TextEditingController controller = TextEditingController();
   String currentLanguage = 'Espanol';
 
-  void setBaseUrl(String hotspotAddress) async {
+  void setBaseUrl(String hotspotAddress, void Function() function) async {
     serviceLocator<ConfigurationData>().BASE_URL = 'http://$hotspotAddress:34545';
     serviceLocator.get<ConnectionHelper>().setBaseUrl('http://$hotspotAddress:34545');
     controller.text = hotspotAddress;
     emit(state.copyWith(hotspotAddress: hotspotAddress));
+    function.call();
   }
 
   void changeLanguage(bool spanish) {

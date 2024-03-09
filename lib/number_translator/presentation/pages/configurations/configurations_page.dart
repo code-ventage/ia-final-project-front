@@ -62,41 +62,41 @@ class ConfigurationsPage extends StatelessWidget {
 
   ExpansionTile buildHotsPotIpAddressConfiguration(ThemeData themeData, ConfigurationsCubit cubit, TextEditingController controller) {
     return ExpansionTile(
-      leading: const Icon(Icons.route_outlined),
-      title: Text(tr('hotspot_ip_address_label')),
+      leading: const Icon(Icons.route_outlined, color: Colors.lightBlueAccent),
+      title: Text(tr('hotspot_ip_address_label'), style: const TextStyle(
+        fontWeight: FontWeight.w500,
+        fontSize: 16
+      )),
       subtitle: Text(tr('input_your_hotspot_ip_address')),
       children: [
         Padding(
           padding: const EdgeInsets.all(20),
           child: SizedBox(
-            height: 65,
-            child: BlocConsumer<ConfigurationsCubit, ConfigurationsState>(
-              listener: (context, state) {
-                if (state is ConfigurationsInitial) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      duration: const Duration(seconds: 1),
-                      content: Text(
-                        '${tr('the_base_has_been_changed')} ${state.hotspotAddress}',
-                        style: themeData.textTheme.bodyLarge?.copyWith(
-                          color: themeData.colorScheme.onSecondary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  );
-                }
-              },
+            height: 58,
+            child: BlocBuilder<ConfigurationsCubit, ConfigurationsState>(
               builder: (context, state) {
                 final state = cubit.state as ConfigurationsInitial;
                 return TextFormField(
                   controller: controller..text = state.hotspotAddress,
-                  textAlignVertical: TextAlignVertical.top,
-                  cursorHeight: 25,
+                  textAlignVertical: TextAlignVertical.center,
+                  cursorHeight: 22,
                   decoration: InputDecoration(
                     suffix: IconButton(
-                      icon: const Icon(Icons.save),
-                      onPressed: () => cubit.setBaseUrl(controller.text),
+                      icon: const Icon(Icons.save, color: Colors.lightBlueAccent),
+                      onPressed: () => cubit.setBaseUrl(controller.text, (){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: const Duration(seconds: 1),
+                            content: Text(
+                              '${tr('the_base_has_been_changed')} ${state.hotspotAddress}',
+                              style: themeData.textTheme.bodyLarge?.copyWith(
+                                color: themeData.colorScheme.onSecondary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(

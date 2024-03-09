@@ -63,9 +63,17 @@ class _NumberTranslateApp extends StatelessWidget {
       title: 'Material App',
       debugShowCheckedModeBanner: false,
       routerConfig: router,
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData(
+          colorSchemeSeed: Colors.lightBlueAccent,
+          useMaterial3: true,
+          brightness: Brightness.dark
+      ),
       themeMode: ThemeMode.dark,
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        colorSchemeSeed: Colors.purpleAccent,
+        useMaterial3: true,
+        brightness: Brightness.light
+      ),
     );
   }
 }
