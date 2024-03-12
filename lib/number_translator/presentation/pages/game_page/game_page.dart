@@ -93,7 +93,7 @@ class _Game extends StatelessWidget {
             ),
             const Gap(20),
             CustomAnimatedTimer(
-              duration: const Duration(seconds: 20),
+              duration: const Duration(seconds: 60),
               size: const Size(50, 50),
               onFinished: () => cubit.finishState(() {}),
               fontSize: 26,

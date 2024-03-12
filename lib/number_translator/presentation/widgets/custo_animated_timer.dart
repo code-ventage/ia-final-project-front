@@ -23,7 +23,7 @@ class _CustomAnimatedTimerState extends State<CustomAnimatedTimer> {
 
   @override
   Widget build(BuildContext context) {
-    if (maxTime < 0) {
+    if (maxTime <= 0) {
       timer?.cancel();
       widget.onFinished?.call();
     }
@@ -60,7 +60,7 @@ class _CustomAnimatedTimerState extends State<CustomAnimatedTimer> {
 
   void startTimer() async {
     timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      if (maxTime < 0) {
+      if (maxTime <= 0) {
         setState(() {
           timer.cancel();
         });
