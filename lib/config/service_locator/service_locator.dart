@@ -7,6 +7,7 @@ import 'package:ia_final_project_front/number_translator/presentation/bloc/confi
 import 'package:ia_final_project_front/number_translator/presentation/bloc/translation/number_translator_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/configurations/configurations_page.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/game_page/game_page.dart';
+import 'package:ia_final_project_front/theme/presentation/bloc/theme_selector_cubit.dart';
 
 import '../../number_translator/data/data_sources/number_translator_datasource.dart';
 import '../../number_translator/domain/repositories/number_translator_domain_repository.dart';
@@ -21,6 +22,7 @@ void setupServiceLocator() {
   serviceLocator.registerSingleton<NumberTranslatorCubit>(NumberTranslatorCubit());
   serviceLocator.registerSingleton<ConfigurationsCubit>(ConfigurationsCubit());
   serviceLocator.registerSingleton<GameCubit>(GameCubit());
+  serviceLocator.registerSingleton<ThemeSelectorCubit>(ThemeSelectorCubit());
 
 
   setupDataServices();

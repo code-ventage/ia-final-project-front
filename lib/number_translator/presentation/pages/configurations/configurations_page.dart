@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
+import 'package:ia_final_project_front/theme/presentation/widgets/wrap_theme_selector_widget.dart';
 
 class ConfigurationsPage extends StatelessWidget {
   const ConfigurationsPage({super.key});
@@ -54,6 +55,12 @@ class ConfigurationsPage extends StatelessWidget {
                 serviceLocator.get<ConfigurationsCubit>().changeLanguage(value == 'es');
               },
             ),
+          ),
+          const Gap(15),
+          SizedBox(
+            width: MediaQuery.of(context).size.width - 20,
+            height: 100,
+            child: const WrapThemeSelectorWidget(),
           ),
         ],
       ),
