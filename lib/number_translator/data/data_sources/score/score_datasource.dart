@@ -17,6 +17,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
   final ConnectionHelper connectionHelper;
 
   ScoreDatasourceImpl({required this.connectionHelper});
+
   @override
   Future<List<UserScoreModel>> getAll() async{
     var response = <String, dynamic>{};
@@ -74,7 +75,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
             ]
           }
         };
-        return GeneralUsersResponse<UserScoreResponse>.fromJson(response).response.status == '200';
+        return response['response']['status'] == '200';
       }
       debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
       response = (await connectionHelper.dio.post(
@@ -87,6 +88,6 @@ class ScoreDatasourceImpl extends ScoreDatasource {
       return false;
     }
 
-    return GeneralUsersResponse<UserScoreResponse>.fromJson(response).response.status == '200';
+    return response['response']['status'] == '200';
   }
 }
