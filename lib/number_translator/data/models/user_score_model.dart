@@ -13,4 +13,11 @@ class UserScoreModel {
       score: json['score'] ?? '',
     );
   }
+
+  Map<String, String> toJson() {
+    return {
+      'username': username,
+      'score': score,
+    };
+  }
 }
