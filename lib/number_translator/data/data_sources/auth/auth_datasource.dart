@@ -71,7 +71,7 @@ class AuthDatasourceImpl extends AuthDatasource {
         return response['response']['status'] == '200';
       }
       response = (await connectionHelper.dio.post(
-        '/user/signup',
+        '/user/signUp',
         data: userModel.toJson(),
       ))
           .data;
