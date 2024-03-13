@@ -1,11 +1,11 @@
-class GeneralResponse<T> {
+class GeneralUsersResponse<T> {
   final String version;
   final Response<T> response;
 
-  GeneralResponse({required this.version, required this.response});
+  GeneralUsersResponse({required this.version, required this.response});
 
-  factory GeneralResponse.fromJson(Map<String, dynamic> json) {
-    return GeneralResponse(
+  factory GeneralUsersResponse.fromJson(Map<String, dynamic> json) {
+    return GeneralUsersResponse(
       version: json['version'] ?? '',
       response: Response.fromJson(json['response']),
     );
