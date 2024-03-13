@@ -9,13 +9,13 @@ abstract class ScoreDatasource {
 class ScoreDatasourceImpl extends ScoreDatasource {
   @override
   Future<List<UserScoreModel>> getAll() async{
-    // TODO: implement logIn
+    // TODO: implement getAll
     throw UnimplementedError();
   }
 
   @override
   Future<bool> save(UserScoreModel userModel) async{
-    // TODO: implement signUp
+    // TODO: implement save
     throw UnimplementedError();
   }
 }
