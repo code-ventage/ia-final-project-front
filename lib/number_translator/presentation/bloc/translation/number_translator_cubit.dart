@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/number_translator/domain/entities/consult_entity.dart';
-import 'package:ia_final_project_front/number_translator/domain/use_cases/number_translator_service.dart';
+import 'package:ia_final_project_front/number_translator/domain/use_cases/number_translator/number_translator_service.dart';
 
 part 'number_translator_state.dart';
 
