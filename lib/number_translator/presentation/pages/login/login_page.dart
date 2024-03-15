@@ -56,16 +56,12 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(
                 width: double.infinity,
-                child: ButtonTheme(
-                  height: 50,
-                  minWidth: 200,
-                  child: FilledButton.icon(
-                    onPressed: () {
-                      // todo: iniciar sesion
-                    },
-                    label: const Text('Sign in'),
-                    icon: const Icon(Icons.login),
-                  ),
+                child: FilledButton.icon(
+                  onPressed: () {
+                    // todo: iniciar sesion
+                  },
+                  label: const Text('Sign in'),
+                  icon: const Icon(Icons.login),
                 ),
               ),
               const SizedBox(
