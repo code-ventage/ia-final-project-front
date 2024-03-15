@@ -13,6 +13,7 @@ class LoginPage extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
 
     final size = Theme.of(context).textTheme;
+    final isSignInPage = false; // todo: en un futuro se debe coger del estado
 
     return Scaffold(
       appBar: AppBar(),
@@ -27,7 +28,7 @@ class LoginPage extends StatelessWidget {
                 color: Colors.lightBlueAccent,
               ),
               Text(
-                'Login',
+                isSignInPage ? 'Login' : 'Sign up',
                 style: TextStyle(
                   fontSize: size.headlineMedium?.fontSize,
                   // letterSpacing: 5,
@@ -43,7 +44,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
               TextFormField(
                 controller: passwordController,
@@ -60,7 +61,7 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     // todo: iniciar sesion
                   },
-                  label: const Text('Sign in'),
+                  label: Text(isSignInPage ? 'Sign in' : 'Create account'),
                   icon: const Icon(Icons.login),
                 ),
               ),
@@ -72,7 +73,9 @@ class LoginPage extends StatelessWidget {
                   // todo: navegar a la pagina de crear cuenta
                   context.pushNamed(Routes.signupPage.name);
                 },
-                child: const Text("Don't have an account? Create one"),
+                child: Text(isSignInPage
+                    ? "Don't have an account? Create one"
+                    : "Already have an account? Sign in"),
               ),
             ],
           ),
