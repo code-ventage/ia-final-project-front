@@ -7,6 +7,7 @@ import 'package:ia_final_project_front/number_translator/presentation/bloc/confi
 import 'package:ia_final_project_front/number_translator/presentation/bloc/translation/number_translator_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/configurations/configurations_page.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/game_page/game_page.dart';
+import 'package:ia_final_project_front/number_translator/presentation/pages/login/login_page.dart';
 
 import '../../number_translator/data/data_sources/number_translator_datasource.dart';
 import '../../number_translator/domain/repositories/number_translator_domain_repository.dart';
@@ -18,10 +19,10 @@ final serviceLocator = GetIt.instance;
 void setupServiceLocator() {
   serviceLocator.registerSingleton<ConfigurationData>(ConfigurationData());
   serviceLocator.registerSingleton<ConnectionHelper>(ConnectionHelper());
-  serviceLocator.registerSingleton<NumberTranslatorCubit>(NumberTranslatorCubit());
+  serviceLocator
+      .registerSingleton<NumberTranslatorCubit>(NumberTranslatorCubit());
   serviceLocator.registerSingleton<ConfigurationsCubit>(ConfigurationsCubit());
   serviceLocator.registerSingleton<GameCubit>(GameCubit());
-
 
   setupDataServices();
   setupDomainServices();
@@ -30,9 +31,12 @@ void setupServiceLocator() {
 }
 
 void setupPages() {
-  serviceLocator.registerSingleton<NumberTranslatorPage>(const NumberTranslatorPage());
-  serviceLocator.registerSingleton<ConfigurationsPage>(const ConfigurationsPage());
+  serviceLocator
+      .registerSingleton<NumberTranslatorPage>(const NumberTranslatorPage());
+  serviceLocator
+      .registerSingleton<ConfigurationsPage>(const ConfigurationsPage());
   serviceLocator.registerSingleton<GamePage>(const GamePage());
+  serviceLocator.registerSingleton<LoginPage>(const LoginPage());
 }
 
 void setupDataServices() {
@@ -43,13 +47,15 @@ void setupDataServices() {
   );
 
   serviceLocator.registerSingleton<NumberTranslatorRepository>(
-    NumberTranslatorRepositoryImpl(datasource: serviceLocator.get<NumberTranslatorDatasource>()),
+    NumberTranslatorRepositoryImpl(
+        datasource: serviceLocator.get<NumberTranslatorDatasource>()),
   );
 }
 
 void setupDomainServices() {
   serviceLocator.registerSingleton<NumberTranslatorDomainRepository>(
-    NumberTranslatorDomainRepositoryImpl(repository: serviceLocator.get<NumberTranslatorRepository>()),
+    NumberTranslatorDomainRepositoryImpl(
+        repository: serviceLocator.get<NumberTranslatorRepository>()),
   );
 
   serviceLocator.registerSingleton<NumberTranslatorService>(
