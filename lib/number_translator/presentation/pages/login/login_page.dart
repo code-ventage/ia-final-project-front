@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
                 color: Colors.lightBlueAccent,
               ),
               Text(
-                isSignInPage ? 'Login' : 'Sign up',
+                isSignInPage ? 'Login' : 'Create an account',
                 style: TextStyle(
                   fontSize: size.headlineMedium?.fontSize,
                   // letterSpacing: 5,
@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     // todo: iniciar sesion
                   },
-                  label: Text(isSignInPage ? 'Sign in' : 'Create account'),
+                  label: Text(isSignInPage ? 'Sign in' : 'Sign up'),
                   icon: const Icon(Icons.login),
                 ),
               ),
