@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/game/game_cubit.dart';
+import 'package:ia_final_project_front/theme/presentation/bloc/theme_selector_cubit.dart';
+import 'package:ia_final_project_front/theme/theme.dart';
 
 import 'config/service_locator/service_locator.dart';
 import 'go_router/go_router.dart';
@@ -11,23 +13,20 @@ import 'number_translator/presentation/bloc/translation/number_translator_cubit.
 void main() async {
   initServices();
 
-  runApp(
-      EasyLocalization(
-          supportedLocales: const [
-            Locale('es', 'ES'),
-            Locale('en', 'US'),
-          ],
-          saveLocale: true,
-          path: 'assets/translations',
-          startLocale: const Locale('es', 'ES'),
-          fallbackLocale: const Locale('en', 'US'),
-          useFallbackTranslations: true,
-          child:const NumberTranslateApp()
-      )
-  );
+  runApp(EasyLocalization(
+      supportedLocales: const [
+        Locale('es', 'ES'),
+        Locale('en', 'US'),
+      ],
+      saveLocale: true,
+      path: 'assets/translations',
+      startLocale: const Locale('es', 'ES'),
+      fallbackLocale: const Locale('en', 'US'),
+      useFallbackTranslations: true,
+      child: const NumberTranslateApp()));
 }
 
-void initServices() async{
+void initServices() async {
   setupServiceLocator();
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -42,7 +41,8 @@ class NumberTranslateApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => serviceLocator.get<NumberTranslatorCubit>()),
         BlocProvider(create: (context) => serviceLocator.get<ConfigurationsCubit>()),
-        BlocProvider(create: (context) => serviceLocator.get<GameCubit>())
+        BlocProvider(create: (context) => serviceLocator.get<GameCubit>()),
+        BlocProvider(create: (context) => serviceLocator.get<ThemeSelectorCubit>()),
       ],
       child: const _NumberTranslateApp(),
     );
@@ -56,24 +56,29 @@ class _NumberTranslateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      title: 'Material App',
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
-      darkTheme: ThemeData(
-          colorSchemeSeed: Colors.lightBlueAccent,
-          useMaterial3: true,
-          brightness: Brightness.dark
-      ),
-      themeMode: ThemeMode.dark,
-      theme: ThemeData(
-        colorSchemeSeed: Colors.purpleAccent,
-        useMaterial3: true,
-        brightness: Brightness.light
-      ),
+    return BlocBuilder<ThemeSelectorCubit, ThemeSelectorState>(
+      builder: (context, state) {
+        if (state is! ThemeSelectorInitial) {
+          return const SizedBox();
+        }
+        return MaterialApp.router(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          title: 'Number Translator Apk',
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+          darkTheme: CustomTheme(
+            brightness: Brightness.dark,
+            colorSeed: state.colorSeed,
+          ).theme,
+          themeMode: state.themeMode,
+          theme: CustomTheme(
+            brightness: Brightness.light,
+            colorSeed: state.colorSeed,
+          ).theme,
+        );
+      },
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
-import 'package:ia_final_project_front/number_translator/presentation/widgets/custo_animated_timer.dart';
+import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_animated_timer.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -93,7 +93,7 @@ class _Game extends StatelessWidget {
             ),
             const Gap(20),
             CustomAnimatedTimer(
-              duration: const Duration(seconds: 20),
+              duration: const Duration(seconds: 60),
               size: const Size(50, 50),
               onFinished: () => cubit.finishState(() {}),
               fontSize: 26,
