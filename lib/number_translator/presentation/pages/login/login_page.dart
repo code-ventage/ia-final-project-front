@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
     TextEditingController usernameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    final size = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final isSignInPage = true; // todo: en un futuro se debe coger del estado
 
     return Scaffold(
@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               children: [
-                const Gap(10),
+                const Gap(20),
                 const Icon(
                   Icons.account_box_rounded,
                   size: 180,
@@ -32,39 +32,25 @@ class LoginPage extends StatelessWidget {
                 Text(
                   isSignInPage ? 'Login' : 'Create an account',
                   style: TextStyle(
-                    fontSize: size.headlineMedium?.fontSize,
+                    fontSize: textTheme.headlineMedium?.fontSize,
                     // letterSpacing: 5,
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
+                const Gap(15),
+                CustomTextFormField(
+                  textEditingController: usernameController,
+                  label: 'Username',
                 ),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  textAlignVertical: TextAlignVertical.bottom,
-                  cursorHeight: 22,
-                  controller: usernameController,
-                  decoration: const InputDecoration(
-                    label: Text('Username'),
-                  ),
+                const Gap(15),
+                CustomPasswordTextFormField(
+                  passwordController: passwordController,
+                  label: 'Password',
+                  isShowPassword: false,
+                  onShowPasswordPressed: () {},
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  obscureText: true, //todo: cambiar dependiendo de si esta en mostrar
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.remove_red_eye_rounded),
-                    ),
-                    label: const Text('Password'),
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const Gap(15),
+                if(!isSignInPage)
+                ...buildRepeatPasswordTextFormField(passwordController: passwordController),
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton.icon(
@@ -75,20 +61,79 @@ class LoginPage extends StatelessWidget {
                     icon: const Icon(Icons.login),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const Gap(15),
                 TextButton(
                   onPressed: () {
                     // todo: navegar a la pagina de crear cuenta
                     context.pushNamed(Routes.signupPage.name);
                   },
-                  child: Text(isSignInPage ? "Don't have an account? Create one" : "Already have an account? Sign in"),
+                  child: Text(isSignInPage ? 'Don\'t have an account? Create one' : 'Already have an account? Sign in'),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  buildRepeatPasswordTextFormField({required TextEditingController passwordController}) {
+    return [
+      CustomPasswordTextFormField(
+        passwordController: passwordController,
+        label: 'Repeat your password',
+        isShowPassword: false,
+        onShowPasswordPressed: () {},
+      ),
+      const Gap(15),
+    ];
+  }
+}
+
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
+    super.key,
+    required this.textEditingController,
+    required this.label,
+  });
+
+  final TextEditingController textEditingController;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      textAlign: TextAlign.left,
+      textAlignVertical: TextAlignVertical.bottom,
+      cursorHeight: 22,
+      controller: textEditingController,
+      decoration: InputDecoration(
+        label: Text(label),
+      ),
+    );
+  }
+}
+
+class CustomPasswordTextFormField extends StatelessWidget {
+  const CustomPasswordTextFormField(
+      {super.key, required this.passwordController, required this.label, this.onShowPasswordPressed, required this.isShowPassword});
+
+  final String label;
+  final bool isShowPassword;
+  final TextEditingController passwordController;
+  final void Function()? onShowPasswordPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      obscureText: !isShowPassword,
+      controller: passwordController,
+      decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: onShowPasswordPressed,
+          icon: const Icon(Icons.remove_red_eye_rounded),
+        ),
+        label: Text(label),
       ),
     );
   }
