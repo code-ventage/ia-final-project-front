@@ -8,11 +8,11 @@ import 'package:ia_final_project_front/number_translator/presentation/bloc/trans
 import 'package:ia_final_project_front/number_translator/presentation/pages/configurations/configurations_page.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/game_page/game_page.dart';
 import 'package:ia_final_project_front/theme/presentation/bloc/theme_selector_cubit.dart';
-import 'package:ia_final_project_front/number_translator/presentation/pages/login/login_page.dart';
 
 import '../../number_translator/data/data_sources/number_translator/number_translator_datasource.dart';
 import '../../number_translator/domain/repositories/number_translator/number_translator_domain_repository.dart';
 import '../../number_translator/presentation/bloc/game/game_cubit.dart';
+import '../../number_translator/presentation/pages/auth/auth_page.dart';
 import '../../number_translator/presentation/pages/translation/number_translator_page.dart';
 
 final serviceLocator = GetIt.instance;
@@ -38,7 +38,7 @@ void setupPages() {
   serviceLocator
       .registerSingleton<ConfigurationsPage>(const ConfigurationsPage());
   serviceLocator.registerSingleton<GamePage>(const GamePage());
-  serviceLocator.registerSingleton<LoginPage>(const LoginPage());
+  serviceLocator.registerSingleton<AuthPage>(const AuthPage());
 }
 
 void setupDataServices() {
