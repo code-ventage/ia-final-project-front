@@ -3,8 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/go_router/routes.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({
+class AuthPage extends StatelessWidget {
+  const AuthPage({
     super.key,
   });
 
@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     // todo: navegar a la pagina de crear cuenta
-                    context.pushNamed(Routes.signupPage.name);
+                    context.pushNamed(Routes.authPage.name);
                   },
                   child: Text(isSignInPage ? 'Don\'t have an account? Create one' : 'Already have an account? Sign in'),
                 ),
