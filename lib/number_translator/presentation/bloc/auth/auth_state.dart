@@ -4,35 +4,36 @@ abstract class AuthState extends Equatable {
   const AuthState();
 
   AuthInitial copyWith({
-    bool? isSigned,
     bool? isSignInPage,
     bool? showPassword,
+    bool? isValidPassword,
   });
 }
 
 class AuthInitial extends AuthState {
-  final bool isSigned;
   final bool isSignInPage;
   final bool showPassword;
+  final bool isValidPassword;
 
   const AuthInitial({
-    this.isSigned = false,
     this.isSignInPage = true,
     this.showPassword = false,
+    this.isValidPassword = true,
   });
 
   @override
-  List<Object> get props => [isSigned, isSignInPage, showPassword];
+  List<Object> get props => [isSignInPage, showPassword, isValidPassword];
 
   @override
   AuthInitial copyWith({
-    bool? isSigned,
     bool? isSignInPage,
     bool? showPassword,
+    bool? isValidPassword,
   }) {
     return AuthInitial(
-      isSigned: isSigned ?? this.isSigned,
       isSignInPage: isSignInPage ?? this.isSignInPage,
+      showPassword: showPassword ?? this.showPassword,
+      isValidPassword: isValidPassword ?? this.isValidPassword,
     );
   }
 }
