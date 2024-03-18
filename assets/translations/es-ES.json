@@ -29,6 +29,15 @@
   "game_next_button": "siguiente",
   "game_back_button": "atras",
   "game_your_score": "Tu puntuación",
-  "game_finish": "Termine"
+  "game_finish": "Termine",
+  "dont_have_account": "No tienes cuenta? Crea una...",
+  "already_have_account": "Ya tienes cuenta? Autenticate...",
+  "sign_in": "Autenticarse",
+  "sign_up": "Crear cuenta",
+  "login": "Iniciar session",
+  "create_account": "Crear cuenta",
+  "username": "Nombre",
+  "password": "Contraseña",
+  "repeat_your_password": "Repite tu contraseña"
 
 }
