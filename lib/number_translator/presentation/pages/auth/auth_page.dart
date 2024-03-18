@@ -1,7 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/go_router/routes.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/auth/auth_cubit.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({
@@ -10,66 +14,74 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     final textTheme = Theme.of(context).textTheme;
-    final isSignInPage = true; // todo: en un futuro se debe coger del estado
 
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              children: [
-                const Gap(20),
-                const Icon(
-                  Icons.account_box_rounded,
-                  size: 180,
-                  color: Colors.lightBlueAccent,
-                ),
-                Text(
-                  isSignInPage ? 'Login' : 'Create an account',
-                  style: TextStyle(
-                    fontSize: textTheme.headlineMedium?.fontSize,
-                    // letterSpacing: 5,
-                  ),
-                ),
-                const Gap(15),
-                CustomTextFormField(
-                  textEditingController: usernameController,
-                  label: 'Username',
-                ),
-                const Gap(15),
-                CustomPasswordTextFormField(
-                  passwordController: passwordController,
-                  label: 'Password',
-                  isShowPassword: false,
-                  onShowPasswordPressed: () {},
-                ),
-                const Gap(15),
-                if(!isSignInPage)
-                ...buildRepeatPasswordTextFormField(passwordController: passwordController),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: () {
-                      // todo: iniciar sesion
-                    },
-                    label: Text(isSignInPage ? 'Sign in' : 'Sign up'),
-                    icon: const Icon(Icons.login),
-                  ),
-                ),
-                const Gap(15),
-                TextButton(
-                  onPressed: () {
-                    // todo: navegar a la pagina de crear cuenta
-                    context.pushNamed(Routes.authPage.name);
-                  },
-                  child: Text(isSignInPage ? 'Don\'t have an account? Create one' : 'Already have an account? Sign in'),
-                ),
-              ],
+            child: BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                if (state is! AuthInitial) return const CircularProgressIndicator();
+
+                final cubit = serviceLocator.get<AuthCubit>();
+
+                if (state.isSigned) {
+                  context.replaceNamed(Routes.numberTranslator.name);
+                }
+
+                return Column(
+                  children: [
+                    const Gap(20),
+                    const Icon(
+                      Icons.account_box_rounded,
+                      size: 180,
+                      color: Colors.lightBlueAccent,
+                    ),
+                    Text(
+                      state.isSignInPage ? tr('login') : tr('create_account'),
+                      style: TextStyle(
+                        fontSize: textTheme.headlineMedium?.fontSize,
+                      ),
+                    ),
+                    const Gap(15),
+                    CustomTextFormField(
+                      textEditingController: cubit.usernameController,
+                      label: tr('username'),
+                    ),
+                    const Gap(15),
+                    CustomPasswordTextFormField(
+                      passwordController: cubit.passwordController,
+                      label: tr('password'),
+                      isShowPassword: state.showPassword,
+                      onShowPasswordPressed: () => cubit.changePasswordVisibility(),
+                    ),
+                    const Gap(15),
+                    if (!state.isSignInPage)
+                      ...buildRepeatPasswordTextFormField(
+                        passwordController: cubit.passwordController,
+                        showPassword: state.showPassword,
+                        onShowPasswordPressed: () => cubit.changePasswordVisibility(),
+                      ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: () {
+                          state.isSignInPage ? cubit.logIn() : cubit.signUp();
+                        },
+                        label: Text(state.isSignInPage ? tr('sign_in') : tr('sign_up')),
+                        icon: const Icon(Icons.login),
+                      ),
+                    ),
+                    const Gap(15),
+                    TextButton(
+                      onPressed: () => cubit.changePage(),
+                      child: Text(state.isSignInPage ? tr('dont_have_account') : tr('already_have_account')),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -77,13 +89,14 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  buildRepeatPasswordTextFormField({required TextEditingController passwordController}) {
+  buildRepeatPasswordTextFormField(
+      {required TextEditingController passwordController, required bool showPassword, required void Function() onShowPasswordPressed}) {
     return [
       CustomPasswordTextFormField(
         passwordController: passwordController,
-        label: 'Repeat your password',
-        isShowPassword: false,
-        onShowPasswordPressed: () {},
+        label: tr('repeat_your_password'),
+        isShowPassword: showPassword,
+        onShowPasswordPressed: onShowPasswordPressed,
       ),
       const Gap(15),
     ];

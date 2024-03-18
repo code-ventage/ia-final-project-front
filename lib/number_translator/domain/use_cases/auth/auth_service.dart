@@ -9,16 +9,19 @@ abstract class AuthService {
 
 class AuthServiceImpl extends AuthService {
   final AuthDomainRepository repository;
+  bool isSigned = false;
 
   AuthServiceImpl({required this.repository});
 
   @override
   Future<bool> logIn(UserEntity userEntity) async {
-    return await repository.logIn(userEntity);
+    isSigned = await repository.logIn(userEntity);
+    return isSigned;
   }
 
   @override
   Future<bool> signUp(UserEntity userEntity) async {
-    return await repository.signUp(userEntity);
+    isSigned = await repository.signUp(userEntity);
+    return isSigned;
   }
 }
