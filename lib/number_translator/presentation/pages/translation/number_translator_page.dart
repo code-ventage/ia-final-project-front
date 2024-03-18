@@ -55,6 +55,32 @@ class NumberTranslatorPage extends StatelessWidget {
                   },
                   icon: const Icon(Icons.settings),
                 ),
+              ),
+              CustomTooltip(
+                message: tr('profile'),
+                child: PopupMenuButton(
+                  tooltip: '',
+                  itemBuilder: (context) {
+                    return List.of([
+                      PopupMenuItem(
+                        child: TextButton(
+                          onPressed: () {
+                            // todo: go to myProfile page
+                          },
+                          child: const Text('Profile'),
+                        ),
+                      ),
+                      PopupMenuItem(
+                        child: TextButton(
+                          child: const Text('LogOut'),
+                          onPressed: (){
+                            // todo: logout
+                          },
+                        ),
+                      ),
+                    ]);
+                  },
+                ),
               )
             ],
           ),
