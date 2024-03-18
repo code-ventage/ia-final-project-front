@@ -30,7 +30,7 @@
   "game_back_button": "back",
   "game_your_score": "Your score",
   "game_finish": "Finish",
-  "dont_have_account": "Don\\'t have an account? Create one...",
+  "dont_have_account": "Don't have an account? Create one...",
   "already_have_account": "Already have an account? Sign in...",
   "sign_in": "Sign In",
   "sign_up": "Sign Up",
@@ -38,5 +38,6 @@
   "create_account": "Create an account",
   "username": "UserName",
   "password": "Password",
-  "repeat_your_password": "Repeat your password"
+  "repeat_your_password": "Repeat your password",
+  "profile": "Profile"
 }

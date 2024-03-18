@@ -38,6 +38,7 @@
   "create_account": "Crear cuenta",
   "username": "Nombre",
   "password": "Contraseña",
-  "repeat_your_password": "Repite tu contraseña"
+  "repeat_your_password": "Repite tu contraseña",
+  "profile": "Perfil"
 
 }
