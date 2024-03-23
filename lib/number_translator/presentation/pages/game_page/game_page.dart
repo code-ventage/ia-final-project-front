@@ -123,14 +123,7 @@ class _GameFinished extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var authService = serviceLocator.get<AuthService>();
-    authService.get() != null
-        ? serviceLocator.get<ScoreService>().save(
-              UserScoreEntity(
-                username: authService.get()!.username,
-                score: '${serviceLocator.get<GameCubit>().currentPoints}',
-              ),
-            )
-        : null;
+    saveScore(authService);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -161,6 +154,8 @@ class _GameFinished extends StatelessWidget {
       ),
     );
   }
+
+  void saveScore(AuthService authService) => serviceLocator.get<GameCubit>().saveCurrentScore(authService);
 }
 
 class _GameIntroduction extends StatelessWidget {
