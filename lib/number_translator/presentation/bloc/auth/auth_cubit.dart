@@ -15,12 +15,15 @@ class AuthCubit extends Cubit<AuthState> {
   final TextEditingController repeatPasswordController = TextEditingController();
 
   Future<void> logIn(void Function() callback) async {
-    if (await serviceLocator.get<AuthService>().logIn(
-      UserEntity(
-        username: usernameController.text,
-        password: passwordController.text,
-      ),
+    var userEntity = UserEntity(
+      username: usernameController.text,
+      password: passwordController.text,
+    );
+    var authService = serviceLocator.get<AuthService>();
+    if (await authService.logIn(
+      userEntity,
     )) {
+      authService.set(userEntity);
       callback.call();
       return;
     }
@@ -28,18 +31,19 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void validatePassword(void Function() callback) {
-    passwordController.text != repeatPasswordController.text
-        ? emit(state.copyWith(isValidPassword: false))
-        : signUp(callback);
+    passwordController.text != repeatPasswordController.text ? emit(state.copyWith(isValidPassword: false)) : signUp(callback);
   }
 
   Future<void> signUp(void Function() callback) async {
-    if (await serviceLocator.get<AuthService>().signUp(
-      UserEntity(
-        username: usernameController.text,
-        password: passwordController.text,
-      ),
+    var authService = serviceLocator.get<AuthService>();
+    var userEntity = UserEntity(
+      username: usernameController.text,
+      password: passwordController.text,
+    );
+    if (await authService.signUp(
+      userEntity,
     )) {
+      authService.set(userEntity);
       callback.call();
       return;
     }
