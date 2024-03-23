@@ -58,4 +58,9 @@ class AuthCubit extends Cubit<AuthState> {
     debugPrint('${!(state as AuthInitial).showPassword}');
     emit(state.copyWith(showPassword: !(state as AuthInitial).showPassword));
   }
+
+  void logOut() {
+    serviceLocator.get<AuthService>().logOut();
+    emit(state.copyWith());
+  }
 }
