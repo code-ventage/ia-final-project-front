@@ -9,6 +9,8 @@ abstract class AuthService {
   Future<bool> signUp(UserEntity userEntity);
 
   Future<bool> logIn(UserEntity userEntity);
+
+  void logOut();
 }
 
 class AuthServiceImpl extends AuthService {
@@ -34,5 +36,11 @@ class AuthServiceImpl extends AuthService {
   Future<bool> signUp(UserEntity userEntity) async {
     isSigned = await repository.signUp(userEntity);
     return isSigned;
+  }
+
+  @override
+  void logOut() {
+    isSigned = false;
+    _userEntity = null;
   }
 }
