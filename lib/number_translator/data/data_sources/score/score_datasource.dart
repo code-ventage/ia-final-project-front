@@ -75,6 +75,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
             ]
           }
         };
+        debugPrint('response: $response');
         return response['response']['status'] == '200';
       }
       debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
