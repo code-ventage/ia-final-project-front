@@ -8,10 +8,10 @@ abstract class ScoreRepository {
   Future<List<UserScoreModel>> getAll();
 }
 
-class ScoreDomainRepositoryImpl extends ScoreRepository {
+class ScoreRepositoryImpl extends ScoreRepository {
   final ScoreDatasource scoreDatasource;
 
-  ScoreDomainRepositoryImpl({
+  ScoreRepositoryImpl({
     required this.scoreDatasource,
   });
 
