@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/auth/auth_cubit.dart';
 
 import '../../../../go_router/routes.dart';
 import '../../bloc/configurations/configurations_cubit.dart';
@@ -64,11 +65,16 @@ class NumberTranslatorPage extends StatelessWidget {
                     return List.of([
                       PopupMenuItem(
                         child: const Text('Profile'),
-                        onTap: () {},
+                        onTap: () {
+                          //TODO 3/23/24 palmerodev : go to profile page
+                        },
                       ),
                       PopupMenuItem(
                         child: const Text('LogOut'),
-                        onTap: () {},
+                        onTap: () {
+                          serviceLocator.get<AuthCubit>().logOut();
+                          context.replaceNamed(Routes.authPage.name);
+                        },
                       ),
                     ]);
                   },
