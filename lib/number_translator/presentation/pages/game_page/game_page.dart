@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
+import 'package:ia_final_project_front/number_translator/domain/entities/user_score_entity.dart';
+import 'package:ia_final_project_front/number_translator/domain/use_cases/auth/auth_service.dart';
+import 'package:ia_final_project_front/number_translator/domain/use_cases/score/score_service.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_animated_timer.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -119,6 +122,15 @@ class _GameFinished extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var authService = serviceLocator.get<AuthService>();
+    authService.get() != null
+        ? serviceLocator.get<ScoreService>().save(
+              UserScoreEntity(
+                username: authService.get()!.username,
+                score: '${serviceLocator.get<GameCubit>().currentPoints}',
+              ),
+            )
+        : null;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -204,7 +216,7 @@ class _GameIntroduction extends StatelessWidget {
         color: colorScheme.primary,
         activeColor: colorScheme.onInverseSurface,
         size: const Size(8, 8),
-        activeSize: const Size(12, 12),
+        activeSize: const Size(14, 14),
       ),
     );
   }
