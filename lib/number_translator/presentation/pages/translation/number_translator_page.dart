@@ -63,20 +63,12 @@ class NumberTranslatorPage extends StatelessWidget {
                   itemBuilder: (context) {
                     return List.of([
                       PopupMenuItem(
-                        child: TextButton(
-                          onPressed: () {
-                            // todo: go to myProfile page
-                          },
-                          child: const Text('Profile'),
-                        ),
+                        child: const Text('Profile'),
+                        onTap: () {},
                       ),
                       PopupMenuItem(
-                        child: TextButton(
-                          child: const Text('LogOut'),
-                          onPressed: (){
-                            // todo: logout
-                          },
-                        ),
+                        child: const Text('LogOut'),
+                        onTap: () {},
                       ),
                     ]);
                   },
