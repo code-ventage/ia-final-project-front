@@ -8,17 +8,17 @@ abstract class ScoreService {
 }
 
 class ScoreServiceImpl extends ScoreService {
-  final ScoreDomainRepository repository;
+  final ScoreDomainRepository scoreRepository;
 
-  ScoreServiceImpl({required this.repository});
+  ScoreServiceImpl({required this.scoreRepository});
 
   @override
   Future<List<UserScoreEntity>> getAll() async {
-    return await repository.getAll();
+    return await scoreRepository.getAll();
   }
 
   @override
   Future<bool> save(UserScoreEntity userScoreEntity) async {
-    return await repository.save(userScoreEntity);
+    return await scoreRepository.save(userScoreEntity);
   }
 }
