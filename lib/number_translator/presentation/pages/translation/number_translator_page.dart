@@ -33,13 +33,6 @@ class NumberTranslatorPage extends StatelessWidget {
         context.setLocale((state as ConfigurationsInitial).isSpanishLanguage ? context.supportedLocales.first : context.supportedLocales.last);
         serviceLocator.get<ConfigurationsCubit>().currentLanguage =
             context.locale == context.supportedLocales.first ? tr('spanish_language') : tr('english_language');
-        cubit.validateNumberToTranslate().then(
-              (value) => {
-                cubit.translate(
-                  numberToTranslate: cubit.numberToTranslateController.text,
-                )
-              },
-            );
       },
       builder: (context, state) {
         cubit.validateNumberToTranslate();
@@ -261,17 +254,10 @@ class NumberTranslatorPage extends StatelessWidget {
           SizedBox(
             height: height * 0.25,
             width: width * 0.85,
-            child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
-              builder: (context, state) {
-                if (state is NumberTranslatorInitial) {
-                  return CustomTextFormField(
-                    borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
-                    controller: cubit.translatedNumberController,
-                    readOnly: true,
-                  );
-                }
-                return const CircularProgressIndicator();
-              },
+            child: CustomTextFormField(
+              borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
+              controller: cubit.translatedNumberController,
+              readOnly: true,
             ),
           ),
         ],

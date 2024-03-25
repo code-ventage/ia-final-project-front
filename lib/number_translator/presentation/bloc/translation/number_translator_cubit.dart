@@ -76,6 +76,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
       return false;
     }
     if (!(state as NumberTranslatorInitial).isLetterTranslation) {
+      debugPrint('isOnlyDigits');
       translatedNumberController.text = '';
       emit(
         state.copyWith(
