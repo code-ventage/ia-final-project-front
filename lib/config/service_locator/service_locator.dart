@@ -27,7 +27,7 @@ import '../../number_translator/presentation/pages/translation/number_translator
 final serviceLocator = GetIt.instance;
 
 void setupServiceLocator() {
-  serviceLocator.registerSingleton<ConfigurationData>(ConfigurationData());
+  serviceLocator.registerSingleton<ConfigurationData>(ConfigurationData(DEBUGING: false));
   serviceLocator.registerSingleton<ConnectionHelper>(ConnectionHelper());
 
   setupDataServices();
