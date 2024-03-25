@@ -69,10 +69,10 @@ class ConfigurationsPage extends StatelessWidget {
 
   ExpansionTile buildHotsPotIpAddressConfiguration(ThemeData themeData, ConfigurationsCubit cubit, TextEditingController controller) {
     return ExpansionTile(
-      leading: const Icon(Icons.route_outlined, color: Colors.lightBlueAccent),
+      leading: Icon(Icons.route_outlined, color: themeData.colorScheme.primary),
       title: Text(tr('hotspot_ip_address_label'), style: const TextStyle(
         fontWeight: FontWeight.w500,
-        fontSize: 16
+        fontSize: 16,
       )),
       subtitle: Text(tr('input_your_hotspot_ip_address')),
       children: [
