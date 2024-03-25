@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/auth/auth_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/game/game_cubit.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/score/score_cubit.dart';
 import 'package:ia_final_project_front/theme/presentation/bloc/theme_selector_cubit.dart';
 import 'package:ia_final_project_front/theme/theme.dart';
 
@@ -45,6 +46,7 @@ class NumberTranslateApp extends StatelessWidget {
         BlocProvider(create: (context) => serviceLocator.get<GameCubit>()),
         BlocProvider(create: (context) => serviceLocator.get<ThemeSelectorCubit>()),
         BlocProvider(create: (context)=> serviceLocator.get<AuthCubit>()),
+        BlocProvider(create: (context)=> serviceLocator.get<ScoreCubit>()),
       ],
       child: const _NumberTranslateApp(),
     );

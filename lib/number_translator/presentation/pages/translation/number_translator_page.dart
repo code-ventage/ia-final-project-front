@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -64,13 +67,14 @@ class NumberTranslatorPage extends StatelessWidget {
                   itemBuilder: (context) {
                     return List.of([
                       PopupMenuItem(
-                        child: const Text('Profile'),
+                        child: Text(tr('score')),
                         onTap: () {
-                          //TODO 3/23/24 palmerodev : go to profile page
+                          debugPrint('oasdosadpasdo');
+                          context.pushNamed(Routes.userScore.name);
                         },
                       ),
                       PopupMenuItem(
-                        child: const Text('LogOut'),
+                        child: Text(tr('logout')),
                         onTap: () {
                           serviceLocator.get<AuthCubit>().logOut();
                           context.replaceNamed(Routes.authPage.name);

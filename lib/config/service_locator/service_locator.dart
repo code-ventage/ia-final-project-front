@@ -11,6 +11,7 @@ import 'package:ia_final_project_front/number_translator/domain/use_cases/number
 import 'package:ia_final_project_front/number_translator/domain/use_cases/score/score_service.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/auth/auth_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/score/score_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/translation/number_translator_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/configurations/configurations_page.dart';
 import 'package:ia_final_project_front/number_translator/presentation/pages/game_page/game_page.dart';
@@ -38,15 +39,8 @@ void setupServiceLocator() {
   serviceLocator.registerSingleton<GameCubit>(GameCubit());
   serviceLocator.registerSingleton<ThemeSelectorCubit>(ThemeSelectorCubit());
   serviceLocator.registerSingleton<AuthCubit>(AuthCubit());
+  serviceLocator.registerSingleton<ScoreCubit>(ScoreCubit());
 
-  setupPages();
-}
-
-void setupPages() {
-  serviceLocator.registerSingleton<NumberTranslatorPage>(const NumberTranslatorPage());
-  serviceLocator.registerSingleton<ConfigurationsPage>(const ConfigurationsPage());
-  serviceLocator.registerSingleton<GamePage>(const GamePage());
-  serviceLocator.registerSingleton<AuthPage>(const AuthPage());
 }
 
 void setupDataServices() {

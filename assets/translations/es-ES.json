@@ -34,11 +34,13 @@
   "already_have_account": "Ya tienes cuenta? Autenticate",
   "sign_in": "Autenticarse",
   "sign_up": "Crear cuenta",
-  "login": "Iniciar session",
+  "login": "Iniciar sesión",
   "create_account": "Crear cuenta",
   "username": "Nombre",
   "password": "Contraseña",
   "repeat_your_password": "Repite tu contraseña",
-  "profile": "Perfil"
+  "profile": "Perfil",
+  "score": "Puntuación",
+  "logout": "Cerrar Sesión"
 
 }

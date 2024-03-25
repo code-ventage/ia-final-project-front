@@ -36,8 +36,10 @@
   "sign_up": "Sign Up",
   "login": "Login",
   "create_account": "Create an account",
-  "username": "UserName",
+  "username": "Username",
   "password": "Password",
   "repeat_your_password": "Repeat your password",
-  "profile": "Profile"
+  "profile": "Profile",
+  "score": "Score",
+  "logout":"Logout"
 }
