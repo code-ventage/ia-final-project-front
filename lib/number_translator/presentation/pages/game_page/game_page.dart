@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
-import 'package:ia_final_project_front/number_translator/domain/entities/user_score_entity.dart';
 import 'package:ia_final_project_front/number_translator/domain/use_cases/auth/auth_service.dart';
-import 'package:ia_final_project_front/number_translator/domain/use_cases/score/score_service.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_animated_timer.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -107,7 +107,7 @@ class _Game extends StatelessWidget {
               onPressed: () {
                 cubit.finishState(() {});
               },
-              child: Text(tr('game_finish')), // todo change the text to tr
+              child: Text(tr('game_finish')),
             ),
           ],
         );
