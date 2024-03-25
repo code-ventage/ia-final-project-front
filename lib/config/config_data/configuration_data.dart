@@ -1,6 +1,6 @@
 class ConfigurationData {
   ConfigurationData({
-    this.BASE_URL = "http://0.0.0.0:34545",
+    this.BASE_URL = "http://localhost:34545",
     this.CONTENT_TYPE = "application/json",
     this.DEBUGGING = false,
   });

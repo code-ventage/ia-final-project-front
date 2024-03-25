@@ -42,7 +42,7 @@ class AuthDatasourceImpl extends AuthDatasource {
         data: userModel.toJson(),
       ))
           .data;
-      debugPrint(response['response']);
+      debugPrint(response['response'].toString());
     } on Exception catch (e) {
       debugPrint(e.toString());
       return false;
@@ -76,7 +76,7 @@ class AuthDatasourceImpl extends AuthDatasource {
         data: userModel.toJson(),
       ))
           .data;
-      debugPrint(response['response']);
+      debugPrint(response['response'].toString());
     } on Exception catch (e) {
       debugPrint(e.toString());
       return false;
