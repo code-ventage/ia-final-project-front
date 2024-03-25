@@ -41,5 +41,7 @@
   "repeat_your_password": "Repeat your password",
   "profile": "Profile",
   "score": "Score",
-  "logout":"Logout"
+  "logout":"Logout",
+  "user_score_title": "Scores"
+
 }
