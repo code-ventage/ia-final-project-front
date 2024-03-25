@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/number_translator/domain/entities/user_score_entity.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/score/score_cubit.dart';
 
@@ -13,16 +14,7 @@ class UserScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scores = <UserScoreEntity>[
-      UserScoreEntity(username: 'pepe', score: '200'),
-      UserScoreEntity(username: 'pepe', score: '200'),
-      UserScoreEntity(username: 'pepe', score: '200'),
-      UserScoreEntity(username: 'pepe', score: '200'),
-      UserScoreEntity(username: 'pepe', score: '200'),
-      UserScoreEntity(username: 'pepe', score: '200'),
-    ];
-    //TODO 3/25/24 palmerodev : delete this
-
+    final cubit = serviceLocator.get<ScoreCubit>();
     return Scaffold(
       appBar: AppBar(
         title: Text(tr('user_score_title')),
@@ -36,12 +28,10 @@ class UserScorePage extends StatelessWidget {
               height: 60,
               width: MediaQuery.of(context).size.width * 0.9,
               child: CustomTextFormField(
-                suffix: IconButton(
-                    icon: const Icon(Icons.search),
-                    onPressed: () {
-                      //TODO 3/25/24 palmerodev : make the filter adn change the state
-                    }),
-                controller: TextEditingController(),
+                onChanged: (value){
+                  cubit.filter(value);
+                },
+                controller: cubit.filterEditingController,
                 readOnly: false,
               ),
             ),
@@ -49,17 +39,22 @@ class UserScorePage extends StatelessWidget {
           const Gap(20),
           BlocBuilder<ScoreCubit, ScoreState>(
             builder: (context, state) {
+              final scores = cubit.userScores;
+              if (scores == null) {
+                cubit.initialize();
+                return const Center(child: CircularProgressIndicator());
+              }
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: ListView.builder(
-                    itemCount: scores.length, //TODO 3/25/24 palmerodev : get this from the cubit
+                    itemCount: cubit.userScores!.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                          title: Text(scores[index].score, style: const TextStyle(fontSize: 20)),
-                          trailing: Text(scores[index].username, style: const TextStyle(fontSize: 20)),
-                          subtitle: const Text('2001-12-12'),  //TODO 3/25/24 palmerodev : get this from the scores
+                          title: Text(cubit.userScores![index].score, style: const TextStyle(fontSize: 20)),
+                          trailing: Text(cubit.userScores![index].username, style: const TextStyle(fontSize: 20)),
+                          subtitle: const Text('2001-12-12'), //TODO 3/25/24 palmerodev : get this from the scores
                           leading: const Icon(Icons.sports_score, size: 40));
                     },
                   ),
