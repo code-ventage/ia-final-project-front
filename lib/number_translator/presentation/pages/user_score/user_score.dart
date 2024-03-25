@@ -59,7 +59,8 @@ class UserScorePage extends StatelessWidget {
                       return ListTile(
                           title: Text(scores[index].score, style: const TextStyle(fontSize: 20)),
                           trailing: Text(scores[index].username, style: const TextStyle(fontSize: 20)),
-                          leading: const Icon(Icons.sports_score, size: 32));
+                          subtitle: const Text('2001-12-12'),  //TODO 3/25/24 palmerodev : get this from the scores
+                          leading: const Icon(Icons.sports_score, size: 40));
                     },
                   ),
                 ),
