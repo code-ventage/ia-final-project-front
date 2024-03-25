@@ -35,8 +35,10 @@ class AuthDatasourceImpl extends AuthDatasource {
             ]
           }
         };
+        debugPrint('DEBUGGING');
         return response['response']['status'] == '200';
       }
+      debugPrint('NOT DEBUGGING');
       response = (await connectionHelper.dio.post(
         '/user/login',
         data: userModel.toJson(),
@@ -69,8 +71,10 @@ class AuthDatasourceImpl extends AuthDatasource {
             ]
           }
         };
+        debugPrint('DEBUGGING');
         return response['response']['status'] == '200';
       }
+      debugPrint('NOT DEBUGGING');
       response = (await connectionHelper.dio.post(
         '/user/signUp',
         data: userModel.toJson(),
