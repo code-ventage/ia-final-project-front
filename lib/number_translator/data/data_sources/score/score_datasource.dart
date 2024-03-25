@@ -22,7 +22,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
   Future<List<UserScoreModel>> getAll() async{
     var response = <String, dynamic>{};
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           "version": "0",
           "response": {
@@ -61,7 +61,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
   Future<bool> save(UserScoreModel userModel) async{
     var response = <String, dynamic>{};
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           "version": "0",
           "response": {

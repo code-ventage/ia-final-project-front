@@ -21,7 +21,7 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
     var response = <String, dynamic>{};
     var error = '';
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           'hash_response': {'N': isFromDigit ? '1000' : 'mil'},
         };

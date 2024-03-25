@@ -21,7 +21,7 @@ class AuthDatasourceImpl extends AuthDatasource {
   Future<bool> logIn(UserModel userModel) async{
     var response = <String, dynamic>{};
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           "version": "0",
           "response": {
@@ -42,6 +42,7 @@ class AuthDatasourceImpl extends AuthDatasource {
         data: userModel.toJson(),
       ))
           .data;
+      debugPrint(response['response']);
     } on Exception catch (e) {
       debugPrint(e.toString());
       return false;
@@ -54,7 +55,7 @@ class AuthDatasourceImpl extends AuthDatasource {
   Future<bool> signUp(UserModel userModel) async{
     var response = <String, dynamic>{};
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           "version": "0",
           "response": {
@@ -75,6 +76,7 @@ class AuthDatasourceImpl extends AuthDatasource {
         data: userModel.toJson(),
       ))
           .data;
+      debugPrint(response['response']);
     } on Exception catch (e) {
       debugPrint(e.toString());
       return false;
