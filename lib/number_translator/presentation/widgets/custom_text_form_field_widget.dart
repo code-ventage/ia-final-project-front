@@ -7,12 +7,14 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     required this.controller,
     this.borderColor,
+    this.suffix,
   });
 
   final bool readOnly;
   final Function(String)? onChanged;
   final TextEditingController controller;
   final Color? borderColor;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,10 @@ class CustomTextFormField extends StatelessWidget {
         fontSize: 16,
       ),
       decoration: InputDecoration(
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: suffix,
+        ),
         border: OutlineInputBorder(
           borderSide: BorderSide(
             color: borderColor??Theme.of(context).colorScheme.secondary,
