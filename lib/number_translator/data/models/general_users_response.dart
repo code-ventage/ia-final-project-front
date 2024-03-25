@@ -1,13 +1,15 @@
+import 'package:flutter/cupertino.dart';
+
 class GeneralUsersResponse<T> {
   final String version;
   final Response<T> response;
 
   GeneralUsersResponse({required this.version, required this.response});
 
-  factory GeneralUsersResponse.fromJson(Map<String, dynamic> json) {
+  factory GeneralUsersResponse.fromJson(Map<String, dynamic> json, bool isUserScore) {
     return GeneralUsersResponse(
       version: json['version'] ?? '',
-      response: Response.fromJson(json['response']),
+      response: Response<T>.fromJson(json['response'], isUserScore),
     );
   }
 }
@@ -19,11 +21,11 @@ class Response<T> {
 
   Response({required this.status, required this.message, required this.data});
 
-  factory Response.fromJson(Map<String, dynamic> json) {
+  factory Response.fromJson(Map<String, dynamic> json, bool isUsersScore) {
     return Response(
       status: json['status'] ?? '',
       message: json['message'] ?? '',
-      data: List.from((json['data'] as List).map((e) => (T is UserScoreResponse) ? UserScoreResponse.fromJson(e) : UserResponse.fromJson(e))),
+      data: List.from((json['data'] as List).map((e) => (isUsersScore) ? UserScoreResponse.fromJson(e) : UserResponse.fromJson(e))),
     );
   }
 }
