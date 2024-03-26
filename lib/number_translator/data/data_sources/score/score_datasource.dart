@@ -48,7 +48,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
       }
       debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
       response = (await connectionHelper.dio.get(
-        '/user/score/getAll',
+        '/user/score/index',
       ))
           .data;
     } on Exception catch (e) {
