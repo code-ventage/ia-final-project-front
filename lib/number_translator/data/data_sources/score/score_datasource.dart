@@ -43,6 +43,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
             .map((e) => UserScoreModel(
                   username: e.username,
                   score: e.score,
+                  date: e.date,
                 ))
             .toList();
       }
@@ -62,6 +63,7 @@ class ScoreDatasourceImpl extends ScoreDatasource {
         .map((e) => UserScoreModel(
               username: e.username,
               score: e.score,
+      date: e.date,
             ))
         .toList();
   }
