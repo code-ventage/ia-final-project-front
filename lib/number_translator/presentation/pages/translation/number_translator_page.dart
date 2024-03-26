@@ -71,6 +71,10 @@ class NumberTranslatorPage extends StatelessWidget {
                         child: Text(tr('logout')),
                         onTap: () {
                           serviceLocator.get<AuthCubit>().logOut();
+                          // reset text form fields
+                          serviceLocator.get<AuthCubit>().usernameController.text = '';
+                          serviceLocator.get<AuthCubit>().passwordController.text = '';
+                          serviceLocator.get<AuthCubit>().repeatPasswordController.text = '';
                           context.replaceNamed(Routes.authPage.name);
                         },
                       ),
