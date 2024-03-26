@@ -27,10 +27,6 @@ class AuthPage extends StatelessWidget {
 
                 final cubit = serviceLocator.get<AuthCubit>();
 
-                if (state.isSigned) {
-                  context.replaceNamed(Routes.numberTranslator.name);
-                }
-
                 return Column(
                   children: [
                     const Gap(20),
@@ -55,20 +51,26 @@ class AuthPage extends StatelessWidget {
                       passwordController: cubit.passwordController,
                       label: tr('password'),
                       isShowPassword: state.showPassword,
-                      onShowPasswordPressed: () => cubit.changePasswordVisibility(),
+                      error: !state.isSignInPage ? state.isValidPassword : null,
+                      onShowPasswordPressed: cubit.changePasswordVisibility,
                     ),
                     const Gap(15),
                     if (!state.isSignInPage)
                       ...buildRepeatPasswordTextFormField(
-                        passwordController: cubit.passwordController,
+                        passwordController: cubit.repeatPasswordController,
                         showPassword: state.showPassword,
-                        onShowPasswordPressed: () => cubit.changePasswordVisibility(),
+                        error: !state.isSignInPage ? state.isValidPassword : null,
+                        onShowPasswordPressed: cubit.changePasswordVisibility,
                       ),
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
                         onPressed: () {
-                          state.isSignInPage ? cubit.logIn() : cubit.signUp();
+                          if (!state.isSignInPage) {
+                            cubit.validatePassword(() => context.replaceNamed(Routes.numberTranslator.name));
+                          } else {
+                            cubit.logIn(() => context.replaceNamed(Routes.numberTranslator.name));
+                          }
                         },
                         label: Text(state.isSignInPage ? tr('sign_in') : tr('sign_up')),
                         icon: const Icon(Icons.login),
@@ -89,13 +91,18 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  buildRepeatPasswordTextFormField(
-      {required TextEditingController passwordController, required bool showPassword, required void Function() onShowPasswordPressed}) {
+  buildRepeatPasswordTextFormField({
+    required TextEditingController passwordController,
+    required bool showPassword,
+    required void Function() onShowPasswordPressed,
+    bool? error,
+  }) {
     return [
       CustomPasswordTextFormField(
         passwordController: passwordController,
         label: tr('repeat_your_password'),
         isShowPassword: showPassword,
+        error: error,
         onShowPasswordPressed: onShowPasswordPressed,
       ),
       const Gap(15),
@@ -128,10 +135,17 @@ class CustomTextFormField extends StatelessWidget {
 }
 
 class CustomPasswordTextFormField extends StatelessWidget {
-  const CustomPasswordTextFormField(
-      {super.key, required this.passwordController, required this.label, this.onShowPasswordPressed, required this.isShowPassword});
+  const CustomPasswordTextFormField({
+    super.key,
+    required this.passwordController,
+    required this.label,
+    this.onShowPasswordPressed,
+    required this.isShowPassword,
+    this.error,
+  });
 
   final String label;
+  final bool? error;
   final bool isShowPassword;
   final TextEditingController passwordController;
   final void Function()? onShowPasswordPressed;
@@ -147,6 +161,24 @@ class CustomPasswordTextFormField extends StatelessWidget {
           icon: const Icon(Icons.remove_red_eye_rounded),
         ),
         label: Text(label),
+        focusedBorder: !(error ?? true)
+            ? UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 4,
+                ),
+              )
+            : null,
+        enabledBorder: !(error ?? true)
+            ? UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: const BorderSide(
+                  color: Colors.redAccent,
+                  width: 4,
+                ),
+              )
+            : null,
       ),
     );
   }

@@ -12,31 +12,42 @@ class AuthCubit extends Cubit<AuthState> {
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController repeatPasswordController = TextEditingController();
 
-  Future<void> logIn() async {
-    emit(
-      state.copyWith(
-        isSigned: await serviceLocator.get<AuthService>().logIn(
-              UserEntity(
-                username: usernameController.text,
-                password: passwordController.text,
-              ),
-            ),
-      ),
+  Future<void> logIn(void Function() callback) async {
+    var userEntity = UserEntity(
+      username: usernameController.text,
+      password: passwordController.text,
     );
+    var authService = serviceLocator.get<AuthService>();
+    if (await authService.logIn(
+      userEntity,
+    )) {
+      authService.set(userEntity);
+      callback.call();
+      return;
+    }
+    emit(state.copyWith()); //todo: show auth error
   }
 
-  Future<void> signUp() async {
-    emit(
-      state.copyWith(
-        isSigned: await serviceLocator.get<AuthService>().signUp(
-              UserEntity(
-                username: usernameController.text,
-                password: passwordController.text,
-              ),
-            ),
-      ),
+  void validatePassword(void Function() callback) {
+    passwordController.text != repeatPasswordController.text ? emit(state.copyWith(isValidPassword: false)) : signUp(callback);
+  }
+
+  Future<void> signUp(void Function() callback) async {
+    var authService = serviceLocator.get<AuthService>();
+    var userEntity = UserEntity(
+      username: usernameController.text,
+      password: passwordController.text,
     );
+    if (await authService.signUp(
+      userEntity,
+    )) {
+      authService.set(userEntity);
+      callback.call();
+      return;
+    }
+    emit(state.copyWith()); //todo: show auth error
   }
 
   void changePage() {
@@ -44,6 +55,12 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void changePasswordVisibility() {
+    debugPrint('${!(state as AuthInitial).showPassword}');
     emit(state.copyWith(showPassword: !(state as AuthInitial).showPassword));
+  }
+
+  void logOut() {
+    serviceLocator.get<AuthService>().logOut();
+    emit(state.copyWith());
   }
 }

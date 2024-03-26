@@ -8,10 +8,10 @@ abstract class ScoreRepository {
   Future<List<UserScoreModel>> getAll();
 }
 
-class ScoreDomainRepositoryImpl extends ScoreRepository {
+class ScoreRepositoryImpl extends ScoreRepository {
   final ScoreDatasource scoreDatasource;
 
-  ScoreDomainRepositoryImpl({
+  ScoreRepositoryImpl({
     required this.scoreDatasource,
   });
 
@@ -25,6 +25,7 @@ class ScoreDomainRepositoryImpl extends ScoreRepository {
     return await scoreDatasource.save(UserScoreModel(
       username: userScoreModel.username,
       score: userScoreModel.score,
+      date: userScoreModel.date,
     ));
   }
 }

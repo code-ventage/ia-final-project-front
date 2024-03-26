@@ -1,9 +1,14 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/auth/auth_cubit.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/score/score_cubit.dart';
 
 import '../../../../go_router/routes.dart';
 import '../../bloc/configurations/configurations_cubit.dart';
@@ -29,13 +34,6 @@ class NumberTranslatorPage extends StatelessWidget {
         context.setLocale((state as ConfigurationsInitial).isSpanishLanguage ? context.supportedLocales.first : context.supportedLocales.last);
         serviceLocator.get<ConfigurationsCubit>().currentLanguage =
             context.locale == context.supportedLocales.first ? tr('spanish_language') : tr('english_language');
-        cubit.validateNumberToTranslate().then(
-              (value) => {
-                cubit.translate(
-                  numberToTranslate: cubit.numberToTranslateController.text,
-                )
-              },
-            );
       },
       builder: (context, state) {
         cubit.validateNumberToTranslate();
@@ -54,6 +52,30 @@ class NumberTranslatorPage extends StatelessWidget {
                     context.pushNamed(Routes.configurations.name);
                   },
                   icon: const Icon(Icons.settings),
+                ),
+              ),
+              CustomTooltip(
+                message: tr('profile'),
+                child: PopupMenuButton(
+                  tooltip: '',
+                  itemBuilder: (context) {
+                    return List.of([
+                      PopupMenuItem(
+                        child: Text(tr('score')),
+                        onTap: () async{
+                          await serviceLocator.get<ScoreCubit>().initialize();
+                          context.pushNamed(Routes.userScore.name);
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: Text(tr('logout')),
+                        onTap: () {
+                          serviceLocator.get<AuthCubit>().logOut();
+                          context.replaceNamed(Routes.authPage.name);
+                        },
+                      ),
+                    ]);
+                  },
                 ),
               )
             ],
@@ -233,17 +255,10 @@ class NumberTranslatorPage extends StatelessWidget {
           SizedBox(
             height: height * 0.25,
             width: width * 0.85,
-            child: BlocBuilder<NumberTranslatorCubit, NumberTranslatorState>(
-              builder: (context, state) {
-                if (state is NumberTranslatorInitial) {
-                  return CustomTextFormField(
-                    borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
-                    controller: cubit.translatedNumberController,
-                    readOnly: true,
-                  );
-                }
-                return const CircularProgressIndicator();
-              },
+            child: CustomTextFormField(
+              borderColor: state.validationFailed ? Theme.of(context).colorScheme.error : null,
+              controller: cubit.translatedNumberController,
+              readOnly: true,
             ),
           ),
         ],

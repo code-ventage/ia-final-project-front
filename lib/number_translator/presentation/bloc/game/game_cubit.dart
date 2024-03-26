@@ -7,6 +7,10 @@ import 'package:ia_final_project_front/config/service_locator/service_locator.da
 import 'package:ia_final_project_front/number_translator/domain/entities/consult_entity.dart';
 import 'package:ia_final_project_front/number_translator/domain/use_cases/number_translator/number_translator_service.dart';
 
+import '../../../domain/entities/user_score_entity.dart';
+import '../../../domain/use_cases/auth/auth_service.dart';
+import '../../../domain/use_cases/score/score_service.dart';
+
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
@@ -37,7 +41,7 @@ class GameCubit extends Cubit<GameState> {
       var now = DateTime.now();
       var diference = now.difference(initiationTime).inSeconds;
       currentPoints += currentNumber ~/ diference;
-      var nextLimit = (state as GameInitial).randomNumberLimit + 1000;
+      var nextLimit = (state as GameInitial).randomNumberLimit + 10000;
       startGame(limit: nextLimit > maxLimit ? maxLimit : nextLimit);
     } else {
       emit(state.copyWith(finished: true));
@@ -51,4 +55,14 @@ class GameCubit extends Cubit<GameState> {
     currentPoints = 0;
     emit(const GameInitial(isFirstTime: false, isInitializing: true));
   }
+
+  void saveCurrentScore(AuthService authService) => authService.get() != null
+      ? serviceLocator.get<ScoreService>().save(
+            UserScoreEntity(
+              username: authService.get()!.username,
+              score: '${serviceLocator.get<GameCubit>().currentPoints}',
+              date: DateTime.now().toString(),
+            ),
+          )
+      : null;
 }

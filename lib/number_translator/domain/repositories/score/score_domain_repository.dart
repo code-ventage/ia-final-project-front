@@ -19,7 +19,7 @@ class ScoreDomainRepositoryImpl extends ScoreDomainRepository {
   @override
   Future<List<UserScoreEntity>> getAll() async {
     return (await scoreRepository.getAll())
-        .map((userScoreModel) => UserScoreEntity(username: userScoreModel.username, score: userScoreModel.score))
+        .map((userScoreModel) => UserScoreEntity(username: userScoreModel.username, score: userScoreModel.score, date: userScoreModel.date))
         .toList();
   }
 
@@ -28,6 +28,7 @@ class ScoreDomainRepositoryImpl extends ScoreDomainRepository {
     return await scoreRepository.save(UserScoreModel(
       username: userScoreEntity.username,
       score: userScoreEntity.score,
+      date: userScoreEntity.date,
     ));
   }
 }

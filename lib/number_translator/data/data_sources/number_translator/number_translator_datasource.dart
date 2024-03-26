@@ -21,13 +21,13 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
     var response = <String, dynamic>{};
     var error = '';
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           'hash_response': {'N': isFromDigit ? '1000' : 'mil'},
         };
         return GeneralResponse(error: error, data: ConsultResponse.fromJson(response));
       }
-      debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
+      // debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
       response = (await connectionHelper.dio.post(
         '/consult/${isFromDigit ? '/digit' : '/letter'}',
         data: request.toJson(),

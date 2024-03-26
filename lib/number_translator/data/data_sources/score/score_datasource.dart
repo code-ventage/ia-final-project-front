@@ -13,37 +13,43 @@ abstract class ScoreDatasource {
 }
 
 class ScoreDatasourceImpl extends ScoreDatasource {
-
   final ConnectionHelper connectionHelper;
 
   ScoreDatasourceImpl({required this.connectionHelper});
 
   @override
-  Future<List<UserScoreModel>> getAll() async{
+  Future<List<UserScoreModel>> getAll() async {
     var response = <String, dynamic>{};
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           "version": "0",
           "response": {
             "status": "200",
             "message": "",
             "data": [
-              {
-                "username": "pepe",
-                "score": "123123"
-              }
+              {"username": "pepe", "score": "123123"},
+              {"username": "ramon", "score": "123123"},
+              {"username": "antonio", "score": "123123"},
+              {"username": "chancleta", "score": "123123"},
+              {"username": "camello", "score": "123123"},
+              {"username": "televisor", "score": "123123"}
             ]
           }
         };
-        return GeneralUsersResponse<UserScoreResponse>.fromJson(response).response.data.map((e) => UserScoreModel(
-          username: e.username,
-          score: e.score,
-        )).toList();
+        return GeneralUsersResponse<UserScoreResponse>.fromJson(response, true)
+            .response
+            .data
+            .map((e) => UserScoreModel(
+                  username: e.username,
+                  score: e.score,
+                  date: e.date,
+                ))
+            .toList();
       }
       debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
       response = (await connectionHelper.dio.get(
-        '/user/score/getAll',
+        '/user/score/index',
       ))
           .data;
     } on Exception catch (e) {
@@ -51,30 +57,33 @@ class ScoreDatasourceImpl extends ScoreDatasource {
       return [];
     }
 
-    return GeneralUsersResponse<UserScoreResponse>.fromJson(response).response.data.map((e) => UserScoreModel(
-      username: e.username,
-      score: e.score,
-    )).toList();
+    return GeneralUsersResponse<UserScoreResponse>.fromJson(response, true)
+        .response
+        .data
+        .map((e) => UserScoreModel(
+              username: e.username,
+              score: e.score,
+      date: e.date,
+            ))
+        .toList();
   }
 
   @override
-  Future<bool> save(UserScoreModel userModel) async{
+  Future<bool> save(UserScoreModel userModel) async {
     var response = <String, dynamic>{};
     try {
-      if (serviceLocator.get<ConfigurationData>().DEBUGING) {
+      if (serviceLocator.get<ConfigurationData>().DEBUGGING) {
         response = {
           "version": "0",
           "response": {
             "status": "200",
             "message": "",
             "data": [
-              {
-                "username": "pepe",
-                "score": "123123"
-              }
+              {"username": "pepe", "score": "123123"}
             ]
           }
         };
+        debugPrint('response: $response');
         return response['response']['status'] == '200';
       }
       debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');

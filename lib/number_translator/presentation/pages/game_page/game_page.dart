@@ -1,10 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
+import 'package:ia_final_project_front/number_translator/domain/use_cases/auth/auth_service.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_animated_timer.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -104,7 +107,7 @@ class _Game extends StatelessWidget {
               onPressed: () {
                 cubit.finishState(() {});
               },
-              child: Text(tr('game_finish')), // todo change the text to tr
+              child: Text(tr('game_finish')),
             ),
           ],
         );
@@ -119,6 +122,8 @@ class _GameFinished extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var authService = serviceLocator.get<AuthService>();
+    saveScore(authService);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -149,6 +154,8 @@ class _GameFinished extends StatelessWidget {
       ),
     );
   }
+
+  void saveScore(AuthService authService) => serviceLocator.get<GameCubit>().saveCurrentScore(authService);
 }
 
 class _GameIntroduction extends StatelessWidget {
@@ -204,7 +211,7 @@ class _GameIntroduction extends StatelessWidget {
         color: colorScheme.primary,
         activeColor: colorScheme.onInverseSurface,
         size: const Size(8, 8),
-        activeSize: const Size(12, 12),
+        activeSize: const Size(14, 14),
       ),
     );
   }

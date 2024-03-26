@@ -76,7 +76,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
       return false;
     }
     if (!(state as NumberTranslatorInitial).isLetterTranslation) {
-      translatedNumberController.text = '';
+      // translatedNumberController.text = '';
       emit(
         state.copyWith(
           validationFailed: false,
@@ -96,7 +96,7 @@ class NumberTranslatorCubit extends Cubit<NumberTranslatorState> {
         return false;
       }
     }
-    translatedNumberController.text = errorTextToShow;
+    // translatedNumberController.text = errorTextToShow;
     emit(
       state.copyWith(
         validationFailed: false,
