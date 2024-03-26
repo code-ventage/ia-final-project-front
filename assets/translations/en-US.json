@@ -42,6 +42,7 @@
   "profile": "Profile",
   "score": "Score",
   "logout":"Logout",
-  "user_score_title": "Scores"
-
+  "user_score_title": "Scores",
+  "invalid_password": "Username or password invalid",
+  "invalid_username": "Username already exists"
 }

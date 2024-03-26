@@ -42,6 +42,7 @@
   "profile": "Perfil",
   "score": "Puntuación",
   "logout": "Cerrar Sesión",
-  "user_score_title": "Puntuaciones"
-
+  "user_score_title": "Puntuaciones",
+  "invalid_passowrd": "Nombre de usuario o contraseña inválido",
+  "invalid_username": "Nombre de usuario existente"
 }
