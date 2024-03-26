@@ -42,11 +42,11 @@ dependencies:
   flutter_bloc: ^8.1.4
   equatable: ^2.0.5
   easy_localization: ^3.0.5
-  animate_do: ^3.3.4
   gap: ^3.0.1
   introduction_screen: ^3.1.12
   flutter_animate: ^4.5.0
   flutter_launcher_icons: ^0.13.1
+  animate_do: ^3.3.4
 
 flutter_icons:
   android: true
