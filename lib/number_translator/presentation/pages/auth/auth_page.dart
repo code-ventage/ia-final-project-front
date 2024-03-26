@@ -26,7 +26,6 @@ class AuthPage extends StatelessWidget {
                 if (state is! AuthInitial) return const CircularProgressIndicator();
 
                 final cubit = serviceLocator.get<AuthCubit>();
-                debugPrint('casacsa: ${!state.isSignInPage ? state.isValidPassword : null}');
 
                 return Column(
                   children: [

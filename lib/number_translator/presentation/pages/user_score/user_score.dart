@@ -41,7 +41,7 @@ class UserScorePage extends StatelessWidget {
             builder: (context, state) {
               final scores = cubit.userScores;
               if (scores == null) {
-                cubit.initialize();
+                // cubit.initialize();
                 return const Center(child: CircularProgressIndicator());
               }
               return SizedBox(
