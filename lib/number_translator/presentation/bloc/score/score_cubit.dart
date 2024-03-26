@@ -24,7 +24,7 @@ class ScoreCubit extends Cubit<ScoreState> {
       emit(state.copyWith(userScoreVersions: (state as ScoreInitial).userScoreVersions + 1));
     } else {
       await initialize();
-      final filtered = userScores!.where((element) => element.username.contains(filter.toLowerCase())).toList();
+      final filtered = userScores!.where((element) => element.username.toLowerCase().contains(filter.toLowerCase())).toList();
       userScores = filtered;
       emit(state.copyWith(userScoreVersions: (state as ScoreInitial).userScoreVersions + 1));
     }
