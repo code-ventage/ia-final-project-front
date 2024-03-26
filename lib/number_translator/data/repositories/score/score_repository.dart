@@ -25,6 +25,7 @@ class ScoreRepositoryImpl extends ScoreRepository {
     return await scoreDatasource.save(UserScoreModel(
       username: userScoreModel.username,
       score: userScoreModel.score,
+      date: userScoreModel.date,
     ));
   }
 }
