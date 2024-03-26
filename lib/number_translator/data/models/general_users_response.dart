@@ -47,13 +47,15 @@ class UserResponse {
 class UserScoreResponse {
   final String username;
   final String score;
+  final String date;
 
-  UserScoreResponse({required this.username, required this.score});
+  UserScoreResponse({required this.username, required this.score, required this.date});
 
   factory UserScoreResponse.fromJson(Map<String, dynamic> json) {
     return UserScoreResponse(
       username: json['username'] ?? '',
       score: json['score'] ?? '',
+      date: json['date'] ?? '',
     );
   }
 }
