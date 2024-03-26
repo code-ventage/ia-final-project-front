@@ -54,7 +54,7 @@ class UserScorePage extends StatelessWidget {
                       return ListTile(
                           title: Text(cubit.userScores![index].score, style: const TextStyle(fontSize: 20)),
                           trailing: Text(cubit.userScores![index].username, style: const TextStyle(fontSize: 20)),
-                          subtitle: const Text('2001-12-12'), //TODO 3/25/24 palmerodev : get this from the scores
+                          subtitle: Text(cubit.userScores![index].date.split('.')[0]), //TODO 3/25/24 palmerodev : get this from the scores
                           leading: const Icon(Icons.sports_score, size: 40));
                     },
                   ),
