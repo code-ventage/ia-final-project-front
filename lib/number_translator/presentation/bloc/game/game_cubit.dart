@@ -61,6 +61,7 @@ class GameCubit extends Cubit<GameState> {
             UserScoreEntity(
               username: authService.get()!.username,
               score: '${serviceLocator.get<GameCubit>().currentPoints}',
+              date: DateTime.now().toString(),
             ),
           )
       : null;
