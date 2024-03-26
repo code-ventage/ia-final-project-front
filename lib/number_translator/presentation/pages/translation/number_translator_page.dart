@@ -8,6 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/auth/auth_cubit.dart';
+import 'package:ia_final_project_front/number_translator/presentation/bloc/score/score_cubit.dart';
 
 import '../../../../go_router/routes.dart';
 import '../../bloc/configurations/configurations_cubit.dart';
@@ -61,8 +62,8 @@ class NumberTranslatorPage extends StatelessWidget {
                     return List.of([
                       PopupMenuItem(
                         child: Text(tr('score')),
-                        onTap: () {
-                          debugPrint('oasdosadpasdo');
+                        onTap: () async{
+                          await serviceLocator.get<ScoreCubit>().initialize();
                           context.pushNamed(Routes.userScore.name);
                         },
                       ),

@@ -27,7 +27,7 @@ class NumberTranslatorDatasourceImpl extends NumberTranslatorDatasource {
         };
         return GeneralResponse(error: error, data: ConsultResponse.fromJson(response));
       }
-      debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
+      // debugPrint('baseUrl: ${connectionHelper.dio.options.baseUrl}');
       response = (await connectionHelper.dio.post(
         '/consult/${isFromDigit ? '/digit' : '/letter'}',
         data: request.toJson(),
