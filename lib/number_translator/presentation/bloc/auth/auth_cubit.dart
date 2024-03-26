@@ -12,7 +12,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController repeatPasswordController = TextEditingController();
+  final TextEditingController repeatPasswordController =
+      TextEditingController();
 
   Future<void> logIn(void Function() callback) async {
     var userEntity = UserEntity(
@@ -25,13 +26,16 @@ class AuthCubit extends Cubit<AuthState> {
     )) {
       authService.set(userEntity);
       callback.call();
+      emit(const AuthInitial());
       return;
     }
-    emit(state.copyWith()); //todo: show auth error
+    emit(state.copyWith(isValidPassword: false)); //todo: show auth error
   }
 
   void validatePassword(void Function() callback) {
-    passwordController.text != repeatPasswordController.text ? emit(state.copyWith(isValidPassword: false)) : signUp(callback);
+    passwordController.text != repeatPasswordController.text
+        ? emit(state.copyWith(isValidPassword: false))
+        : signUp(callback);
   }
 
   Future<void> signUp(void Function() callback) async {
@@ -45,13 +49,38 @@ class AuthCubit extends Cubit<AuthState> {
     )) {
       authService.set(userEntity);
       callback.call();
+      emit(const AuthInitial());
       return;
     }
-    emit(state.copyWith()); //todo: show auth error
+    emit(state.copyWith(isValidPassword: false)); //todo: show auth error
+  }
+
+  void validateTextFormFields(String value) {
+    if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+      emit(state.copyWith(enableSubmitButton: false));
+      return;
+    }
+
+    if (!(state as AuthInitial).isSignInPage &&
+        repeatPasswordController.text.isEmpty) {
+      emit(state.copyWith(enableSubmitButton: false));
+      return;
+    }
+
+    emit(state.copyWith(enableSubmitButton: true));
   }
 
   void changePage() {
-    emit(state.copyWith(isSignInPage: !(state as AuthInitial).isSignInPage));
+    usernameController.text = '';
+    passwordController.text = '';
+    repeatPasswordController.text = '';
+
+    emit(
+      state.copyWith(
+        isSignInPage: !(state as AuthInitial).isSignInPage,
+        isValidPassword: true,
+      ),
+    );
   }
 
   void changePasswordVisibility() {
