@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -92,9 +93,18 @@ class _Game extends StatelessWidget {
               child: SizedBox(
                 height: 100,
                 width: double.infinity,
-                child: CustomTextFormField(
-                  controller: cubit.responseTextController,
-                  readOnly: false,
+                child: RawKeyboardListener(
+                  focusNode: FocusNode(),
+                  onKey: (value) {
+                    if (value.logicalKey == LogicalKeyboardKey.enter) {
+                      return cubit.finishState(() {});
+                    }
+                  },
+                  child: CustomTextFormField(
+                    controller: cubit.responseTextController,
+                    readOnly: false,
+                    autofocus: true,
+                  ),
                 ),
               ),
             ),
@@ -162,7 +172,8 @@ class _GameFinished extends StatelessWidget {
           const Gap(20),
           FilledButton.icon(
               onPressed: () {
-                context.pushNamed(Routes.numberTranslator.name);
+                serviceLocator.get<GameCubit>().hardReset(
+                    () => context.pushNamed(Routes.numberTranslator.name));
               },
               icon: const Icon(Icons.exit_to_app_outlined),
               label: Text(tr('game_exit'))),
