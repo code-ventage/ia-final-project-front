@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.controller,
     this.borderColor,
     this.suffix,
+    this.autofocus
   });
 
   final bool readOnly;
@@ -15,10 +16,12 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final Color? borderColor;
   final Widget? suffix;
+  final bool? autofocus;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autofocus ?? false,
       readOnly: readOnly,
       textAlign: TextAlign.start,
       textAlignVertical: TextAlignVertical.top,
