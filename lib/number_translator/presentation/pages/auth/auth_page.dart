@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -50,21 +51,36 @@ class AuthPage extends StatelessWidget {
                       label: tr('username'),
                       error: state.isValidPassword,
                       onChanged: cubit.validateTextFormFields,
+                      autofocus: true,
                     ),
                     const Gap(15),
-                    CustomPasswordTextFormField(
-                      passwordController: cubit.passwordController,
-                      label: tr('password'),
-                      isShowPassword: state.showPassword,
-                      error: state.isSignInPage ? state.isValidPassword : null,
-                      onShowPasswordPressed: cubit.changePasswordVisibility,
-                      onChanged: cubit.validateTextFormFields,
+                    RawKeyboardListener(
+                      focusNode: FocusNode(),
+                      key: const ValueKey('enter'),
+                      onKey: (value) {
+                        if (value.logicalKey == LogicalKeyboardKey.enter) {
+                          if (state.isSignInPage) {
+                            cubit.logIn(() => context
+                                .replaceNamed(Routes.numberTranslator.name));
+                          }
+                        }
+                      },
+                      child: CustomPasswordTextFormField(
+                        passwordController: cubit.passwordController,
+                        label: tr('password'),
+                        isShowPassword: state.showPassword,
+                        error:
+                            state.isSignInPage ? state.isValidPassword : null,
+                        onShowPasswordPressed: cubit.changePasswordVisibility,
+                        onChanged: cubit.validateTextFormFields,
+                      ),
                     ),
                     const Gap(15),
                     if (!state.isSignInPage)
                       ...buildRepeatPasswordTextFormField(
                         passwordController: cubit.repeatPasswordController,
                         showPassword: state.showPassword,
+                        context: context,
                         error:
                             state.isSignInPage ? state.isValidPassword : null,
                         onShowPasswordPressed: cubit.changePasswordVisibility,
@@ -125,21 +141,30 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  buildRepeatPasswordTextFormField({
-    required TextEditingController passwordController,
-    required bool showPassword,
-    required void Function() onShowPasswordPressed,
-    bool? error,
-  }) {
+  buildRepeatPasswordTextFormField(
+      {required TextEditingController passwordController,
+      required bool showPassword,
+      required void Function() onShowPasswordPressed,
+      bool? error,
+      required BuildContext context}) {
     var cubit = serviceLocator.get<AuthCubit>();
     return [
-      CustomPasswordTextFormField(
-        passwordController: passwordController,
-        label: tr('repeat_your_password'),
-        isShowPassword: showPassword,
-        error: error,
-        onShowPasswordPressed: onShowPasswordPressed,
-        onChanged: cubit.validateTextFormFields,
+      RawKeyboardListener(
+        focusNode: FocusNode(),
+        onKey: (value) {
+          if (value.logicalKey == LogicalKeyboardKey.enter) {
+            cubit.validatePassword(
+                () => context.replaceNamed(Routes.numberTranslator.name));
+          }
+        },
+        child: CustomPasswordTextFormField(
+          passwordController: passwordController,
+          label: tr('repeat_your_password'),
+          isShowPassword: showPassword,
+          error: error,
+          onShowPasswordPressed: onShowPasswordPressed,
+          onChanged: cubit.validateTextFormFields,
+        ),
       ),
       const Gap(15),
     ];
@@ -147,21 +172,25 @@ class AuthPage extends StatelessWidget {
 }
 
 class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField(
-      {super.key,
-      required this.textEditingController,
-      required this.label,
-      this.error,
-      this.onChanged});
+  const CustomTextFormField({
+    super.key,
+    required this.textEditingController,
+    required this.label,
+    this.error,
+    this.onChanged,
+    this.autofocus = false,
+  });
 
   final TextEditingController textEditingController;
   final String label;
   final bool? error;
   final void Function(String value)? onChanged;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autofocus,
       textAlign: TextAlign.left,
       textAlignVertical: TextAlignVertical.bottom,
       cursorHeight: 22,

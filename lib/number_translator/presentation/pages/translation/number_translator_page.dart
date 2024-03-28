@@ -144,7 +144,7 @@ class NumberTranslatorPage extends StatelessWidget {
           floatingActionButton: width < 600
               ? CustomTooltip(
                   message: tr('play_a_game'),
-                  child: FloatingActionButton.small(
+                  child: FloatingActionButton(
                     onPressed: () => context.pushNamed(Routes.gamePage.name),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     child: const Icon(Icons.gamepad_outlined),
