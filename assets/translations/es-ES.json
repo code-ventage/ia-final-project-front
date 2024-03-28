@@ -30,6 +30,8 @@
   "game_back_button": "Atrás",
   "game_your_score": "Tu puntuación",
   "game_finish": "Terminé",
+  "game_try_again": "Reintentarlo",
+  "game_exit": "Salir del juego",
   "dont_have_account": "No tienes cuenta? Crea una",
   "already_have_account": "Ya tienes cuenta? Autenticate",
   "sign_in": "Autenticarse",

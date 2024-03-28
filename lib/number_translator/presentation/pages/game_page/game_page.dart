@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
+import 'package:ia_final_project_front/go_router/routes.dart';
 import 'package:ia_final_project_front/number_translator/domain/use_cases/auth/auth_service.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_animated_timer.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
@@ -22,7 +21,8 @@ class GamePage extends StatelessWidget {
     var cubit = serviceLocator.get<GameCubit>();
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
-        if (state is! GameInitial || state.isFirstTime || state.finished) return;
+        if (state is! GameInitial || state.isFirstTime || state.finished)
+          return;
         cubit.responseTextController.text = '';
       },
       builder: (context, state) {
@@ -75,12 +75,16 @@ class _Game extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Animate(
-              effects: const [ScaleEffect(duration: Duration(milliseconds: 50))],
-              child: const Icon(Icons.directions_run, size: 86, color: Colors.lightBlueAccent),
+              effects: const [
+                ScaleEffect(duration: Duration(milliseconds: 50))
+              ],
+              child: const Icon(Icons.directions_run,
+                  size: 86, color: Colors.lightBlueAccent),
             ),
             Text(
               cubit.currentNumber.toString(),
-              style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500, fontSize: 32),
+              style: textTheme.titleLarge
+                  ?.copyWith(fontWeight: FontWeight.w500, fontSize: 32),
             ),
             const Gap(10),
             Padding(
@@ -150,12 +154,25 @@ class _GameFinished extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          const Gap(20),
+          FilledButton.icon(
+              onPressed: () => serviceLocator.get<GameCubit>().resetState(),
+              icon: const Icon(Icons.redo_rounded),
+              label: Text(tr('game_try_again'))),
+          const Gap(20),
+          FilledButton.icon(
+              onPressed: () {
+                context.pushNamed(Routes.numberTranslator.name);
+              },
+              icon: const Icon(Icons.exit_to_app_outlined),
+              label: Text(tr('game_exit'))),
         ],
       ),
     );
   }
 
-  void saveScore(AuthService authService) => serviceLocator.get<GameCubit>().saveCurrentScore(authService);
+  void saveScore(AuthService authService) =>
+      serviceLocator.get<GameCubit>().saveCurrentScore(authService);
 }
 
 class _GameIntroduction extends StatelessWidget {
