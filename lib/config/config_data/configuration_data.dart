@@ -1,23 +1,23 @@
 class ConfigurationData {
   ConfigurationData({
-    this.BASE_URL = "http://localhost:34545",
-    this.CONTENT_TYPE = "application/json",
-    this.DEBUGGING = false,
+    this.baseUrl = "http://10.0.2.2:34545",
+    this.contentType = "application/json",
+    this.debugging = false,
   });
 
-  String BASE_URL;
-  final String CONTENT_TYPE;
-  final bool DEBUGGING;
+  String baseUrl;
+  final String contentType;
+  final bool debugging;
 
   ConfigurationData copyWith({
-    String? BASE_URL,
-    String? CONTENT_TYPE,
-    bool? DEBUGGING,
+    String? baseUrl,
+    String? contentType,
+    bool? debugging,
   }) {
     return ConfigurationData(
-      BASE_URL: BASE_URL ?? this.BASE_URL,
-      CONTENT_TYPE: CONTENT_TYPE ?? this.CONTENT_TYPE,
-      DEBUGGING: DEBUGGING ?? this.DEBUGGING,
+      baseUrl: baseUrl ?? this.baseUrl,
+      contentType: contentType ?? this.contentType,
+      debugging: debugging ?? this.debugging,
     );
   }
 }
