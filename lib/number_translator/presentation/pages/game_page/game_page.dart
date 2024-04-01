@@ -6,12 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
-import 'package:ia_final_project_front/go_router/routes.dart';
 import 'package:ia_final_project_front/number_translator/domain/use_cases/auth/auth_service.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_animated_timer.dart';
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
+import '../../../../config/router/routes.dart';
 import '../../bloc/game/game_cubit.dart';
 
 class GamePage extends StatelessWidget {
@@ -22,8 +22,7 @@ class GamePage extends StatelessWidget {
     var cubit = serviceLocator.get<GameCubit>();
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
-        if (state is! GameInitial || state.isFirstTime || state.finished)
-          return;
+        if (state is! GameInitial || state.isFirstTime || state.finished) return;
         cubit.responseTextController.text = '';
       },
       builder: (context, state) {
@@ -72,58 +71,63 @@ class _Game extends StatelessWidget {
     return BlocBuilder<GameCubit, GameState>(
       buildWhen: (previous, current) => !(current as GameInitial).finished,
       builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Animate(
-              effects: const [
-                ScaleEffect(duration: Duration(milliseconds: 50))
-              ],
-              child: const Icon(Icons.directions_run,
-                  size: 86, color: Colors.lightBlueAccent),
-            ),
-            Text(
-              cubit.currentNumber.toString(),
-              style: textTheme.titleLarge
-                  ?.copyWith(fontWeight: FontWeight.w500, fontSize: 32),
-            ),
-            const Gap(10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: SizedBox(
-                height: 100,
-                width: double.infinity,
-                child: RawKeyboardListener(
-                  focusNode: FocusNode(),
-                  onKey: (value) {
-                    if (value.logicalKey == LogicalKeyboardKey.enter) {
-                      return cubit.finishState(() {});
-                    }
-                  },
-                  child: CustomTextFormField(
-                    controller: cubit.responseTextController,
-                    readOnly: false,
-                    autofocus: true,
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Animate(
+                effects: const [
+                  ScaleEffect(duration: Duration(milliseconds: 50))
+                ],
+                child: const Icon(Icons.directions_run,
+                    size: 86, color: Colors.lightBlueAccent),
+              ),
+              Text(
+                cubit.currentNumber.toString(),
+                style: textTheme.titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w500, fontSize: 32),
+              ),
+              const Gap(10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: SizedBox(
+                  height: 100,
+                  width: double.infinity,
+                  child: KeyboardListener(
+                    focusNode: FocusNode(),
+                    onKeyEvent: (value) {
+                      if (value.logicalKey == LogicalKeyboardKey.enter) {
+                        // TODO 28/3/24 marcosportales : aqui es donde esta el mojon, estoy llamando al mismo metodo que se llama en el onPressed del boton
+                        // TODO pero sale directo a la pantalla de GameFinished
+                        // TODO tonce hace falta que cdo presiones Enter se valide el numero que se escribio y siga el flujo del juego
+                         return cubit.finishState(() {});
+                      }
+                    },
+                    child: CustomTextFormField(
+                      controller: cubit.responseTextController,
+                      readOnly: false,
+                      autofocus: true,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const Gap(20),
-            CustomAnimatedTimer(
-              duration: const Duration(seconds: 60),
-              size: const Size(50, 50),
-              onFinished: () => cubit.finishState(() {}),
-              fontSize: 26,
-              strokeWeight: 4.0,
-            ),
-            const Gap(20),
-            ElevatedButton(
-              onPressed: () {
-                cubit.finishState(() {});
-              },
-              child: Text(tr('game_finish')),
-            ),
-          ],
+              const Gap(20),
+              CustomAnimatedTimer(
+                duration: const Duration(seconds: 60),
+                size: const Size(50, 50),
+                onFinished: () => cubit.finishState(() {}),
+                fontSize: 26,
+                strokeWeight: 4.0,
+              ),
+              const Gap(20),
+              ElevatedButton(
+                onPressed: () {
+                  cubit.finishState(() {});
+                },
+                child: Text(tr('game_finish')),
+              ),
+            ],
+          ),
         );
       },
     );
