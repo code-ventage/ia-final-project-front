@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -22,7 +21,8 @@ class GamePage extends StatelessWidget {
     var cubit = serviceLocator.get<GameCubit>();
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
-        if (state is! GameInitial || state.isFirstTime || state.finished) return;
+        if (state is! GameInitial || state.isFirstTime || state.finished)
+          return;
         cubit.responseTextController.text = '';
       },
       builder: (context, state) {
@@ -93,21 +93,10 @@ class _Game extends StatelessWidget {
                 child: SizedBox(
                   height: 100,
                   width: double.infinity,
-                  child: KeyboardListener(
-                    focusNode: FocusNode(),
-                    onKeyEvent: (value) {
-                      if (value.logicalKey == LogicalKeyboardKey.enter) {
-                        // TODO 28/3/24 marcosportales : aqui es donde esta el mojon, estoy llamando al mismo metodo que se llama en el onPressed del boton
-                        // TODO pero sale directo a la pantalla de GameFinished
-                        // TODO tonce hace falta que cdo presiones Enter se valide el numero que se escribio y siga el flujo del juego
-                         return cubit.finishState(() {});
-                      }
-                    },
-                    child: CustomTextFormField(
-                      controller: cubit.responseTextController,
-                      readOnly: false,
-                      autofocus: true,
-                    ),
+                  child: CustomTextFormField(
+                    controller: cubit.responseTextController,
+                    readOnly: false,
+                    autofocus: true,
                   ),
                 ),
               ),

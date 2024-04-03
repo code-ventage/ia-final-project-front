@@ -40,7 +40,7 @@ class GameCubit extends Cubit<GameState> {
         isInitializing: false, isFirstTime: false, randomNumberLimit: limit));
   }
 
-  void finishState(void Function()? onWrong) {
+  void finishState(void Function()? onWrong, {String? text = ''} ) {
     if (responseTextController.text == currentTranslation &&
         !(state as GameInitial).finished) {
       var now = DateTime.now();
