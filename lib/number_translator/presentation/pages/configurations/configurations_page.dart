@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ia_final_project_front/config/service_locator/service_locator.dart';
+import 'package:ia_final_project_front/config/theme/presentation/bloc/theme_selector_cubit.dart';
 import 'package:ia_final_project_front/number_translator/presentation/bloc/configurations/configurations_cubit.dart';
-import 'package:ia_final_project_front/theme/presentation/widgets/wrap_theme_selector_widget.dart';
+
+import '../../../../config/theme/presentation/widgets/wrap_theme_selector_widget.dart';
 
 class ConfigurationsPage extends StatelessWidget {
   const ConfigurationsPage({super.key});
@@ -21,17 +23,30 @@ class ConfigurationsPage extends StatelessWidget {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(left: 10.0),
-          child: Text(tr('configurations_page_title'), style: const TextStyle(fontSize: 20)),
+          child: Text(tr('configurations_page_title'),
+              style: const TextStyle(fontSize: 20)),
         ),
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              context.pop();
-            }),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.pop();
+          },
+        ),
+        actions: [
+          BlocBuilder<ThemeSelectorCubit, ThemeSelectorState>(
+              builder: (context, state) {
+            final isDarkMode =
+                (state as ThemeSelectorInitial).themeMode == ThemeMode.dark;
+            return IconButton(
+                onPressed: () => context
+                    .read<ThemeSelectorCubit>()
+                    .changeTheme(isDarkMode ? ThemeMode.light : ThemeMode.dark),
+                icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode));
+          })
+        ],
         toolbarHeight: height * 0.1,
       ),
       body: Column(
-
         children: [
           buildHotsPotIpAddressConfiguration(themeData, cubit, controller),
           const Gap(20),
@@ -52,7 +67,9 @@ class ConfigurationsPage extends StatelessWidget {
                 ),
               ],
               onSelected: (value) {
-                serviceLocator.get<ConfigurationsCubit>().changeLanguage(value == 'es');
+                serviceLocator
+                    .get<ConfigurationsCubit>()
+                    .changeLanguage(value == 'es');
               },
             ),
           ),
@@ -67,13 +84,15 @@ class ConfigurationsPage extends StatelessWidget {
     );
   }
 
-  ExpansionTile buildHotsPotIpAddressConfiguration(ThemeData themeData, ConfigurationsCubit cubit, TextEditingController controller) {
+  ExpansionTile buildHotsPotIpAddressConfiguration(ThemeData themeData,
+      ConfigurationsCubit cubit, TextEditingController controller) {
     return ExpansionTile(
       leading: Icon(Icons.route_outlined, color: themeData.colorScheme.primary),
-      title: Text(tr('hotspot_ip_address_label'), style: const TextStyle(
-        fontWeight: FontWeight.w500,
-        fontSize: 16,
-      )),
+      title: Text(tr('hotspot_ip_address_label'),
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          )),
       subtitle: Text(tr('input_your_hotspot_ip_address')),
       children: [
         Padding(
@@ -89,8 +108,9 @@ class ConfigurationsPage extends StatelessWidget {
                   cursorHeight: 22,
                   decoration: InputDecoration(
                     suffix: IconButton(
-                      icon: const Icon(Icons.save, color: Colors.lightBlueAccent),
-                      onPressed: () => cubit.setBaseUrl(controller.text, (){
+                      icon:
+                          const Icon(Icons.save, color: Colors.lightBlueAccent),
+                      onPressed: () => cubit.setBaseUrl(controller.text, () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             duration: const Duration(seconds: 1),

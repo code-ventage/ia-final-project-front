@@ -29,15 +29,20 @@ class GameCubit extends Cubit<GameState> {
   void startGame({int limit = 1000}) async {
     currentNumber = Random().nextInt(limit);
     var translationService = serviceLocator.get<NumberTranslatorService>();
-    currentTranslation =
-        (await translationService.makeTranslate(request: ConsultEntity(number: '$currentNumber'), isFromDigit: false)).data.hashResponse;
+    currentTranslation = (await translationService.makeTranslate(
+            request: ConsultEntity(number: '$currentNumber'),
+            isFromDigit: false))
+        .data
+        .hashResponse;
     debugPrint('currentTranslation: $currentTranslation');
     initiationTime = DateTime.now();
-    emit(state.copyWith(isInitializing: false, isFirstTime: false, randomNumberLimit: limit));
+    emit(state.copyWith(
+        isInitializing: false, isFirstTime: false, randomNumberLimit: limit));
   }
 
-  void finishState(void Function()? onWrong) {
-    if (responseTextController.text == currentTranslation && !(state as GameInitial).finished) {
+  void finishState(void Function()? onWrong, {String? text = ''} ) {
+    if (responseTextController.text == currentTranslation &&
+        !(state as GameInitial).finished) {
       var now = DateTime.now();
       var diference = now.difference(initiationTime).inSeconds;
       currentPoints += currentNumber ~/ diference;
@@ -53,6 +58,13 @@ class GameCubit extends Cubit<GameState> {
   void resetState() {
     responseTextController.text = '';
     currentPoints = 0;
+    emit(const GameInitial(isFirstTime: false, isInitializing: true));
+  }
+
+  void hardReset(void Function() onFinish) {
+    responseTextController.text = '';
+    currentPoints = 0;
+    onFinish.call();
     emit(const GameInitial(isFirstTime: false, isInitializing: true));
   }
 

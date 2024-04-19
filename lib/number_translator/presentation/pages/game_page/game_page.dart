@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -12,6 +10,7 @@ import 'package:ia_final_project_front/number_translator/presentation/widgets/cu
 import 'package:ia_final_project_front/number_translator/presentation/widgets/custom_text_form_field_widget.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
+import '../../../../config/router/routes.dart';
 import '../../bloc/game/game_cubit.dart';
 
 class GamePage extends StatelessWidget {
@@ -22,7 +21,8 @@ class GamePage extends StatelessWidget {
     var cubit = serviceLocator.get<GameCubit>();
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
-        if (state is! GameInitial || state.isFirstTime || state.finished) return;
+        if (state is! GameInitial || state.isFirstTime || state.finished)
+          return;
         cubit.responseTextController.text = '';
       },
       builder: (context, state) {
@@ -71,45 +71,52 @@ class _Game extends StatelessWidget {
     return BlocBuilder<GameCubit, GameState>(
       buildWhen: (previous, current) => !(current as GameInitial).finished,
       builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Animate(
-              effects: const [ScaleEffect(duration: Duration(milliseconds: 50))],
-              child: const Icon(Icons.directions_run, size: 86, color: Colors.lightBlueAccent),
-            ),
-            Text(
-              cubit.currentNumber.toString(),
-              style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500, fontSize: 32),
-            ),
-            const Gap(10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: SizedBox(
-                height: 100,
-                width: double.infinity,
-                child: CustomTextFormField(
-                  controller: cubit.responseTextController,
-                  readOnly: false,
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Animate(
+                effects: const [
+                  ScaleEffect(duration: Duration(milliseconds: 50))
+                ],
+                child: const Icon(Icons.directions_run,
+                    size: 86, color: Colors.lightBlueAccent),
+              ),
+              Text(
+                cubit.currentNumber.toString(),
+                style: textTheme.titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w500, fontSize: 32),
+              ),
+              const Gap(10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: SizedBox(
+                  height: 100,
+                  width: double.infinity,
+                  child: CustomTextFormField(
+                    controller: cubit.responseTextController,
+                    readOnly: false,
+                    autofocus: true,
+                  ),
                 ),
               ),
-            ),
-            const Gap(20),
-            CustomAnimatedTimer(
-              duration: const Duration(seconds: 60),
-              size: const Size(50, 50),
-              onFinished: () => cubit.finishState(() {}),
-              fontSize: 26,
-              strokeWeight: 4.0,
-            ),
-            const Gap(20),
-            ElevatedButton(
-              onPressed: () {
-                cubit.finishState(() {});
-              },
-              child: Text(tr('game_finish')),
-            ),
-          ],
+              const Gap(20),
+              CustomAnimatedTimer(
+                duration: const Duration(seconds: 60),
+                size: const Size(50, 50),
+                onFinished: () => cubit.finishState(() {}),
+                fontSize: 26,
+                strokeWeight: 4.0,
+              ),
+              const Gap(20),
+              ElevatedButton(
+                onPressed: () {
+                  cubit.finishState(() {});
+                },
+                child: Text(tr('game_finish')),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -150,12 +157,26 @@ class _GameFinished extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          const Gap(20),
+          FilledButton.icon(
+              onPressed: () => serviceLocator.get<GameCubit>().resetState(),
+              icon: const Icon(Icons.redo_rounded),
+              label: Text(tr('game_try_again'))),
+          const Gap(20),
+          FilledButton.icon(
+              onPressed: () {
+                serviceLocator.get<GameCubit>().hardReset(
+                    () => context.pushNamed(Routes.numberTranslator.name));
+              },
+              icon: const Icon(Icons.exit_to_app_outlined),
+              label: Text(tr('game_exit'))),
         ],
       ),
     );
   }
 
-  void saveScore(AuthService authService) => serviceLocator.get<GameCubit>().saveCurrentScore(authService);
+  void saveScore(AuthService authService) =>
+      serviceLocator.get<GameCubit>().saveCurrentScore(authService);
 }
 
 class _GameIntroduction extends StatelessWidget {
